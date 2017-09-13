@@ -1,0 +1,315 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Chi-squared by simulation &#8212; Tutorials on imaging, computing and mathematics</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Algorithms and data analysis" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p><span class="math">\(\newcommand{L}[1]{\| #1 \|}\newcommand{VL}[1]{\L{ \vec{#1} }}\newcommand{R}[1]{\operatorname{Re}\,(#1)}\newcommand{I}[1]{\operatorname{Im}\, (#1)}\)</span></p>
+<div class="section" id="chi-squared-by-simulation">
+<h1>Chi-squared by simulation<a class="headerlink" href="#chi-squared-by-simulation" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<p>We can make empty arrays like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_array</span>
+<span class="go">array([[ 0.,  0.,  0.],</span>
+<span class="go">       [ 0.,  0.,  0.]])</span>
+</pre></div>
+</div>
+<p>Use of <code class="docutils literal"><span class="pre">np.all</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">new_array</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_array</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">99</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">new_array</span>
+<span class="go">array([[ 99.,   0.,   0.],</span>
+<span class="go">       [  0.,   0.,   0.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">new_array</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Make a table with the counts in it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">gs_table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gs_table</span>
+<span class="go">array([[ 1,  9],</span>
+<span class="go">       [11,  3]])</span>
+</pre></div>
+</div>
+<p>The sum of all the values in the table.  This gives the total number of people
+surveyed.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="n">gs_table</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n</span>
+<span class="go">24</span>
+</pre></div>
+</div>
+<p>We can use <em>slicing</em> to get individual rows and columns.  Here we get the
+first row:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># First row, and all the columns (there are only two)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">men</span> <span class="o">=</span> <span class="n">gs_table</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">men</span>
+<span class="go">array([1, 9])</span>
+</pre></div>
+</div>
+<p>We can get the sum of this new row too, to get the total number of men:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n_men</span> <span class="o">=</span> <span class="n">men</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_men</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<p>Here we get the first column:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># All the rows, and only the first column (there are only two)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">studiers</span> <span class="o">=</span> <span class="n">gs_table</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">studiers</span>
+<span class="go">array([ 1, 11])</span>
+</pre></div>
+</div>
+<p>The probabilities that an observation drawn from the <span class="math">\(n\)</span> observations at
+random, will be a man:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p_man</span> <span class="o">=</span> <span class="n">n_men</span> <span class="o">/</span> <span class="n">n</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p_man</span>
+<span class="go">0.41666666666666669</span>
+</pre></div>
+</div>
+<p>The probabilities that an observation drawn from the <span class="math">\(n\)</span> observations at
+random, will be a studier:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p_studier</span> <span class="o">=</span> <span class="n">studiers</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">n</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p_studier</span>
+<span class="go">0.5</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">is_man</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p_man</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">people</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">people</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">is_man</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">people</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">people</span><span class="p">)</span>
+<span class="go">0.4166</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">is_studier</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">p_studier</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="k">return</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">people</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">people</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">is_studier</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">people</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">people</span><span class="p">)</span>
+<span class="go">0.4941</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">make_table</span><span class="p">(</span><span class="n">n_observations</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">new_table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_observations</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">is_man</span><span class="p">():</span>
+<span class="gp">... </span>            <span class="k">if</span> <span class="n">is_studier</span><span class="p">():</span>
+<span class="gp">... </span>                <span class="n">new_table</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>            <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>                <span class="n">new_table</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>        <span class="k">else</span><span class="p">:</span> <span class="c1"># A woman</span>
+<span class="gp">... </span>            <span class="k">if</span> <span class="n">is_studier</span><span class="p">():</span>
+<span class="gp">... </span>                <span class="n">new_table</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>            <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>                <span class="n">new_table</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">new_table</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make_table</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="go">array([[ 8.,  4.],</span>
+<span class="go">       [ 7.,  5.]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make_table</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="go">array([[ 5.,  4.],</span>
+<span class="go">       [ 7.,  8.]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">make_similar_table</span><span class="p">(</span><span class="n">example_table</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">n</span> <span class="o">=</span> <span class="n">example_table</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">row_totals</span> <span class="o">=</span> <span class="n">example_table</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">column_totals</span> <span class="o">=</span> <span class="n">example_table</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>  <span class="c1"># Run forever, until break</span>
+<span class="gp">... </span>        <span class="n">new_table</span> <span class="o">=</span> <span class="n">make_table</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">row_totals</span> <span class="o">!=</span> <span class="n">new_table</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)):</span>
+<span class="gp">... </span>            <span class="k">continue</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">column_totals</span> <span class="o">!=</span> <span class="n">new_table</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)):</span>
+<span class="gp">... </span>            <span class="k">continue</span>
+<span class="gp">... </span>        <span class="k">break</span> <span class="c1"># the rows and columns are all equal to the original</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">new_table</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make_similar_table</span><span class="p">(</span><span class="n">gs_table</span><span class="p">)</span>
+<span class="go">array([[ 7.,  3.],</span>
+<span class="go">       [ 5.,  9.]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make_similar_table</span><span class="p">(</span><span class="n">gs_table</span><span class="p">)</span>
+<span class="go">array([[ 3.,  7.],</span>
+<span class="go">       [ 9.,  5.]])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">p_woman</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">p_man</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p_not_study</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">p_studier</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expected_probs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">p_man</span> <span class="o">*</span> <span class="n">p_studier</span><span class="p">,</span> <span class="n">p_man</span> <span class="o">*</span> <span class="n">p_not_study</span><span class="p">],</span>
+<span class="gp">... </span>                           <span class="p">[</span><span class="n">p_woman</span> <span class="o">*</span> <span class="n">p_studier</span><span class="p">,</span> <span class="n">p_woman</span> <span class="o">*</span> <span class="n">p_not_study</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">expected_table</span> <span class="o">=</span> <span class="n">expected_probs</span> <span class="o">*</span> <span class="n">n</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">chi2</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">o_minus_e</span> <span class="o">=</span> <span class="n">table</span> <span class="o">-</span> <span class="n">expected_table</span>
+<span class="gp">... </span>    <span class="n">oe2_e</span> <span class="o">=</span> <span class="n">o_minus_e</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">expected_table</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">oe2_e</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">actual_chi2</span> <span class="o">=</span> <span class="n">chi2</span><span class="p">(</span><span class="n">gs_table</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">actual_chi2</span>
+<span class="go">10.971428571428572</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">simulated_table</span> <span class="o">=</span> <span class="n">make_similar_table</span><span class="p">(</span><span class="n">gs_table</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simulated_chi2</span> <span class="o">=</span> <span class="n">chi2</span><span class="p">(</span><span class="n">simulated_table</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simulated_chi2</span>
+<span class="go">0.68571428571428572</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">simulated_chi2s</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">simulated_table</span> <span class="o">=</span> <span class="n">make_similar_table</span><span class="p">(</span><span class="n">gs_table</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">s_chi2</span> <span class="o">=</span> <span class="n">chi2</span><span class="p">(</span><span class="n">simulated_table</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">simulated_chi2s</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s_chi2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If running in the IPython console, consider running <code class="docutils literal"><span class="pre">%matplotlib</span></code> to enable
+interactive plots.  If running in the Jupyter Notebook, use <code class="docutils literal"><span class="pre">%matplotlib</span>
+<span class="pre">inline</span></code>.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">simulated_chi2s</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//simulating_chi2-29.png">png</a>, <a class="reference external" href=".//simulating_chi2-29.hires.png">hires.png</a>, <a class="reference external" href=".//simulating_chi2-29.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/simulating_chi2-29.png" src="_images/simulating_chi2-29.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">simulated_chi2s</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_as_big</span> <span class="o">=</span> <span class="n">n_repeats</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">simulated_chi2s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">actual_chi2</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">first_as_big</span> <span class="o">=</span> <span class="n">i</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">first_as_big</span>
+<span class="go">9999</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">number_as_big</span> <span class="o">=</span> <span class="n">n_repeats</span> <span class="o">-</span> <span class="n">first_as_big</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">proportion_as_big</span> <span class="o">=</span> <span class="n">number_as_big</span> <span class="o">/</span> <span class="n">n_repeats</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">proportion_as_big</span><span class="p">)</span>
+<span class="go">0.0001</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Algorithms and data analysis</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/simulating_chi2.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/simulating_chi2.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
