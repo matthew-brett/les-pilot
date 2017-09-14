@@ -3,9 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-############################
-Algorithms and data analysis
-############################
+########################################
+A pilot course on teaching data analysis
+########################################
 
 These are the web pages for a pilot course on teaching algorithms and data
 analysis at the University of Birmingham.
