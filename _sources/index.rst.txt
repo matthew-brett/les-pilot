@@ -7,8 +7,15 @@
 Algorithms and data analysis
 ############################
 
-* :doc:`simulating_chi2`
+These are the web pages for a pilot course on teaching algorithms and data
+analysis at the University of Birmingham.
 
+The pages will fill out in the days leading up to the course.
+
+.. toctree::
+
+    when_where
+    setup_beforehand
 
 .. The hidden toctree below is to suppress build warnings
 
