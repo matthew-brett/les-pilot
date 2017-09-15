@@ -22,7 +22,7 @@ dictionary".  It was originally in Rich Text Format, but I have converted to
 PDF for convenience.  It is otherwise identical to the file you will find at
 the UK Data Service.
 
-Download these file to the working directory for your Jupyter Notebook:
+Download these files to the working directory for your Jupyter Notebook:
 
 * :download:`tab-delimited data file
   <audit_of_political_engagement_14_2017.tab>`;
@@ -74,7 +74,7 @@ about in the data dictionary:
 The data frame has columns for all the questions listed in the data
 dictionary.  For the moment, we will focus on two questions labeled ``cut15``
 and ``numage``.  ``cut15`` is the question about Brexit. The data dictionary
-has the "variable label "CUT15 - How did you vote on the question 'Should the
+has the *variable label* "CUT15 - How did you vote on the question 'Should the
 United Kingdom remain a member of the European Union or leave the European
 Union'?".  The recorded values run from 1 through 6 and have the following
 labels:
