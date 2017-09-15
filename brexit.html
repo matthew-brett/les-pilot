@@ -230,7 +230,13 @@ that 1 is the code for a No vote:</p>
 </pre></div>
 </div>
 <p>In this sample, what are the proportion of Leave voters, compared to all those
-who will confess to a vote?</p>
+who will confess to a vote?  We use the <code class="docutils literal"><span class="pre">len</span></code> function to get the number of
+cases in each data frame:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">)</span>
+<span class="go">541</span>
+</pre></div>
+</div>
+<p>Now for the proportion:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">remainers</span><span class="p">))</span>
 <span class="go">0.4114068441064639</span>
 </pre></div>
@@ -245,18 +251,18 @@ who will confess to a vote?</p>
 <span class="go">(...)</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href=".//brexit-12.png">png</a>, <a class="reference external" href=".//brexit-12.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-12.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href=".//brexit-13.png">png</a>, <a class="reference external" href=".//brexit-13.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-13.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="_images/brexit-12.png" src="_images/brexit-12.png" />
+<img alt="_images/brexit-13.png" src="_images/brexit-13.png" />
 </div>
 <p>How about the ages of the Brexiteers?</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
 <span class="go">(...)</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href=".//brexit-13.png">png</a>, <a class="reference external" href=".//brexit-13.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-13.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href=".//brexit-14.png">png</a>, <a class="reference external" href=".//brexit-14.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-14.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="_images/brexit-13.png" src="_images/brexit-13.png" />
+<img alt="_images/brexit-14.png" src="_images/brexit-14.png" />
 </div>
 <p>These distributions look different.  But — how different are they?  And how
 confident can we be that this difference did not come about by chance?</p>

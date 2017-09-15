@@ -218,7 +218,15 @@ Next we make a new data frame for those who claimed to vote Yes (leave) (code
     [541 rows x 2 columns]
 
 In this sample, what are the proportion of Leave voters, compared to all those
-who will confess to a vote?
+who will confess to a vote?  We use the ``len`` function to get the number of
+cases in each data frame:
+
+.. nbplot::
+
+    >>> len(brexiteers)
+    541
+
+Now for the proportion:
 
 .. nbplot::
 
