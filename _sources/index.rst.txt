@@ -23,3 +23,4 @@ The pages will fill out in the days leading up to the course.
     :hidden:
 
     simulating_chi2
+    brexit

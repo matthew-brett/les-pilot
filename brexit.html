@@ -1,0 +1,344 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Analyzing Brexit &#8212; Tutorials on imaging, computing and mathematics</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Chi-squared by simulation" href="simulating_chi2.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p><span class="math">\(\newcommand{L}[1]{\| #1 \|}\newcommand{VL}[1]{\L{ \vec{#1} }}\newcommand{R}[1]{\operatorname{Re}\,(#1)}\newcommand{I}[1]{\operatorname{Im}\, (#1)}\)</span></p>
+<div class="section" id="analyzing-brexit">
+<h1>Analyzing Brexit<a class="headerlink" href="#analyzing-brexit" title="Permalink to this headline">¶</a></h1>
+<p>Every year, the <a class="reference external" href="https://www.hansardsociety.org.uk/research/audit-of-political-engagement">Hansard Society</a>
+sponsors a survey on political engagement in the UK.</p>
+<p>They put topical questions in each survey.  For the 2016 / 7 survey, they
+asked about how people voted in the Brexit referendum.</p>
+<p>Luckily, they make the data freely available online for us to analyze.</p>
+<p>You can get the data for yourself from the UK Data Service:
+<a class="reference external" href="https://discover.ukdataservice.ac.uk/catalogue/?sn=8183">https://discover.ukdataservice.ac.uk/catalogue/?sn=8183</a>.</p>
+<p>To save you a tiny bit of work, I’ve made an unchanged copy of the
+“tab-delimited” data file for you to download directly. I’ve also made a copy
+of the document describing the questions they ask and the way that they have
+recorded the answers in the data file.  This is often called the “data
+dictionary”.  It was originally in Rich Text Format, but I have converted to
+PDF for convenience.  It is otherwise identical to the file you will find at
+the UK Data Service.</p>
+<p>Download these file to the working directory for your Jupyter Notebook:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="_downloads/audit_of_political_engagement_14_2017.tab" download=""><code class="xref download docutils literal"><span class="pre">tab-delimited</span> <span class="pre">data</span> <span class="pre">file</span></code></a>;</li>
+<li><a class="reference download internal" href="_downloads/audit_of_political_engagement_14_2017_ukda_data_dictionary.pdf" download=""><code class="xref download docutils literal"><span class="pre">data</span> <span class="pre">dictionary</span> <span class="pre">PDF</span> <span class="pre">file</span></code></a>.</li>
+</ul>
+<p>We are going to load this data using the <a class="reference external" href="http://pandas.pydata.org">Pandas</a> package for data analysis.</p>
+<p>Pandas is a large, powerful package that is very popular for data analysis.
+You might want to read the <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable">Pandas documentation</a> and you will find lots of
+help with Google searches and the <a class="reference external" href="https://stackoverflow.com">StackOverflow</a> question answer site.</p>
+<p>First we <em>import</em> the package, so it is ready to use.  Actually we will import
+it, and also give it a nice short name so we do not have to do much typing to
+use the package:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<p>The data file that you just downloaded should be called
+<code class="docutils literal"><span class="pre">audit_of_political_engagement_14_2017.tab</span></code>.  We load the data file into
+memory with Pandas:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Notice we use &quot;pd&quot; to refer to the Pandas package (see above)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">audit_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_table</span><span class="p">(</span><span class="s1">&#39;audit_of_political_engagement_14_2017.tab&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We now have something called a “data frame”.  This is a table, rather like a
+spreadsheet, where there is one row per person surveyed, and one column for
+each question in the survey.  The columns have helpful names that you can read
+about in the data dictionary:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">audit_data</span>
+<span class="go">      cu041  cu042  cu043  cu044  cu045  cu046  cu047  cu048  cu049  cu0410  \</span>
+<span class="go">0         0      0      0      0      1      1      0      0      0       0 ...</span>
+<span class="go">1         0      0      0      0      0      0      0      0      0       1 ...</span>
+<span class="go">2         0      0      0      0      1      0      0      0      0       0 ...</span>
+<span class="go">3         0      0      0      0      1      0      1      0      0       0 ...</span>
+<span class="go">4         0      0      0      1      1      0      1      0      0       0 ...</span>
+<span class="go">5         1      1      0      0      0      0      0      0      0       0 ...</span>
+<span class="gp">...</span>
+
+<span class="go">[1771 rows x 370 columns]</span>
+</pre></div>
+</div>
+<p>The data frame has columns for all the questions listed in the data
+dictionary.  For the moment, we will focus on two questions labeled <code class="docutils literal"><span class="pre">cut15</span></code>
+and <code class="docutils literal"><span class="pre">numage</span></code>.  <code class="docutils literal"><span class="pre">cut15</span></code> is the question about Brexit. The data dictionary
+has the “variable label “CUT15 - How did you vote on the question ‘Should the
+United Kingdom remain a member of the European Union or leave the European
+Union’?”.  The recorded values run from 1 through 6 and have the following
+labels:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>Value label information for cut15
+Value = 1.0    Label = Remain a member of the European Union
+Value = 2.0    Label = Leave the European Union
+Value = 3.0    Label = Did not vote
+Value = 4.0    Label = Too young
+Value = 5.0    Label = Can&#39;t remember
+Value = 6.0    Label = Refused
+</pre></div>
+</div>
+<p>We also want the variable <code class="docutils literal"><span class="pre">numage</span></code>; this is the age of the respondent in
+years.</p>
+<p>To reduce clutter, we first make a new data frame that just has the two
+questions we are interested in:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Select the age and Brexit vote questions only</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brexit_age</span> <span class="o">=</span> <span class="n">audit_data</span><span class="p">[[</span><span class="s1">&#39;numage&#39;</span><span class="p">,</span> <span class="s1">&#39;cut15&#39;</span><span class="p">]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brexit_age</span>
+<span class="go">      numage  cut15</span>
+<span class="go">0         37      1</span>
+<span class="go">1         55      1</span>
+<span class="go">2         71      2</span>
+<span class="go">3         37      1</span>
+<span class="go">4         42      1</span>
+<span class="go">5          0      1</span>
+<span class="gp">...</span>
+
+<span class="go">[1771 rows x 2 columns]</span>
+</pre></div>
+</div>
+<p>The variable name <code class="docutils literal"><span class="pre">cut15</span></code> is not very memorable, and we care about
+memorable, because good names help to keep our ideas clear as we are working.
+We rename the columns from their original names to more memorable ones:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Rename the columns to be more memorable</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brexit_age</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="s1">&#39;brexit&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brexit_age</span>
+<span class="go">      age  brexit</span>
+<span class="go">0      37       1</span>
+<span class="go">1      55       1</span>
+<span class="go">2      71       2</span>
+<span class="go">3      37       1</span>
+<span class="go">4      42       1</span>
+<span class="go">5       0       1</span>
+<span class="gp">...</span>
+
+<span class="go">[1771 rows x 2 columns]</span>
+</pre></div>
+</div>
+<p>Wait — there’s something odd in those numbers.</p>
+<p>We were lucky to spot that, but in any case, we want to check our data before
+we continue.  The first thing we do is make a histogram of the ages.</p>
+<p>To do this we first need to load the standard Python plotting library,
+<a class="reference external" href="http://matplotlib.org">Matplotlib</a>.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If running in the IPython console, consider running <code class="docutils literal"><span class="pre">%matplotlib</span></code> to enable
+interactive plots.  If running in the Jupyter Notebook, use <code class="docutils literal"><span class="pre">%matplotlib</span>
+<span class="pre">inline</span></code>.</p>
+</div>
+<p>Remember that we did an “import” for the Pandas package above.  Now we import
+part of <code class="docutils literal"><span class="pre">matplotlib</span></code>, and again, we give it a short memorable name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<p>Here is a histogram of the respondents’ ages:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">brexit_age</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//brexit-7.png">png</a>, <a class="reference external" href=".//brexit-7.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-7.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/brexit-7.png" src="_images/brexit-7.png" />
+</div>
+<p>There appear to be a few subjects with age of 0.</p>
+<p>It looks as if the survey coders are using the value 0 to mean that the person
+did not state their age.  We will have to clean that up.  We do that by
+selecting the cases that have ages not equal to 0:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Select rows where the age is not equal to 0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brexit_age</span> <span class="o">=</span> <span class="n">brexit_age</span><span class="p">[</span><span class="n">brexit_age</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brexit_age</span>
+<span class="go">      age  brexit</span>
+<span class="go">0      37       1</span>
+<span class="go">1      55       1</span>
+<span class="go">2      71       2</span>
+<span class="go">3      37       1</span>
+<span class="go">4      42       1</span>
+<span class="go">6      69       1</span>
+<span class="gp">...</span>
+
+<span class="go">[1757 rows x 2 columns]</span>
+</pre></div>
+</div>
+<p>Now we want to ask what proportion of the respondents said that they voted
+Remain or Leave.  Later we will try to work out whether the proportion is
+consistent with the way that the UK voted in the referendum.</p>
+<p>First we make a new data frame that contains only the rows for people who said
+they voted No in the referendum (remain).  Remember, from the data dictionary,
+that 1 is the code for a No vote:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Select the cases who say they voted No (Remain)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remainers</span> <span class="o">=</span> <span class="n">brexit_age</span><span class="p">[</span><span class="n">brexit_age</span><span class="p">[</span><span class="s1">&#39;brexit&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remainers</span>
+<span class="go">      age  brexit</span>
+<span class="go">0      37       1</span>
+<span class="go">1      55       1</span>
+<span class="go">3      37       1</span>
+<span class="go">4      42       1</span>
+<span class="go">6      69       1</span>
+<span class="gp">...</span>
+
+<span class="go">[774 rows x 2 columns]</span>
+</pre></div>
+</div>
+<p>Next we make a new data frame for those who claimed to vote Yes (leave) (code
+2):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">brexiteers</span> <span class="o">=</span> <span class="n">brexit_age</span><span class="p">[</span><span class="n">brexit_age</span><span class="p">[</span><span class="s1">&#39;brexit&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brexiteers</span>
+<span class="go">      age  brexit</span>
+<span class="go">2      71       2</span>
+<span class="go">9      60       2</span>
+<span class="go">17     74       2</span>
+<span class="go">19     61       2</span>
+<span class="go">20     47       2</span>
+<span class="gp">...</span>
+
+<span class="go">[541 rows x 2 columns]</span>
+</pre></div>
+</div>
+<p>In this sample, what are the proportion of Leave voters, compared to all those
+who will confess to a vote?</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">remainers</span><span class="p">))</span>
+<span class="go">0.4114068441064639</span>
+</pre></div>
+</div>
+<p>Let us remind ourselves of the <a class="reference external" href="https://www.electoralcommission.org.uk/find-information-by-subject/elections-and-referendums/past-elections-and-referendums/eu-referendum/electorate-and-count-information">final referendum vote percentages</a>:</p>
+<ul class="simple">
+<li>Remain: 48.1%</li>
+<li>Leave: 51.9%</li>
+</ul>
+<p>Now let’s have a look at the distribution of ages for the Remain voters:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">remainers</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//brexit-12.png">png</a>, <a class="reference external" href=".//brexit-12.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-12.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/brexit-12.png" src="_images/brexit-12.png" />
+</div>
+<p>How about the ages of the Brexiteers?</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//brexit-13.png">png</a>, <a class="reference external" href=".//brexit-13.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-13.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/brexit-13.png" src="_images/brexit-13.png" />
+</div>
+<p>These distributions look different.  But — how different are they?  And how
+confident can we be that this difference did not come about by chance?</p>
+<p>Last, we will save the data to use it later.  First we stack the Remain and
+Leave cases together into one long data frame:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">remain_leave</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">remainers</span><span class="p">,</span> <span class="n">brexiteers</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">remain_leave</span><span class="p">)</span>
+<span class="go">1315</span>
+</pre></div>
+</div>
+<p>Next we save to a simple text file so we can load it later.  The format is
+CSV, which stands for Comma Separated Values — commas separate the values
+within each row.  In saving, we drop off the first implicit column, with the
+case numbers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">remain_leave</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;remain_leave.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To be safe, we check we can load back that file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">remain_leave_reloaded</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;remain_leave.csv&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remain_leave_reloaded</span>
+<span class="go">      age  brexit</span>
+<span class="go">0      37       1</span>
+<span class="go">1      55       1</span>
+<span class="go">2      37       1</span>
+<span class="go">3      42       1</span>
+<span class="go">4      69       1</span>
+<span class="go">5      20       1</span>
+<span class="gp">...</span>
+
+<span class="go">[1315 rows x 2 columns]</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="simulating_chi2.html" title="previous chapter">Chi-squared by simulation</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/brexit.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/brexit.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
