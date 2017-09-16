@@ -206,7 +206,7 @@ simulation-chi2: build-simulation_chi2
 build-%:
 	pandoc --toc --filter pandoc-citeproc --filter pandoc-eqnos $*.md -o $*.pdf
 
-TEMPLATES = animal_attitudes
+TEMPLATES = animal_attitudes number_of_girls
 
 TPL_FILES = $(TEMPLATES:=.tpl)
 SOLUTION_FILES = $(TPL_FILES:.tpl=_solution.rst)

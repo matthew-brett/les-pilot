@@ -13,7 +13,7 @@ Day 0
   * reproducibility crisis
   * cargo cult science
   * nulliam in verbis
-  * data analysis and computing
+  * data analysis and computing, simulation, models, algorithms.
   * data science, Python and R
   * on working with computers
 
@@ -23,6 +23,7 @@ Day 0
 
   * Python as a calculator
   * introducing ``random``
+  * :doc:`python_intro`
 
   .. 10 minute break = 2 hours
 
@@ -42,11 +43,11 @@ Day 0
 
   .. 25 minutes
 
-  * Simulation with ``random``.  Lists.  For loops. Range.
+  * :doc:`programs_in_python`.
 
   .. 25 minutes
 
-  * Complete the simulation
+  * Complete the simulation :doc:`number_of_girls_exercise`.
 
   .. = 2 hours, end of day 0
 
@@ -91,6 +92,7 @@ Day 2
 
   .. 25 minutes
 
+  * :doc:`school_and_fertility`;
   * The mean
   * Standard deviation
   * Z scores

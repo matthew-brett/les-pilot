@@ -16,13 +16,19 @@ The pages will fill out in the days leading up to the course.
 
     when_where
     setup_beforehand
-    schedule
 
 .. The hidden toctree below is to suppress build warnings
 
 .. toctree::
     :hidden:
 
+    schedule
     simulating_chi2
     brexit
     school_and_fertility
+    animal_attitudes_exercise
+    animal_attitudes_solution
+    number_of_girls_exercise
+    number_of_girls_solution
+    programs_in_python
+    python_intro
