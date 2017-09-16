@@ -7,6 +7,8 @@ SPHINXBUILD   = sphinx-build
 PAPER         =
 BUILDDIR      = _build
 
+PYTHON ?= python3
+
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
 $(error The '$(SPHINXBUILD)' command was not found. Make sure you have Sphinx installed, then set the SPHINXBUILD environment variable to point to the full path of the '$(SPHINXBUILD)' executable. Alternatively you can add the directory with the executable to your PATH. If you don't have Sphinx installed, grab it from http://sphinx-doc.org/)
@@ -50,8 +52,9 @@ help:
 
 clean:
 	rm -rf $(BUILDDIR)/*
+	-rm -rf $(SOLUTION_FILES) $(CODE_FILES) $(EXERCISE_FILES)
 
-html:
+html-only:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
@@ -171,7 +174,7 @@ linkcheck:
 	@echo "Link check complete; look for any errors in the above output " \
 	      "or in $(BUILDDIR)/linkcheck/output.txt."
 
-doctest:
+doctest: rst-exercises
 	$(SPHINXBUILD) -b doctest $(ALLSPHINXOPTS) $(BUILDDIR)/doctest
 	@echo "Testing of doctests in the sources finished, look at the " \
 	      "results in $(BUILDDIR)/doctest/output.txt."
@@ -191,9 +194,6 @@ pseudoxml:
 	@echo
 	@echo "Build finished. The pseudo-XML files are in $(BUILDDIR)/pseudoxml."
 
-graphics:
-	python3 tools/vector_projection.py images/vector_projection
-
 github:
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	ghp-import -n $(BUILDDIR)/html/
@@ -205,3 +205,17 @@ simulation-chi2: build-simulation_chi2
 
 build-%:
 	pandoc --toc --filter pandoc-citeproc --filter pandoc-eqnos $*.md -o $*.pdf
+
+TEMPLATES = animal_attitudes
+
+TPL_FILES = $(TEMPLATES:=.tpl)
+SOLUTION_FILES = $(TPL_FILES:.tpl=_solution.rst)
+EXERCISE_FILES = $(TPL_FILES:.tpl=_exercise.rst)
+CODE_SKELETON_FILES = $(TPL_FILES:.tpl=_code.rst)
+
+%_solution.rst : %.tpl
+	$(PYTHON) tools/proc_rst.py $<
+
+rst-exercises: $(SOLUTION_FILES)
+
+html: rst-exercises html-only

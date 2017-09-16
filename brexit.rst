@@ -72,7 +72,19 @@ about in the data dictionary:
     [1771 rows x 370 columns]
 
 The data frame has columns for all the questions listed in the data
-dictionary.  For the moment, we will focus on two questions labeled ``cut15``
+dictionary:
+
+.. nbplot::
+
+    >>> audit_data.columns
+    Index(['cu041', 'cu042', 'cu043', 'cu044', 'cu045', 'cu046', 'cu047', 'cu048',
+           'cu049', 'cu0410',
+           ...
+           'intten', 'cx_971_980', 'serial', 'week', 'wts', 'numage', 'weight0',
+           'sgrade_grp', 'age_grp', 'region2'],
+          dtype='object', length=370)
+
+For the moment, we will focus on two questions labeled ``cut15``
 and ``numage``.  ``cut15`` is the question about Brexit. The data dictionary
 has the *variable label* "CUT15 - How did you vote on the question 'Should the
 United Kingdom remain a member of the European Union or leave the European

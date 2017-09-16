@@ -32,7 +32,7 @@ Day 0
 
   * Populations and samples
   * :doc:`brexit`.
-  * :doc:`animals`.
+  * :doc:`animal_attitudes_exercise`.
 
 * The problem of proportions
 
