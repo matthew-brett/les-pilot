@@ -1,0 +1,301 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Schooling and fertility &#8212; Tutorials on imaging, computing and mathematics</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Attitudes to animal research" href="animal_attitudes_exercise.html" />
+    <link rel="prev" title="Analyzing Brexit" href="brexit.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p><span class="math">\(\newcommand{L}[1]{\| #1 \|}\newcommand{VL}[1]{\L{ \vec{#1} }}\newcommand{R}[1]{\operatorname{Re}\,(#1)}\newcommand{I}[1]{\operatorname{Im}\, (#1)}\)</span></p>
+<div class="section" id="schooling-and-fertility">
+<h1>Schooling and fertility<a class="headerlink" href="#schooling-and-fertility" title="Permalink to this headline">¶</a></h1>
+<p>Here we are analyzing this dataset from the World Bank on gender and
+inequality:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://data.worldbank.org/data-catalog/gender-statistics">https://data.worldbank.org/data-catalog/gender-statistics</a></li>
+</ul>
+<p>You can download the data yourself as a zip file <a class="reference external" href="http://databank.worldbank.org/data/download/Gender_Stats_csv.zip">from that site</a>, but to
+make your life a little easier, I’ve made a link to the extracted data file:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="_downloads/Gender_StatsData.csv" download=""><code class="xref download docutils literal"><span class="pre">Gender_StatsData.csv</span></code></a></li>
+</ul>
+<p>Download this file to the same directory as your Jupyter Notebook.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Import Pandas with its usual short name</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<p>Load the Comma Separated Value text file into Pandas as a data frame:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Gender_StatsData.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is a slightly clumsy-looking data frame, because it has years for
+columns, and variables for rows, where there are 630 variables for each
+country.  So there are 630 rows * the number of countries.  To investigate, we
+first look at the column names:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+<span class="go">Index([&#39;﻿&quot;Country Name&quot;&#39;, &#39;Country Code&#39;, &#39;Indicator Name&#39;, &#39;Indicator Code&#39;,</span>
+<span class="go">       &#39;1960&#39;, &#39;1961&#39;, &#39;1962&#39;, &#39;1963&#39;, &#39;1964&#39;, &#39;1965&#39;, &#39;1966&#39;, &#39;1967&#39;, &#39;1968&#39;,</span>
+<span class="go">       &#39;1969&#39;, &#39;1970&#39;, &#39;1971&#39;, &#39;1972&#39;, &#39;1973&#39;, &#39;1974&#39;, &#39;1975&#39;, &#39;1976&#39;, &#39;1977&#39;,</span>
+<span class="go">       &#39;1978&#39;, &#39;1979&#39;, &#39;1980&#39;, &#39;1981&#39;, &#39;1982&#39;, &#39;1983&#39;, &#39;1984&#39;, &#39;1985&#39;, &#39;1986&#39;,</span>
+<span class="go">       &#39;1987&#39;, &#39;1988&#39;, &#39;1989&#39;, &#39;1990&#39;, &#39;1991&#39;, &#39;1992&#39;, &#39;1993&#39;, &#39;1994&#39;, &#39;1995&#39;,</span>
+<span class="go">       &#39;1996&#39;, &#39;1997&#39;, &#39;1998&#39;, &#39;1999&#39;, &#39;2000&#39;, &#39;2001&#39;, &#39;2002&#39;, &#39;2003&#39;, &#39;2004&#39;,</span>
+<span class="go">       &#39;2005&#39;, &#39;2006&#39;, &#39;2007&#39;, &#39;2008&#39;, &#39;2009&#39;, &#39;2010&#39;, &#39;2011&#39;, &#39;2012&#39;, &#39;2013&#39;,</span>
+<span class="go">       &#39;2014&#39;, &#39;2015&#39;, &#39;2016&#39;, &#39;2017&#39;, &#39;Unnamed: 62&#39;],</span>
+<span class="go">      dtype=&#39;object&#39;)</span>
+</pre></div>
+</div>
+<p>Next we look at the data frame itself:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">df</span>
+<span class="go">       ﻿&quot;Country Name&quot; Country Code  \</span>
+<span class="go">0           Arab World          ARB ...</span>
+<span class="go">1           Arab World          ARB ...</span>
+<span class="go">2           Arab World          ARB ...</span>
+<span class="go">3           Arab World          ARB ...</span>
+<span class="go">4           Arab World          ARB ...</span>
+<span class="go">5           Arab World          ARB ...</span>
+<span class="gp">...</span>
+
+<span class="go">[165690 rows x 63 columns]</span>
+</pre></div>
+</div>
+<p>There are lots of countries here, so to start, let’s look at the variables for
+the UK.</p>
+<p>We get the UK country code from <a class="reference external" href="http://www.worldatlas.com/aatlas/ctycodes.htm">http://www.worldatlas.com/aatlas/ctycodes.htm</a>.
+The code is <code class="docutils literal"><span class="pre">GBR</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># We select only the UK rows</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gb</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Country Code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;GBR&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gb</span>
+<span class="go">       ﻿&quot;Country Name&quot; Country Code  \</span>
+<span class="go">158130  United Kingdom          GBR ...</span>
+<span class="go">158131  United Kingdom          GBR ...</span>
+<span class="go">158132  United Kingdom          GBR ...</span>
+<span class="go">158133  United Kingdom          GBR ...</span>
+<span class="go">158134  United Kingdom          GBR ...</span>
+<span class="go">158135  United Kingdom          GBR ...</span>
+<span class="gp">...</span>
+
+<span class="go">[630 rows x 63 columns]</span>
+</pre></div>
+</div>
+<p>Pandas truncates the output to only show a certain number of rows, and only a
+certain length for the text fields.  To investigate further, you can increase
+these limits to see all 630 rows for the UK, and all the text for the text
+fields:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># See more of the text, more rows in the displayed output</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_colwidth</span> <span class="o">=</span> <span class="mi">80</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_rows</span> <span class="o">=</span> <span class="mi">700</span>
+</pre></div>
+</div>
+<p>If you are working in the Notebook, you will now see all of the rows and the
+whole text field with the variable description.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This will be different from above when working in the Notebook</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">gb</span>
+<span class="go">       ﻿&quot;Country Name&quot; Country Code  \</span>
+<span class="go">158130  United Kingdom          GBR ...</span>
+<span class="go">158131  United Kingdom          GBR ...</span>
+<span class="go">158132  United Kingdom          GBR ...</span>
+<span class="go">158133  United Kingdom          GBR ...</span>
+<span class="go">158134  United Kingdom          GBR ...</span>
+<span class="go">158135  United Kingdom          GBR ...</span>
+<span class="gp">...</span>
+
+<span class="go">[630 rows x 63 columns]</span>
+</pre></div>
+</div>
+<p>After scanning through this output, we decide we want to look at these two
+variables:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">SP.ADO.TFRT</span></code> : Adolescent fertility rate (births per 1,000 women ages
+15-19)</li>
+<li><code class="docutils literal"><span class="pre">SE.SCH.LIFE.FE</span></code> : Expected years of schooling, female</li>
+</ul>
+<p>Remember that, for each variable there is one row per country.  We have to
+select the rows corresponding to this variable, for all countries.  We do that
+for both variables we are interested in.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Put the variables we want into their own data frames</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fertility_rate</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Indicator Code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;SP.ADO.TFRT&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">age_female_sch</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Indicator Code&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;SE.SCH.LIFE.FE&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>For convenience, we are going to put the values from these columns back into
+their own data frame.  To do that, we make a new data frame, and fill it with
+the values from our variables:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Make a new data frame to store our school and fertility columns</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">,</span> <span class="s1">&#39;fertility&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span>
+<span class="go">Empty DataFrame</span>
+<span class="go">Columns: [school, fertility]</span>
+<span class="go">Index: []</span>
+</pre></div>
+</div>
+<p>We fill the empty data frame with the values we selected:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">age_female_sch</span><span class="p">[</span><span class="s1">&#39;2014&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span><span class="p">[</span><span class="s1">&#39;fertility&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fertility_rate</span><span class="p">[</span><span class="s1">&#39;2014&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span>
+<span class="go">        school   fertility</span>
+<span class="go">0    10.993670   48.479108</span>
+<span class="go">1          NaN   57.160052</span>
+<span class="go">2    16.449970   19.519840</span>
+<span class="go">3    11.816701   41.685074</span>
+<span class="go">4    13.469607   21.358688</span>
+<span class="go">5    13.257181   22.752998</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>We do not have the expected length of schooling for quite a few contries;
+these are the rows with <code class="docutils literal"><span class="pre">NaN</span></code> in the corresponding columns.  We often call
+these <em>missing values</em>.  There are some missing values for the fertility
+statistic too.  For simplicity, we drop rows that have missing values in
+either of these two columns:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Drop the rows with any missing (NaN) values</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span> <span class="o">=</span> <span class="n">school_fertility</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span>
+<span class="go">        school   fertility</span>
+<span class="go">0    10.993670   48.479108</span>
+<span class="go">2    16.449970   19.519840</span>
+<span class="go">3    11.816701   41.685074</span>
+<span class="go">4    13.469607   21.358688</span>
+<span class="go">5    13.257181   22.752998</span>
+<span class="go">6    13.280039   23.077289</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>Now we have the data we think we want, we do a quick check for odd values by
+doing a histogram of each column:</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If running in the IPython console, consider running <code class="docutils literal"><span class="pre">%matplotlib</span></code> to enable
+interactive plots.  If running in the Jupyter Notebook, use <code class="docutils literal"><span class="pre">%matplotlib</span>
+<span class="pre">inline</span></code>.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Import the plotting library with a memorable name</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Histogram of the school length</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">school_fertility</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">]);</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//school_and_fertility-14.png">png</a>, <a class="reference external" href=".//school_and_fertility-14.hires.png">hires.png</a>, <a class="reference external" href=".//school_and_fertility-14.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/school_and_fertility-14.png" src="_images/school_and_fertility-14.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Histogram of the fertility rate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">school_fertility</span><span class="p">[</span><span class="s1">&#39;fertility&#39;</span><span class="p">]);</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//school_and_fertility-15.png">png</a>, <a class="reference external" href=".//school_and_fertility-15.hires.png">hires.png</a>, <a class="reference external" href=".//school_and_fertility-15.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/school_and_fertility-15.png" src="_images/school_and_fertility-15.png" />
+</div>
+<p>Now to the part we are interested in.  We speculate that countries that don’t
+keep their women in school for long, may have higher adolescent fertility
+rates.  We plot length of schooling on the X axis and fertility rates on the Y
+axis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Scatterplot of school length against fertility rate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">school_fertility</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">],</span> <span class="n">school_fertility</span><span class="p">[</span><span class="s1">&#39;fertility&#39;</span><span class="p">])</span>
+<span class="go">&lt;...&gt;</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//school_and_fertility-16.png">png</a>, <a class="reference external" href=".//school_and_fertility-16.hires.png">hires.png</a>, <a class="reference external" href=".//school_and_fertility-16.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/school_and_fertility-16.png" src="_images/school_and_fertility-16.png" />
+</div>
+<p>Last, we save the data frame we made to a file, so we can use these values
+again.  When saving, we drop off the first implicit column, with the case
+numbers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;school_fertility.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="brexit.html" title="previous chapter">Analyzing Brexit</a></li>
+      <li>Next: <a href="animal_attitudes_exercise.html" title="next chapter">Attitudes to animal research</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/school_and_fertility.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/school_and_fertility.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

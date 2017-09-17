@@ -25,6 +25,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Schooling and fertility" href="school_and_fertility.html" />
     <link rel="prev" title="Chi-squared by simulation" href="simulating_chi2.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -58,7 +59,7 @@ recorded the answers in the data file.  This is often called the “data
 dictionary”.  It was originally in Rich Text Format, but I have converted to
 PDF for convenience.  It is otherwise identical to the file you will find at
 the UK Data Service.</p>
-<p>Download these file to the working directory for your Jupyter Notebook:</p>
+<p>Download these files to the working directory for your Jupyter Notebook:</p>
 <ul class="simple">
 <li><a class="reference download internal" href="_downloads/audit_of_political_engagement_14_2017.tab" download=""><code class="xref download docutils literal"><span class="pre">tab-delimited</span> <span class="pre">data</span> <span class="pre">file</span></code></a>;</li>
 <li><a class="reference download internal" href="_downloads/audit_of_political_engagement_14_2017_ukda_data_dictionary.pdf" download=""><code class="xref download docutils literal"><span class="pre">data</span> <span class="pre">dictionary</span> <span class="pre">PDF</span> <span class="pre">file</span></code></a>.</li>
@@ -98,9 +99,19 @@ about in the data dictionary:</p>
 </pre></div>
 </div>
 <p>The data frame has columns for all the questions listed in the data
-dictionary.  For the moment, we will focus on two questions labeled <code class="docutils literal"><span class="pre">cut15</span></code>
+dictionary:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">audit_data</span><span class="o">.</span><span class="n">columns</span>
+<span class="go">Index([&#39;cu041&#39;, &#39;cu042&#39;, &#39;cu043&#39;, &#39;cu044&#39;, &#39;cu045&#39;, &#39;cu046&#39;, &#39;cu047&#39;, &#39;cu048&#39;,</span>
+<span class="go">       &#39;cu049&#39;, &#39;cu0410&#39;,</span>
+<span class="go">       ...</span>
+<span class="go">       &#39;intten&#39;, &#39;cx_971_980&#39;, &#39;serial&#39;, &#39;week&#39;, &#39;wts&#39;, &#39;numage&#39;, &#39;weight0&#39;,</span>
+<span class="go">       &#39;sgrade_grp&#39;, &#39;age_grp&#39;, &#39;region2&#39;],</span>
+<span class="go">      dtype=&#39;object&#39;, length=370)</span>
+</pre></div>
+</div>
+<p>For the moment, we will focus on two questions labeled <code class="docutils literal"><span class="pre">cut15</span></code>
 and <code class="docutils literal"><span class="pre">numage</span></code>.  <code class="docutils literal"><span class="pre">cut15</span></code> is the question about Brexit. The data dictionary
-has the “variable label “CUT15 - How did you vote on the question ‘Should the
+has the <em>variable label</em> “CUT15 - How did you vote on the question ‘Should the
 United Kingdom remain a member of the European Union or leave the European
 Union’?”.  The recorded values run from 1 through 6 and have the following
 labels:</p>
@@ -171,9 +182,9 @@ part of <code class="docutils literal"><span class="pre">matplotlib</span></code
 <span class="go">(...)</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href=".//brexit-7.png">png</a>, <a class="reference external" href=".//brexit-7.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-7.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href=".//brexit-8.png">png</a>, <a class="reference external" href=".//brexit-8.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-8.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="_images/brexit-7.png" src="_images/brexit-7.png" />
+<img alt="_images/brexit-8.png" src="_images/brexit-8.png" />
 </div>
 <p>There appear to be a few subjects with age of 0.</p>
 <p>It looks as if the survey coders are using the value 0 to mean that the person
@@ -251,18 +262,18 @@ cases in each data frame:</p>
 <span class="go">(...)</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href=".//brexit-13.png">png</a>, <a class="reference external" href=".//brexit-13.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-13.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href=".//brexit-14.png">png</a>, <a class="reference external" href=".//brexit-14.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-14.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="_images/brexit-13.png" src="_images/brexit-13.png" />
+<img alt="_images/brexit-14.png" src="_images/brexit-14.png" />
 </div>
 <p>How about the ages of the Brexiteers?</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
 <span class="go">(...)</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href=".//brexit-14.png">png</a>, <a class="reference external" href=".//brexit-14.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-14.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href=".//brexit-15.png">png</a>, <a class="reference external" href=".//brexit-15.hires.png">hires.png</a>, <a class="reference external" href=".//brexit-15.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="_images/brexit-14.png" src="_images/brexit-14.png" />
+<img alt="_images/brexit-15.png" src="_images/brexit-15.png" />
 </div>
 <p>These distributions look different.  But — how different are they?  And how
 confident can we be that this difference did not come about by chance?</p>
@@ -307,6 +318,7 @@ case numbers:</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="simulating_chi2.html" title="previous chapter">Chi-squared by simulation</a></li>
+      <li>Next: <a href="school_and_fertility.html" title="next chapter">Schooling and fertility</a></li>
   </ul></li>
 </ul>
 </div>
