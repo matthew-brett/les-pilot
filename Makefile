@@ -206,7 +206,7 @@ simulation-chi2: build-simulation_chi2
 build-%:
 	pandoc --toc --filter pandoc-citeproc --filter pandoc-eqnos $*.md -o $*.pdf
 
-intro-talk:
+intro-talk: intro_talk.md
 	pandoc -t beamer -s intro_talk.md -o intro_talk_slides.pdf
 
 TEMPLATES = animal_attitudes number_of_girls

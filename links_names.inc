@@ -39,6 +39,8 @@
 .. _pandas: http://pandas.pydata.org
 .. _pandas documentation: http://pandas.pydata.org/pandas-docs/stable
 .. _matplotlib: http://matplotlib.org
+.. _jupyter: http://jupyter.org
+.. _jupyter notebook: http://jupyter-notebook.readthedocs.io
 
 .. Virtualenv and helpers
 .. _virtualenv: http://pypi.python.org/pypi/virtualenv
@@ -109,6 +111,14 @@
 
 .. People
 .. _Sebastian Raschka: http://sebastianraschka.com/
+
+.. Birmingham
+.. _UoB campus map:
+    http://www.birmingham.ac.uk/Documents/university/edgbaston-campus-map.pdf
+
+.. Course:
+.. _course github repository: https://github.com/matthew-brett/les-pilot
+
 
 .. Substitutions
 .. |emdash| unicode:: U+02014

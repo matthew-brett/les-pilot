@@ -139,6 +139,11 @@ Richard Feynman - found on his blackboard after his death.
 * force yourself to get up and walk away;
 * always have a pencil and paper next to you.
 
+# The data analysis landscape
+
+* Python
+* R
+
 # Plan from here
 
 * Introduction to the Jupyter Notebook;
