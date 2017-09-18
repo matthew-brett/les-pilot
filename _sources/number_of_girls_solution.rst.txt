@@ -4,6 +4,8 @@
 Three girls in a family of four
 ###############################
 
+.. code-links:: clear
+
 .. nbplot::
 
     >>> #: We need the random module

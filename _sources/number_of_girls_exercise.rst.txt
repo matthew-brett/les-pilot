@@ -7,6 +7,8 @@ Three girls in a family of four
 * For code template see: :download:`number_of_girls_code.py`;
 * For solution see: :doc:`number_of_girls_solution`.
 
+.. code-links:: clear
+
 .. nbplot::
 
     >>> #: We need the random module
