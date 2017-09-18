@@ -10,7 +10,7 @@ bookings get busy around the beginning of term.
 I'm sure y'all know this off by heart, but here is the standard `campus map
 <http://www.birmingham.ac.uk/Documents/university/edgbaston-campus-map.pdf>`_.
 
-* Tuesday September 19th, 10am - 12, 2 - 4pm in `Room 310
+* Tuesday September 19th, 10am - 12, 2 - 4pm in `Room 310 Watson Building
   <https://universityofbirmingham.service-now.com/eqpublic/rooms.do?room=c0fd79974d8d6c008163baecd9deaa2d>`_
   (R15);
 * Wednesday 20th, 10am - 12 (no afternoon session) in `Room 204, Law Building
