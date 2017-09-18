@@ -206,6 +206,9 @@ simulation-chi2: build-simulation_chi2
 build-%:
 	pandoc --toc --filter pandoc-citeproc --filter pandoc-eqnos $*.md -o $*.pdf
 
+intro-talk:
+	pandoc -t beamer -s intro_talk.md -o intro_talk_slides.pdf
+
 TEMPLATES = animal_attitudes number_of_girls
 
 TPL_FILES = $(TEMPLATES:=.tpl)
@@ -218,4 +221,4 @@ CODE_SKELETON_FILES = $(TPL_FILES:.tpl=_code.rst)
 
 rst-exercises: $(SOLUTION_FILES)
 
-html: rst-exercises html-only
+html: rst-exercises intro-talk html-only

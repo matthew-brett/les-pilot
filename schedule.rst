@@ -10,12 +10,7 @@ Day 0
 
   .. 25 minutes
 
-  * reproducibility crisis
-  * cargo cult science
-  * nulliam in verbis
-  * data analysis and computing, simulation, models, algorithms.
-  * data science, Python and R
-  * on working with computers
+  See :download:`intro_talk_slides.pdf`.
 
 * The Jupyter Notebook
 
