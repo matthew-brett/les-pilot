@@ -179,10 +179,11 @@ the values from our variables:</p>
 </pre></div>
 </div>
 <p>We do not have the expected length of schooling for quite a few contries;
-these are the rows with <code class="docutils literal"><span class="pre">NaN</span></code> in the corresponding columns.  We often call
-these <em>missing values</em>.  There are some missing values for the fertility
-statistic too.  For simplicity, we drop rows that have missing values in
-either of these two columns:</p>
+these are the rows with <code class="docutils literal"><span class="pre">NaN</span></code> in the corresponding columns.  “NaN” stands
+for Not a Number. We often call these <em>missing values</em>. They can also be
+called “NA” for “Not Applicable”.  There are some missing values for the
+fertility statistic too.  For simplicity, we drop rows that have missing
+values in either of these two columns:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Drop the rows with any missing (NaN) values</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span> <span class="o">=</span> <span class="n">school_fertility</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span>

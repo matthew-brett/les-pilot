@@ -165,10 +165,11 @@ We fill the empty data frame with the values we selected:
     ...
 
 We do not have the expected length of schooling for quite a few contries;
-these are the rows with ``NaN`` in the corresponding columns.  We often call
-these *missing values*.  There are some missing values for the fertility
-statistic too.  For simplicity, we drop rows that have missing values in
-either of these two columns:
+these are the rows with ``NaN`` in the corresponding columns.  "NaN" stands
+for Not a Number. We often call these *missing values*. They can also be
+called "NA" for "Not Applicable".  There are some missing values for the
+fertility statistic too.  For simplicity, we drop rows that have missing
+values in either of these two columns:
 
 .. nbplot::
 

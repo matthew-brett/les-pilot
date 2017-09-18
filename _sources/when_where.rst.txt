@@ -7,8 +7,7 @@ The course is for 10 hours total over three days.
 Unfortunately, we are in different rooms on each day.  It turns out that room
 bookings get busy around the beginning of term.
 
-I'm sure y'all know this off by heart, but here is the standard `campus map
-<http://www.birmingham.ac.uk/Documents/university/edgbaston-campus-map.pdf>`_.
+I'm sure y'all know this off by heart, but here is the standard `UoB campus map`_.
 
 * Tuesday September 19th, 10am - 12, 2 - 4pm in `Room 310 Watson Building
   <https://universityofbirmingham.service-now.com/eqpublic/rooms.do?room=c0fd79974d8d6c008163baecd9deaa2d>`_
