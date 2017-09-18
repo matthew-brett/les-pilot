@@ -114,16 +114,14 @@ Begley and Ellis (2012).
 
 # Wrong tools, more errors
 
-\centerline{\includegraphics[height=2.5in]{images/reinhart_rogoff_coding_error_0.png}
+\centerline{\includegraphics[height=2in]{images/reinhart_rogoff_coding_error_0.png}}
 
-Reinhart & Rogoff (2010). "Growth in a Time of Debt".  American Economic
-Review. 100 (2): 573–78. doi:10.1257/aer.100.2.573.
+Reinhart & Rogoff (2010) American Economic Review. 100: 573–78.
 
-Herndon, Ash & Pollin (2014). "Does High Public Debt Consistently Stifle
-Economic Growth? A Critique of Reinhart and Rogoff". Cambridge Journal of
-Economics. 38 (2): 257–279. doi:10.1093/cje/bet075
+Herndon, Ash & Pollin (2014). Cambridge Journal of Economics. 38: 257–279
 
-[Picketty's Capital in the twenty-first century](https://en.wikipedia.org/wiki/Capital_in_the_Twenty-First_Century#Allegation_of_data_errors).
+Picketty (2013) [Capital in the Twenty-First
+Century](https://en.wikipedia.org/wiki/Capital_in_the_Twenty-First_Century#Allegation_of_data_errors).
 
 # Understanding by building
 
