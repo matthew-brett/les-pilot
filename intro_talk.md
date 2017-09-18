@@ -73,6 +73,15 @@ Richard Feynman, What is Science? (1969)
 Donoho, David L, et al. 2009. Reproducible research in computational
 harmonic analysis. *Computing in Science & Engineering* 11, 8--18.
 
+# Careful
+
+> The first principle is that you must not fool yourself—and you are the
+> easiest person to fool. So you have to be very careful about that. After
+> you've not fooled yourself, it's easy not to fool other scientists. You just
+> have to be honest in a conventional way after that.
+
+Richard Feynman, Cargo Cult Science (1974)
+
 # Honest
 
 > It's a kind of scientific integrity, a principle of scientific thought that
@@ -106,12 +115,6 @@ Richard Feynman, Cargo Cult Science (1974)
 
 Begley and Ellis (2012).
 
-# Computers are confusing
-
-  * data analysis and computing, simulation, models, algorithms.
-  * data science, Python and R
-  * on working with computers
-
 # Wrong tools, more errors
 
 \centerline{\includegraphics[height=2in]{images/reinhart_rogoff_coding_error_0.png}}
@@ -129,9 +132,16 @@ Century](https://en.wikipedia.org/wiki/Capital_in_the_Twenty-First_Century#Alleg
 
 Richard Feynman - found on his blackboard after his death.
 
+# Computers are confusing
+
+* if you can, work with someone else;
+* always get someone else to check what you did;
+* force yourself to get up and walk away;
+* always have a pencil and paper next to you.
+
 # Plan from here
 
 * Introduction to the Jupyter Notebook;
 * Some questions from some data;
 * Thinking about chance;
-* Letting the computer do the hard work.
+* You do the logic, the computer does the work.
