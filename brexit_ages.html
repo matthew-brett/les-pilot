@@ -1,0 +1,360 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Comparing two groups with permutation testing &#8212; Tutorials on imaging, computing and mathematics</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Testing Brexit Proportions" href="brexit_proportions_solution.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p><span class="math">\(\newcommand{L}[1]{\| #1 \|}\newcommand{VL}[1]{\L{ \vec{#1} }}\newcommand{R}[1]{\operatorname{Re}\,(#1)}\newcommand{I}[1]{\operatorname{Im}\, (#1)}\)</span></p>
+<div class="section" id="comparing-two-groups-with-permutation-testing">
+<h1>Comparing two groups with permutation testing<a class="headerlink" href="#comparing-two-groups-with-permutation-testing" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference download internal" href="brexit_ages.ipynb">Download this page as a Jupyter notebook (no outputs)</a>.</li>
+</ul>
+<p>We return to the Brexit age data from <a class="reference internal" href="brexit.html"><span class="doc">Analyzing Brexit</span></a>.</p>
+<p>Here’s the data from the processing we did in <a class="reference internal" href="brexit.html"><span class="doc">Analyzing Brexit</span></a>:</p>
+<ul class="simple">
+<li><a class="reference download internal" href="_downloads/remain_leave.csv" download=""><code class="xref download docutils literal"><span class="pre">remain_leave.csv</span></code></a>.</li>
+</ul>
+<p>Download the data file from the link above if you haven’t already got it in
+your Notebook directory.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remain_leave</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;remain_leave.csv&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remainers</span> <span class="o">=</span> <span class="n">remain_leave</span><span class="p">[</span><span class="n">remain_leave</span><span class="p">[</span><span class="s1">&#39;brexit&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brexiteers</span> <span class="o">=</span> <span class="n">remain_leave</span><span class="p">[</span><span class="n">remain_leave</span><span class="p">[</span><span class="s1">&#39;brexit&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Confirm our proportions haven&#39;t changed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">remainers</span><span class="p">))</span>
+<span class="go">0.4114068441064639</span>
+</pre></div>
+</div>
+<p>For convenience we get our ages scores into lists for each group:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># We make a list from the Pandas column with the &quot;list&quot; function</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brexit_ages</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">brexiteers</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">remain_ages</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">remainers</span><span class="p">[</span><span class="s1">&#39;age&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Check our proportions again</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">brexit_ages</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">brexit_ages</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">remain_ages</span><span class="p">))</span>
+<span class="go">0.4114068441064639</span>
+</pre></div>
+</div>
+<p>Let’s put up the histograms of these two groups again:</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If running in the IPython console, consider running <code class="docutils literal"><span class="pre">%matplotlib</span></code> to enable
+interactive plots.  If running in the Jupyter Notebook, use <code class="docutils literal"><span class="pre">%matplotlib</span>
+<span class="pre">inline</span></code>.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">brexit_ages</span><span class="p">)</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//brexit_ages-4.png">png</a>, <a class="reference external" href=".//brexit_ages-4.hires.png">hires.png</a>, <a class="reference external" href=".//brexit_ages-4.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/brexit_ages-4.png" src="_images/brexit_ages-4.png" />
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">remain_ages</span><span class="p">)</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//brexit_ages-5.png">png</a>, <a class="reference external" href=".//brexit_ages-5.hires.png">hires.png</a>, <a class="reference external" href=".//brexit_ages-5.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/brexit_ages-5.png" src="_images/brexit_ages-5.png" />
+</div>
+<p>The remainers look as though they may be a bit younger on average.</p>
+<p>Let’s look at the mean age for the two groups.</p>
+<p>The <em>mean</em> of the values in the list is defined as the sum divided by
+the number of items.  Here is the mean age of the Brexit Leave voters:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">brexit_ages</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">brexit_ages</span><span class="p">)</span>
+<span class="go">51.715341959334566</span>
+</pre></div>
+</div>
+<p>We can define a function to calculate the mean:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="n">some_list</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="c1"># Calculates the mean of the values in `some_list`</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">some_list</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">some_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we can get the mean with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">(</span><span class="n">brexit_ages</span><span class="p">)</span>
+<span class="go">51.715341959334566</span>
+</pre></div>
+</div>
+<p>The mean is lower for the Remain group:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">(</span><span class="n">remain_ages</span><span class="p">)</span>
+<span class="go">48.015503875968989</span>
+</pre></div>
+</div>
+<p>The difference between the means is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">observed_difference</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">brexit_ages</span><span class="p">)</span> <span class="o">-</span> <span class="n">mean</span><span class="p">(</span><span class="n">remain_ages</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">observed_difference</span>
+<span class="go">3.6998380833655773</span>
+</pre></div>
+</div>
+<p>We see that the means of the two groups are different - but can we be
+confident that this difference did not come about by chance?</p>
+<p>What do we mean by chance?  Now we have to define our null hypothesis.</p>
+<p>We hypothesize that there is in fact no difference between the ages of the two
+groups.  We propose that the difference between the means we see could
+reasonably occur if we did the following procedure:</p>
+<ul class="simple">
+<li>sample 541 + 774 = 1315 people from this same underlying
+doesn’t-matter-what-you-voted population;</li>
+<li>arbitrarily split this sample into a group of 541 and a group of 774, call
+these <code class="docutils literal"><span class="pre">group_A</span></code> and <code class="docutils literal"><span class="pre">group_B</span></code>;</li>
+<li>calculate the mean age for <code class="docutils literal"><span class="pre">group_A</span></code> and subtract the mean age of
+<code class="docutils literal"><span class="pre">group_B</span></code>;</li>
+</ul>
+<p>Call this procedure - one trial.  To test our null hypothesis, we would like
+to repeat this trial many times, recording the difference in means for each
+trial. By doing this we could build up a distribution of the kind of
+differences we would expect by chance - the sampling distribution.</p>
+<p>But - we don’t have any more data - so we don’t have many new groups of 541 +
+774 = 1315 to sample.  But it turns out, we can use the data we have to build
+the distribution we need.</p>
+<p>Let’s start with the null hypothesis - that there is no difference in the ages
+of the Leave and Remain groups. If that hypothesis is true, then all the
+ages in <code class="docutils literal"><span class="pre">brexit_ages</span></code> and in <code class="docutils literal"><span class="pre">remain_ages</span></code> can be considered as
+being samples from the same underlying group.</p>
+<p>To express this, I’m going to pool all the weights into one big group, like
+this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># The + below appends the second list to the first</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">all_ages</span> <span class="o">=</span> <span class="n">brexit_ages</span> <span class="o">+</span> <span class="n">remain_ages</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">all_ages</span><span class="p">)</span>
+<span class="go">1315</span>
+</pre></div>
+</div>
+<p>In this new pooled list, the first 541 ages are from the <code class="docutils literal"><span class="pre">brexit_ages</span></code> list,
+and the rest are from the <code class="docutils literal"><span class="pre">remain_ages</span></code> list.</p>
+<p>Now we have the new pooled list, we can do something similar to taking the new
+<code class="docutils literal"><span class="pre">group_A</span></code> and <code class="docutils literal"><span class="pre">group_B</span></code> groups we imagined above.  That is, we can
+<em>shuffle</em> the combined group to a random order, and split this shuffled
+combined group into a group of 541 and a group of 774.  We get the difference
+in means of these two groups, and store it.  We keep shuffling, to create more
+<code class="docutils literal"><span class="pre">group_A</span></code> and <code class="docutils literal"><span class="pre">group_B</span></code> groups, and more differences in means. The
+generated distribution of the mean differences is the distribution we expect
+on the null hypothesis, that there is no real difference between the two
+groups.  We can see where <code class="docutils literal"><span class="pre">observed_difference</span></code> lies in this generated
+distribution, and this gives us a measure of whether the
+<code class="docutils literal"><span class="pre">observed_difference</span></code> is likely on the null hypothesis.</p>
+<p>Python’s <code class="docutils literal"><span class="pre">random.shuffle</span></code> function can do the shuffle for us (see:
+<a class="reference internal" href="more_on_lists.html#list-shuffle"><span class="std std-ref">Shuffling list element order</span></a>):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+<p>Here’s a random shuffle of the combined list of ages:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># The first 10 ages before shuffling (all brexit)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">all_ages</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="go">[71, 60, 74, 61, 47, 56, 76, 35, 44, 38]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">all_ages</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The first 10 ages of the shuffled list, mixed brexit and remain.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">all_ages</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+<span class="go">[24, 59, 55, 31, 89, 66, 64, 35, 28, 41]</span>
+</pre></div>
+</div>
+<p>Now for our permutation test.  We’ve assumed the null hypothesis.  We have
+randomly shuffled the combined group.  We’ll call the first 541 values
+<code class="docutils literal"><span class="pre">group_A</span></code> and the last 774 values <code class="docutils literal"><span class="pre">group_B</span></code>.</p>
+<p>After the shuffling, the <code class="docutils literal"><span class="pre">group_A</span></code> group is a random mix of the
+<code class="docutils literal"><span class="pre">brexit_ages</span></code> and <code class="docutils literal"><span class="pre">remain_ages</span></code> values, as is the <code class="docutils literal"><span class="pre">group_B</span></code> group.</p>
+<p>Here is a function that takes the combined list and returns the difference in
+means:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">difference_in_means</span><span class="p">(</span><span class="n">combined_list</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="sd">&quot;&quot;&quot; Split suffled combind group into two, return mean difference</span>
+<span class="gp">... </span><span class="sd">    &quot;&quot;&quot;</span>
+<span class="gp">... </span>    <span class="n">group_A</span> <span class="o">=</span> <span class="n">combined_list</span><span class="p">[:</span><span class="mi">541</span><span class="p">]</span>
+<span class="gp">... </span>    <span class="n">group_B</span> <span class="o">=</span> <span class="n">combined_list</span><span class="p">[</span><span class="mi">541</span><span class="p">:]</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">mean</span><span class="p">(</span><span class="n">group_B</span><span class="p">)</span> <span class="o">-</span> <span class="n">mean</span><span class="p">(</span><span class="n">group_A</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let’s get the difference in means for these new groups, generated by the
+shuffle:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">difference_in_means</span><span class="p">(</span><span class="n">all_ages</span><span class="p">)</span>
+<span class="go">0.35758261808212666</span>
+</pre></div>
+</div>
+<p>That difference from the shuffled groups looks a lot less than the difference
+we originally found:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">observed_difference</span>
+<span class="go">3.6998380833655773</span>
+</pre></div>
+</div>
+<p>One difference is not enough.  We need more shuffled mean differences to see
+whether <code class="docutils literal"><span class="pre">observed_difference</span></code> is really unusual compared to the range of
+permuted group differences.  Here we run the shuffle procedure 10000 times, to
+get a large range of values:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shuffled_differences</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># An empty list to store the differences</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">all_ages</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">new_difference</span> <span class="o">=</span> <span class="n">difference_in_means</span><span class="p">(</span><span class="n">all_ages</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="c1"># Collect the new mean by adding to the end of the list</span>
+<span class="gp">... </span>    <span class="n">shuffled_differences</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_difference</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This gives us 10000 differences from groups that are compatible with our null
+hypothesis.   We can now ask whether <code class="docutils literal"><span class="pre">observed_difference</span></code> is unusually
+large compared to the distribution of these 10000 differences.</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If running in the IPython console, consider running <code class="docutils literal"><span class="pre">%matplotlib</span></code> to enable
+interactive plots.  If running in the Jupyter Notebook, use <code class="docutils literal"><span class="pre">%matplotlib</span>
+<span class="pre">inline</span></code>.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># The plotting package</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">shuffled_differences</span><span class="p">)</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//brexit_ages-20.png">png</a>, <a class="reference external" href=".//brexit_ages-20.hires.png">hires.png</a>, <a class="reference external" href=".//brexit_ages-20.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/brexit_ages-20.png" src="_images/brexit_ages-20.png" />
+</div>
+<p>Remember our <code class="docutils literal"><span class="pre">observed_difference</span></code>?</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">observed_difference</span>
+<span class="go">3.6998380833655773</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">observed_difference</span></code> looks like it is at the extreme right of the
+distribution. But - how far to the right? What proportion of the 10000 null
+hypothesis differences are greater than or equal to the observed value?</p>
+<p>To test this, we first sort the null hypothesis differences from lowest to
+highest:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sorted_differences</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">shuffled_differences</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Next we find how many of these null hypothesis differences are greater than or
+equal to the <code class="docutils literal"><span class="pre">observed_difference</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Go through all the differences one by one.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># When we&#39;ve found a difference greater than or equal to the observed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># one, stop.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">n_repeats</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="c1"># Check the sorted difference at the current index</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">sorted_differences</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">observed_difference</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="c1"># Stop checking, we&#39;ve found a null hypothesis difference</span>
+<span class="gp">... </span>        <span class="c1"># greater than or equal to the observed difference.</span>
+<span class="gp">... </span>        <span class="k">break</span>
+<span class="gp">... </span>    <span class="c1"># Otherwise, move on to the next null difference</span>
+<span class="gp">... </span>    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>So, the index of the first difference greater than or equal to the observed
+difference is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">index</span>
+<span class="go">9999</span>
+</pre></div>
+</div>
+<p>We calculate how many values in <code class="docutils literal"><span class="pre">sorted_differences</span></code> are greater than or
+equal to <code class="docutils literal"><span class="pre">observed_difference</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n_greater_than_equal</span> <span class="o">=</span> <span class="n">n_repeats</span> <span class="o">-</span> <span class="n">index</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_greater_than_equal</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>Therefore, the <em>proportion</em> of the null-hypothesis differences that are
+greater than or equal to the observed difference is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">prop_greater_equal</span> <span class="o">=</span> <span class="n">n_greater_than_equal</span> <span class="o">/</span> <span class="n">n_repeats</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prop_greater_equal</span>
+<span class="go">0.0001</span>
+</pre></div>
+</div>
+<p>This proportion is very small.  Therefore, our observed difference is very
+unlikely on the null hypothesis that observations in the two groups are
+equivalent. We might be tempted to reject the null hypothesis, and conclude
+that the two groups are not equivalent, and therefore, that people who say
+they voted Leave really do tend to be older than people who say they voted
+Remain.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="brexit_proportions_solution.html" title="previous chapter">Testing Brexit Proportions</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/brexit_ages.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/brexit_ages.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,217 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Testing Brexit Proportions &#8212; Tutorials on imaging, computing and mathematics</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Testing Brexit Proportions" href="brexit_proportions_solution.html" />
+    <link rel="prev" title="Using the Jupyter Notebooks" href="using_the_notebooks.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p><span class="math">\(\newcommand{L}[1]{\| #1 \|}\newcommand{VL}[1]{\L{ \vec{#1} }}\newcommand{R}[1]{\operatorname{Re}\,(#1)}\newcommand{I}[1]{\operatorname{Im}\, (#1)}\)</span></p>
+<div class="section" id="testing-brexit-proportions">
+<h1>Testing Brexit Proportions<a class="headerlink" href="#testing-brexit-proportions" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>For code template see: <a class="reference download internal" href="_downloads/brexit_proportions_code.py" download=""><code class="xref download docutils literal"><span class="pre">brexit_proportions_code.py</span></code></a>;</li>
+<li>For solution see: <a class="reference internal" href="brexit_proportions_solution.html"><span class="doc">Testing Brexit Proportions</span></a>.</li>
+</ul>
+<ul class="simple">
+<li><a class="reference download internal" href="brexit_proportions_exercise.py">Download this page as a Python code file</a>;</li>
+<li><a class="reference download internal" href="brexit_proportions_exercise.ipynb">Download this page as a Jupyter notebook (no outputs)</a>;</li>
+<li><a class="reference download internal" href="brexit_proportions_exercise_full.ipynb">Download this page as a Jupyter notebook (with outputs)</a>.</li>
+</ul>
+<p>If you look back at <a class="reference internal" href="brexit.html"><span class="doc">Analyzing Brexit</span></a>, you will see that we found:</p>
+<ul class="simple">
+<li>541 people who said they voted to Leave the EU;</li>
+<li>774 people who said they voted to remain.</li>
+<li>Therefore we have a total of 541 + 774 = 1315 people who voted and told us
+what they voted.</li>
+</ul>
+<p>This gives us a proportion of Leave / (Leave + Remain) of:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: brexit proportion in survey</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">541</span> <span class="o">/</span> <span class="p">(</span><span class="mi">541</span> <span class="o">+</span> <span class="mi">774</span><span class="p">)</span>
+<span class="go">0.4114068441064639</span>
+</pre></div>
+</div>
+<p>We also saw that the <a class="reference external" href="https://www.electoralcommission.org.uk/find-information-by-subject/elections-and-referendums/past-elections-and-referendums/eu-referendum/electorate-and-count-information">final referendum proportion</a>
+of Leave / (Leave + Remain) was 0.519.</p>
+<p>These proprtions seem very different?  But could such a difference have come
+about by chance?</p>
+<p>Now we need to formulate exactly what we mean by “come about by chance”?</p>
+<p>Specifically, we need for formulate our null hypothesis.  The null hypothesis
+is that the result did come about by chance.</p>
+<p>So, what is the chance element here?</p>
+<p>We could say it is the sampling.  That is, the survey has a sample of 1315
+people.  By chance, the sample could have more or less Leave voters, and
+therefore generate a higher or lower proportion.</p>
+<p>Here’s the null hypothesis: when the survey took its sample, it had the same
+chance of picking a Leave voter as for the whole voting population.  The
+proportion of 0.41 is within the bounds of the variations we might expect from
+random sampling of voters.</p>
+<p>The Leave proportion is our <em>statistic</em> calculated from the sample.</p>
+<p>If we draw 1315 voters at random, and calculate this proportion, and do this
+many times, the calculated proportion will have some distribution or spread.</p>
+<p>This is called the <em>sampling distribution</em> of the statistic.</p>
+<p>We will reject the null hypothesis if 0.411 would be very unusual given the
+sampling distribution of the statistic.</p>
+<p>So, how do we make this sampling distribution?</p>
+<p>We assume that the probability of selecting a leave voter is actually 0.519.</p>
+<p>We adapt our <code class="docutils literal"><span class="pre">girl_or_boy</span></code> function from <a class="reference internal" href="number_of_girls.html"><span class="doc">Three girls in a family of four</span></a> to return a
+Leave or Remain voter with that proportion:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: The random module</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: function to return a Leave or Remain voter</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">leave_or_remain</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="c1"># Return 1 for Leave, 0 for Remain</span>
+<span class="gp">... </span>    <span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.519</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">our_result</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: call the fnction</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#: remember the brackets at the end</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">leave_or_remain</span><span class="p">()</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<p>In <a class="reference internal" href="number_of_girls.html"><span class="doc">Three girls in a family of four</span></a>, a single trial was four children.  In our case, a
+single trial is 1315 Leave or Remain voters drawn at random. We calculate the
+statistic for each trial:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: The statistic value from a single trial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">one_proportion</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">votes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1315</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="n">vote</span> <span class="o">=</span> <span class="n">leave_or_remain</span><span class="p">()</span>
+<span class="gp">... </span>        <span class="n">votes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vote</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">brexits</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">votes</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">brexits</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">votes</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Run a single trial:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: Result of one trial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">one_proportion</span><span class="p">()</span>
+<span class="go">0.47604562737642586</span>
+</pre></div>
+</div>
+<p>Now we want the sampling distribution of this proportion.  So, we’re going to
+draw 10000 random samples, and look at the distribution of the statistic (the
+proportion).  This is your job:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: Number of trials</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_trials</span> <span class="o">=</span> <span class="mi">10000</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Make a list to contain the proportion for each trial</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Make 10000 trials.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#- For each trial, calculate the proportion and store it</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#- You now have 10000 proportions.</span>
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If running in the IPython console, consider running <code class="docutils literal"><span class="pre">%matplotlib</span></code> to enable
+interactive plots.  If running in the Jupyter Notebook, use <code class="docutils literal"><span class="pre">%matplotlib</span>
+<span class="pre">inline</span></code>.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: The stuff you need for plotting a histogram</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<p>Plot the histogram of the sampling distribution you have just collected:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- plot the histogram of the sampling distribution</span>
+</pre></div>
+</div>
+<p>The value we found in our survey data was 0.411.   How likely do you think
+that value is, given the sampling distribution you have just made?</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="using_the_notebooks.html" title="previous chapter">Using the Jupyter Notebooks</a></li>
+      <li>Next: <a href="brexit_proportions_solution.html" title="next chapter">Testing Brexit Proportions</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/brexit_proportions_exercise.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/brexit_proportions_exercise.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

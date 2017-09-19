@@ -40,6 +40,20 @@ the way we would write the ``while`` loop above, using a ``for`` loop:
     >>> coin_tosses
     [1, 1, 0, 1]
 
+*************
+The take-home
+*************
+
+If you want to repeat something N times in Python, then use a ``for`` loop,
+that starts with something like ``for i in range(N):``.
+
+That's the quick version.   If you want to understand more about the ``range``
+and the ``i`` in that statement, read on.
+
+***********
+More detail
+***********
+
 Notice the use of ``range``.  The ``range`` function here gives us a sequence
 of numbers, starting at 0, and going up to, but not including 4.  Therefore,
 the ``range`` function is giving us 4 numbers, 0, 1, 2, 3:

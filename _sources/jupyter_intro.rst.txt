@@ -280,6 +280,14 @@ Notice that we *call* the method using the name of the list - here
 Don't worry about the details at the moment, we will have many chances to get
 used this this idea.
 
+***********************
+Careful of the brackets
+***********************
+
+You need square brackets - ``[`` and ``]`` to make a list.  If you use
+parentheses ``()`` or curly brackets ``{}`` - you'll get something other than
+a list - be careful.
+
 ******************************
 Set equal to and test equal to
 ******************************
