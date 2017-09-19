@@ -11,17 +11,19 @@ Three girls in a family of four
     >>> #: We need the random module
     >>> import random
 
-Now we need a function to do a coin toss.  Assume that probability of heads
-is 0.5.  The function returns 1 for head and 0 for a tail:
+We need a function to do a coin toss.  We will use the function we wrote in
+:doc:`loops_and_functions`:
 
 .. nbplot::
 
     >>> #: A function for a single coin toss
     >>> def coin_toss():
     ...     random_no = random.random()
-    ...     if random_no <= 0.5:
-    ...         return 1
-    ...     return 0
+    ...     if random_no < 0.5:
+    ...         our_result = 0
+    ...     else:
+    ...         our_result = 1
+    ...     return our_result
 
 Test the function a few times:
 
