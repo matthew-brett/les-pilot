@@ -115,7 +115,7 @@ Richard Feynman, Cargo Cult Science (1974)
 
 Begley and Ellis (2012).
 
-# Wrong tools, more errors
+# Easy errors are easy
 
 \centerline{\includegraphics[height=2in]{images/reinhart_rogoff_coding_error_0.png}}
 
