@@ -10,16 +10,9 @@ On Tuesday September 19th we are in `Room 310 Watson Building
 Morning
 *******
 
-* 10.00 - 10.25 - introduction to the course - :download:`talk slides
+* 10.00 - 10.45 - introduction to the course - :download:`talk slides
   <intro_talk_slides.pdf>` [#get-source]_.
-* 10.30 - 10.55 - :doc:`jupyter_intro`;
-
-10 minute break.
-
-.. matplotlib?
-
-* 11.05 - 11.30 - getting our data :doc:`brexit`;
-* 11.35 - 12.00 - a problem of proportions.
+* 10.55 - 12.00 - :doc:`jupyter_intro` (see :doc:`using_the_notebooks`).
 
 2 hour break.
 
@@ -27,23 +20,15 @@ Morning
 Afternoon
 *********
 
-* 14.00 - 14.25 - solving with simulation; :doc:`loops_and_functions`.
-* 14.25 - 14.55 - solving with simulation; :doc:`number_of_girls_exercise`.
-
-10 minute break.
-
-* 15.05 - 15.30 - improving our estimate.  Assume the proportion of boys born
-  in the UK is 0.513 [#male-births]_.  How would we change our estimate?
-* 15.35 - 14.00 - back to Brexit.  Formulating the null hypothesis.  The
-  population and the sample; parameter and statistic. Simulating samples, and
-  therefore, statistics.  The sampling distribution.
+* 14.00 - 14.45 - getting our data :doc:`brexit`; introducing the problem of
+  proportions.  Are there too few Brexiteers in the survey?.  How would we
+  decide?
+* 14.55 - 15.25 - another problem of proportions.  If a family has 4 children,
+  what is the probability that the family has 3 girls?  A simulation.
+* 15.30 - 16.00 - solving with simulation; :doc:`loops_and_functions`.
 
 .. [#get-source] Source files for building the slides, and source for all the
    pages in this website are always available in the `course Github
    repository`_.
-.. [#male-births] `Official UK government statistics
-   <https://www.gov.uk/government/statistics/gender-ratios-at-birth-in-great-britain-2010-to-2014>`_
-   give the birth ratio as 105.3. This the number of boys born for every 100
-   girls.
 
 .. include:: links_names.inc

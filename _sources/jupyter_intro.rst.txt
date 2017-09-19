@@ -78,9 +78,9 @@ Notice, we didn't use any variables. ``(10 + 5 + 1) / 4`` is an expression -
 some code that returns a value.
 
 This means that we can use the Notebook as a simple calculator. You've
-already seen ``+`` and ``/`` and the parentheses. You also have ``*``
-for multiply, and ``-`` for subtract, and ``**`` for to-the-power-of.
-For example, here's :math:`10^4`:
+already seen ``+`` and ``/`` and the parentheses. You also have ``*`` for
+multiply, and ``-`` for subtract, and ``**`` for to-the-power-of.  For
+example, here's :math:`10^4`:
 
 .. nbplot::
 
@@ -356,6 +356,21 @@ number between 0 and 10 like this:
     9
 
 .. _getting-help:
+
+********
+Exercise
+********
+
+Using what you have learned above, make a cell that creates an empty list,
+then appends three random numbers between 0 and 100.
+
+.. nbplot::
+
+    >>> #- Make an empty list.
+    >>> #- Make a random number between 0 and 100
+    >>> #- Append it to the list
+    >>> #- Do this three times
+    >>> #- Show the new list with three numbers.
 
 ************
 Getting help

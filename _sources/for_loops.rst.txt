@@ -14,7 +14,7 @@ To start, let us redefine the function to do a coin toss:
     :hide-from: all
     :show-to: doctest
 
-    >>> random.seed(1966)
+    >>> random.seed(1939)
 
 .. nbplot::
 
@@ -38,7 +38,7 @@ the way we would write the ``while`` loop above, using a ``for`` loop:
     ...     coin_tosses.append(result)
     ...
     >>> coin_tosses
-    [1, 0, 1, 0]
+    [1, 1, 0, 1]
 
 Notice the use of ``range``.  The ``range`` function here gives us a sequence
 of numbers, starting at 0, and going up to, but not including 4.  Therefore,

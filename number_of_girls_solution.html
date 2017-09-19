@@ -52,64 +52,67 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
 </pre></div>
 </div>
-<p>We need a function to do a coin toss.  We will use the function we wrote in
-<a class="reference internal" href="loops_and_functions.html"><span class="doc">Conditionals, functions and loops</span></a>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: A function for a single coin toss</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">coin_toss</span><span class="p">():</span>
+<p>We need a function to give us a boy (0) or a girl (1) following the real
+proportions of p=0.513 of a male child in the UK.  We will use the function we
+wrote in <a class="reference internal" href="loops_and_functions.html"><span class="doc">Conditionals, functions and loops</span></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">girl_or_boy</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="c1"># Return 1 for a girl, 0 for a boy</span>
 <span class="gp">... </span>    <span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
-<span class="gp">... </span>    <span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.513</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="c1"># A boy</span>
 <span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="c1"># A girl</span>
 <span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">our_result</span>
 </pre></div>
 </div>
 <p>Test the function a few times:</p>
-<p>Test the <code class="docutils literal"><span class="pre">coin_toss</span></code> function a few times.  It should come up with a few 1s
-and a few 0s.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Test the coin toss a few times</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_toss</span><span class="p">()</span>
-<span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_toss</span><span class="p">()</span>
-<span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_toss</span><span class="p">()</span>
-<span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_toss</span><span class="p">()</span>
-<span class="go">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_toss</span><span class="p">()</span>
+<p>Test the <code class="docutils literal"><span class="pre">girl_or_boy</span></code> function a few times.  It should come up with a few
+1s and a few 0s.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Test the boy / girl function a few times</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">girl_or_boy</span><span class="p">()</span>
 <span class="go">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_toss</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">girl_or_boy</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">girl_or_boy</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">girl_or_boy</span><span class="p">()</span>
+<span class="go">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">girl_or_boy</span><span class="p">()</span>
 <span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">girl_or_boy</span><span class="p">()</span>
+<span class="go">1</span>
 </pre></div>
 </div>
-<p>Now make a list, called <cite>a_family</cite>, and collect four coin tosses:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Make a list, and collect four coin tosses</span>
+<p>Now make a list, called <cite>a_family</cite>, and collect four boy or girl choices:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Make a list, and collect four boy or girl choices</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coin_toss</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coin_toss</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coin_toss</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coin_toss</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">girl_or_boy</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">girl_or_boy</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">girl_or_boy</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">girl_or_boy</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span>
-<span class="go">[1, 1, 1, 0]</span>
+<span class="go">[0, 0, 0, 1]</span>
 </pre></div>
 </div>
-<p>Let’s take 1 from the coin toss to mean a girl.  Sum up the results of the
-four coin tosses to say how many girls in this family.</p>
+<p>Remember 1 means a girl.  Sum up the results of the four coin tosses to say
+how many girls in this family.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Sum the list to give the number of girls in this family</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">a_family</span><span class="p">)</span>
-<span class="go">3</span>
+<span class="go">1</span>
 </pre></div>
 </div>
 <p>If you didn’t do this before, use a <code class="docutils literal"><span class="pre">while</span></code> loop to make another family from
-coin tosses.  See <a class="reference internal" href="loops_and_functions.html"><span class="doc">Conditionals, functions and loops</span></a> for inspiration:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Make a family from coin tosses, using a while loop.</span>
+boy or girl choices.  See <a class="reference internal" href="loops_and_functions.html"><span class="doc">Conditionals, functions and loops</span></a> for inspiration:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Make a family from boy or girl choices, using a while loop.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a_family</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coin_toss</span><span class="p">())</span>
+<span class="gp">... </span>    <span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">girl_or_boy</span><span class="p">())</span>
 <span class="gp">... </span>    <span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">a_family</span><span class="p">)</span>
-<span class="go">1</span>
+<span class="go">2</span>
 </pre></div>
 </div>
 <p>Now you know how to make one family.  Now you’re going to make 1000 families.</p>
@@ -129,13 +132,13 @@ with 3 girls.</p>
 <span class="gp">... </span>    <span class="n">a_family</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="gp">... </span>    <span class="n">family_counter</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="gp">... </span>    <span class="k">while</span> <span class="n">family_counter</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coin_toss</span><span class="p">())</span>
+<span class="gp">... </span>        <span class="n">a_family</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">girl_or_boy</span><span class="p">())</span>
 <span class="gp">... </span>        <span class="n">family_counter</span> <span class="o">=</span> <span class="n">family_counter</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="gp">... </span>    <span class="n">number_of_girls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">a_family</span><span class="p">))</span>
 <span class="gp">... </span>    <span class="n">sample_counter</span> <span class="o">=</span> <span class="n">sample_counter</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Count the number of families with 3 girls</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">number_of_girls</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-<span class="go">259</span>
+<span class="go">232</span>
 </pre></div>
 </div>
 <p>Finally, divide the number of families with 3 girls, by the number of families
@@ -143,7 +146,7 @@ you made (1000) to give the estimated probability of a family of four having
 three girls:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- divide the number of familes with 3 girls by the number of families</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">number_of_girls</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1000</span>
-<span class="go">0.259</span>
+<span class="go">0.232</span>
 </pre></div>
 </div>
 </div>

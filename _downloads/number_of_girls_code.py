@@ -3,23 +3,15 @@
 #: We need the random module
 import random
 
-#: A function for a single coin toss
-def coin_toss():
-    random_no = random.random()
-    if random_no < 0.5:
-        our_result = 0
-    else:
-        our_result = 1
-    return our_result
 
 
-#- Test the coin toss a few times
+#- Test the boy / girl function a few times
 
-#- Make a list, and collect four coin tosses
+#- Make a list, and collect four boy or girl choices
 
 #- Sum the list to give the number of girls in this family
 
-#- Make a family from coin tosses, using a while loop.
+#- Make a family from boy or girl choices, using a while loop.
 
 #- Make a list to store the number of girls in each family
 #- Use a while loop to make 1000 families.

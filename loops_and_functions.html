@@ -54,8 +54,8 @@ do many coin tosses and collect the result.</p>
 <div class="section" id="conditionals">
 <h2>Conditionals<a class="headerlink" href="#conditionals" title="Permalink to this headline">¶</a></h2>
 <p>We want our Python code to do the equivalent of a coin toss.  We want to run
-the code, and get a random answer, that is 0 50% of the time (representing a
-Head), and 1 50% of the time (representing a Tail).</p>
+the code, and get a random answer, that is 1 50% of the time (representing a
+Head), and 0 50% of the time (representing a Tail).</p>
 <p>Let’s start by getting a random number that can be any value, with equal
 likelihood, all the way between 0 and 1.  We think first of the <code class="docutils literal"><span class="pre">random</span></code>
 module:</p>
@@ -63,7 +63,7 @@ module:</p>
 </pre></div>
 </div>
 <p>We can explore the functions inside the random module by tab completion (see
-<a class="reference internal" href="jupyter_intro.html#getting-help"><span class="std std-ref">Getting help</span></a>).  We can also look at the <a class="reference external" href="https://docs.python.org/3.6/library/random.html">documentation for the random
+<a class="reference internal" href="jupyter_intro.html#getting-help"><span class="std std-ref">Exercise</span></a>).  We can also look at the <a class="reference external" href="https://docs.python.org/3.6/library/random.html">documentation for the random
 module</a>.  We discover that
 the <code class="docutils literal"><span class="pre">random</span></code> function in the <code class="docutils literal"><span class="pre">random</span></code> module does what we want:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get a random number between 0 and 1</span>
@@ -77,22 +77,25 @@ the <code class="docutils literal"><span class="pre">random</span></code> functi
 </pre></div>
 </div>
 <p>To do our coin toss, we can look at the random number.  If it is &lt; 0.5, we can
-decide this is a 0, and if it is &gt;= 0.5, we will say it is a 1.  This is an
-“if, then” type statement, called a <em>conditional</em>.  It’s called a conditional
-because we do one thing if a condition is met, where the condition here is
-that the random number is &lt; 0.5.  A conditional in Python looks like this:</p>
+decide this is a 0 (for Tails), and if it is &gt;= 0.5, we will say it is a 1
+(for Heads).  This is a “if, then” type statement, called a <em>conditional</em>.
+It’s called a conditional because we do something only if a condition is met.
+The condition here is that the random number is &lt; 0.5.  A conditional in
+Python looks like this:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Next we see the condition that is being tested</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="c1"># Tails</span>
 <span class="gp">... </span>    <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="gp">... </span><span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="c1"># Heads</span>
 <span class="gp">... </span>    <span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 <p>There are a couple of important things to notice here. The conditional starts
-with <code class="docutils literal"><span class="pre">if</span></code>, followed by the condition, here <code class="docutils literal"><span class="pre">random_no</span> <span class="pre">&lt;</span> <span class="pre">0.5</span></code>.  There
-must be a colon (<cite>:</cite>) at the end of the line, and this signals the start of
-the statements that should run if the condition is True.</p>
+with <code class="docutils literal"><span class="pre">if</span></code>, followed by the condition, here <code class="docutils literal"><span class="pre">random_no</span> <span class="pre">&lt;</span> <span class="pre">0.5</span></code>.  There must
+be a colon (<cite>:</cite>) at the end of the line, and this signals the start of the
+statements that should run if the condition is True.</p>
 <p>The statement to execute if the condition is True, is <code class="docutils literal"><span class="pre">our_result</span> <span class="pre">=</span> <span class="pre">0</span></code>.
 Notice that this statement is <em>indented</em> by four spaces.  It is this
 indentation that tells Python that the statement should run only if the
@@ -111,9 +114,11 @@ the condition is False.</p>
 have the <code class="docutils literal"><span class="pre">if</span></code> part.  For example, this code would do the same as the code
 above:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Default to Heads</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># We have the &quot;if&quot; part, but no &quot;else:&quot; part.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="c1"># Tails</span>
 <span class="gp">... </span>    <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
 </div>
@@ -163,6 +168,30 @@ if a random number was &lt; 0.5, and a 1 otherwise.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="exercise">
+<h2>Exercise<a class="headerlink" href="#exercise" title="Permalink to this headline">¶</a></h2>
+<p>Up until now, we’ve assumed that the chance that a child is a boy is 0.5.  Now
+assume the proportion of boys born in the UK is 0.513 <a class="footnote-reference" href="#male-births" id="id1">[1]</a>.</p>
+<p>Here is a new copy of the <code class="docutils literal"><span class="pre">coin_toss</span></code> function, but renamed.  Like the
+<code class="docutils literal"><span class="pre">coin_toss</span></code> function, it returns 0 50% of the time, and 1 the rest of the
+time.  Modify the function to return 0 (for a boy) 51.3% of the time, and 1
+(for a girl) 48.7% of the time:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">girl_or_boy</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="c1"># Return 1 for a girl, 0 for a boy</span>
+<span class="gp">... </span>    <span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">our_result</span>
+</pre></div>
+</div>
+<p>You can try your function out a few times with the cell below:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">girl_or_boy</span><span class="p">()</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="loops">
 <h2>Loops<a class="headerlink" href="#loops" title="Permalink to this headline">¶</a></h2>
 <p>We often want to repeat some code many times.  We could type the same code
@@ -183,7 +212,7 @@ can do this with a <code class="docutils literal"><span class="pre">while</span>
 <span class="gp">... </span>    <span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span>
 <span class="gp">...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span>
-<span class="go">[0, 0, 1, 1]</span>
+<span class="go">[0, 1, 1, 1]</span>
 </pre></div>
 </div>
 <p>The <code class="docutils literal"><span class="pre">while</span></code> loop, like the <code class="docutils literal"><span class="pre">if</span></code> statement, tests a condition, here
@@ -193,7 +222,11 @@ difference is that a while loop keeps running the indented statements until
 the condition is True.  So, the first time through, when <code class="docutils literal"><span class="pre">counter</span></code> is set to
 0, the condition will be True (0 is less than 4), and the body of the while
 loop executes.  But, when the while loop finishes running <code class="docutils literal"><span class="pre">counter</span> <span class="pre">=</span> <span class="pre">counter</span>
-<span class="pre">+</span> <span class="pre">1</span></code> at the end of the block, it goes back and checks the conditional again.  Now <code class="docutils literal"><span class="pre">counter</span></code> is 1, but this is still less than 4, and so we proceed to run <code class="docutils literal"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">coin_toss()</span></code> and the rest of the statements in the body.  We do this until the condition is False, and then the while loop stops and the program continues after the end of the while loop.</p>
+<span class="pre">+</span> <span class="pre">1</span></code> at the end of the block, it goes back and checks the conditional again.
+Now <code class="docutils literal"><span class="pre">counter</span></code> is 1, but this is still less than 4, and so we proceed to run
+<code class="docutils literal"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">coin_toss()</span></code> and the rest of the statements in the body.  We do
+this until the condition is False, and then the while loop stops and the
+program continues after the end of the while loop.</p>
 </div>
 </div>
 <div class="section" id="sum-and-count">
@@ -214,6 +247,35 @@ attached to something, in this case, a list.</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="id2">
+<h2>Exercise<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Using the <code class="docutils literal"><span class="pre">while</span></code> loop above as a template, make a list of 10000 samples
+from the <code class="docutils literal"><span class="pre">girl_or_boy</span></code> function you wrote above.  Calculate how many of
+these samples are girls (have value of 1) (hint: <code class="docutils literal"><span class="pre">sum</span></code> might be useful).
+What proportion of the samples are girls?  How close is this to the number you
+were expecting?  Here’s a copy of the <code class="docutils literal"><span class="pre">while</span></code> loop above, for you to use as
+a template:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># A copy of the while loop above for you to edit</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">coin_toss</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">coin_tosses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span>
+<span class="go">[0, 1, 0, 0]</span>
+</pre></div>
+</div>
+<table class="docutils footnote" frame="void" id="male-births" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="https://www.gov.uk/government/statistics/gender-ratios-at-birth-in-great-britain-2010-to-2014">Official UK government statistics</a>
+give the birth ratio as 105.3. This the number of boys born for every 100
+girls.</td></tr>
+</tbody>
+</table>
+</div>
 </div>
 
 
@@ -227,11 +289,13 @@ attached to something, in this case, a list.</p>
 <li><a class="reference internal" href="#">Conditionals, functions and loops</a><ul>
 <li><a class="reference internal" href="#conditionals">Conditionals</a></li>
 <li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#exercise">Exercise</a></li>
 <li><a class="reference internal" href="#loops">Loops</a><ul>
 <li><a class="reference internal" href="#while-loops">While loops</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#sum-and-count">Sum and count</a></li>
+<li><a class="reference internal" href="#id2">Exercise</a></li>
 </ul>
 </li>
 </ul>

@@ -37,3 +37,4 @@ The pages will fill out in the days leading up to the course.
     jupyter_intro
     loops_and_functions
     for_loops
+    using_the_notebooks
