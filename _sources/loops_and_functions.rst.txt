@@ -196,57 +196,25 @@ the condition is True.  So, the first time through, when ``counter`` is set to
 loop executes.  But, when the while loop finishes running ``counter = counter
 + 1`` at the end of the block, it goes back and checks the conditional again.  Now ``counter`` is 1, but this is still less than 4, and so we proceed to run ``result = coin_toss()`` and the rest of the statements in the body.  We do this until the condition is False, and then the while loop stops and the program continues after the end of the while loop.
 
-For loops
-=========
+*************
+Sum and count
+*************
 
-Actually, people writing Python code do not often use ``while`` loops.  That
-is because Python has a particularly nice and general ``for`` loop.  Here is
-the way we would write the ``while`` loop above, using a ``for`` loop:
-
-.. nbplot::
-
-    >>> coin_tosses = []
-    >>> for i in range(4):
-    ...     result = coin_toss()
-    ...     coin_tosses.append(result)
-    ...
-    >>> coin_tosses
-    [1, 0, 1, 0]
-
-Notice the use of ``range``.  The ``range`` function here gives us a sequence
-of numbers, starting at 0, and going up to, but not including 4.  Therefore,
-the ``range`` function is giving us 4 numbers, 0, 1, 2, 3:
+``sum`` is a function, like ``len`` or ``max``:
 
 .. nbplot::
 
-    >>> list(range(4))
-    [0, 1, 2, 3]
+    >>> my_list = [3, 5, 1]
+    >>> sum(my_list)
+    9
 
-Now notice the line ``for i in range(4)``.  The for loop will take each of the
-numbers 0 through 3, and put it into the variable we've named ``i``. This is
-the *loop variable*.  You can see better what is going on if we collect the
-loop variable value in the for loop, instead of doing the coin toss:
-
-.. nbplot::
-
-    >>> variable_values = []
-    >>> for i in range(4):
-    ...     variable_values.append(i)
-    ...
-    >>> variable_values
-    [0, 1, 2, 3]
-
-We can see the same thing, if we call the ``print`` function at each iteration
-of the loop, to show the value of ``i``.   ``print`` displays the value as
-text.
+``count`` is a method of a list.  As y'all remember, a method is a function
+attached to something, in this case, a list.
 
 .. nbplot::
 
-    >>> for i in range(4):
-    ...     # Show the value of i at each iteration of the loop
-    ...     print('Value of i is', i)
-    ...
-    Value of i is 0
-    Value of i is 1
-    Value of i is 2
-    Value of i is 3
+    >>> my_list = [3, 5, 1, 3]
+    >>> my_list.count(3)
+    2
+    >>> my_list.count(1)
+    1

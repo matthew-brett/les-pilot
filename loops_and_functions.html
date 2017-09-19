@@ -25,6 +25,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="For loops" href="for_loops.html" />
     <link rel="prev" title="Introduction to the Jupyter Notebook" href="jupyter_intro.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -194,52 +195,23 @@ the condition is True.  So, the first time through, when <code class="docutils l
 loop executes.  But, when the while loop finishes running <code class="docutils literal"><span class="pre">counter</span> <span class="pre">=</span> <span class="pre">counter</span>
 <span class="pre">+</span> <span class="pre">1</span></code> at the end of the block, it goes back and checks the conditional again.  Now <code class="docutils literal"><span class="pre">counter</span></code> is 1, but this is still less than 4, and so we proceed to run <code class="docutils literal"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">coin_toss()</span></code> and the rest of the statements in the body.  We do this until the condition is False, and then the while loop stops and the program continues after the end of the while loop.</p>
 </div>
-<div class="section" id="for-loops">
-<h3>For loops<a class="headerlink" href="#for-loops" title="Permalink to this headline">¶</a></h3>
-<p>Actually, people writing Python code do not often use <code class="docutils literal"><span class="pre">while</span></code> loops.  That
-is because Python has a particularly nice and general <code class="docutils literal"><span class="pre">for</span></code> loop.  Here is
-the way we would write the <code class="docutils literal"><span class="pre">while</span></code> loop above, using a <code class="docutils literal"><span class="pre">for</span></code> loop:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">coin_toss</span><span class="p">()</span>
-<span class="gp">... </span>    <span class="n">coin_tosses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span>
-<span class="go">[1, 0, 1, 0]</span>
+</div>
+<div class="section" id="sum-and-count">
+<h2>Sum and count<a class="headerlink" href="#sum-and-count" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">sum</span></code> is a function, like <code class="docutils literal"><span class="pre">len</span></code> or <code class="docutils literal"><span class="pre">max</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">9</span>
 </pre></div>
 </div>
-<p>Notice the use of <code class="docutils literal"><span class="pre">range</span></code>.  The <code class="docutils literal"><span class="pre">range</span></code> function here gives us a sequence
-of numbers, starting at 0, and going up to, but not including 4.  Therefore,
-the <code class="docutils literal"><span class="pre">range</span></code> function is giving us 4 numbers, 0, 1, 2, 3:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
-<span class="go">[0, 1, 2, 3]</span>
+<p><code class="docutils literal"><span class="pre">count</span></code> is a method of a list.  As y’all remember, a method is a function
+attached to something, in this case, a list.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">1</span>
 </pre></div>
-</div>
-<p>Now notice the line <code class="docutils literal"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(4)</span></code>.  The for loop will take each of the
-numbers 0 through 3, and put it into the variable we’ve named <code class="docutils literal"><span class="pre">i</span></code>. This is
-the <em>loop variable</em>.  You can see better what is going on if we collect the
-loop variable value in the for loop, instead of doing the coin toss:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">variable_values</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="n">variable_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">variable_values</span>
-<span class="go">[0, 1, 2, 3]</span>
-</pre></div>
-</div>
-<p>We can see the same thing, if we call the <code class="docutils literal"><span class="pre">print</span></code> function at each iteration
-of the loop, to show the value of <code class="docutils literal"><span class="pre">i</span></code>.   <code class="docutils literal"><span class="pre">print</span></code> displays the value as
-text.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
-<span class="gp">... </span>    <span class="c1"># Show the value of i at each iteration of the loop</span>
-<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Value of i is&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
-<span class="gp">...</span>
-<span class="go">Value of i is 0</span>
-<span class="go">Value of i is 1</span>
-<span class="go">Value of i is 2</span>
-<span class="go">Value of i is 3</span>
-</pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -257,9 +229,9 @@ text.</p>
 <li><a class="reference internal" href="#functions">Functions</a></li>
 <li><a class="reference internal" href="#loops">Loops</a><ul>
 <li><a class="reference internal" href="#while-loops">While loops</a></li>
-<li><a class="reference internal" href="#for-loops">For loops</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#sum-and-count">Sum and count</a></li>
 </ul>
 </li>
 </ul>
@@ -268,6 +240,7 @@ text.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="jupyter_intro.html" title="previous chapter">Introduction to the Jupyter Notebook</a></li>
+      <li>Next: <a href="for_loops.html" title="next chapter">For loops</a></li>
   </ul></li>
 </ul>
 </div>

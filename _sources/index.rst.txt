@@ -30,10 +30,10 @@ The pages will fill out in the days leading up to the course.
     animal_attitudes_solution
     number_of_girls_exercise
     number_of_girls_solution
-    programs_in_python
     python_intro
     day_0
     day_1
     day_2
     jupyter_intro
     loops_and_functions
+    for_loops

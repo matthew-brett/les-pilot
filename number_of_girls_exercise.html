@@ -56,14 +56,16 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
 </pre></div>
 </div>
-<p>We need a function to do a coin toss.  Assume that probability of heads
-is 0.5.  The function returns 1 for head and 0 for a tail:</p>
+<p>We need a function to do a coin toss.  We will use the function we wrote in
+<a class="reference internal" href="loops_and_functions.html"><span class="doc">Conditionals, functions and loops</span></a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: A function for a single coin toss</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">coin_toss</span><span class="p">():</span>
 <span class="gp">... </span>    <span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
-<span class="gp">... </span>    <span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;=</span> <span class="mf">0.5</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="k">return</span> <span class="mi">1</span>
-<span class="gp">... </span>    <span class="k">return</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">our_result</span>
 </pre></div>
 </div>
 <p>Test the function a few times:</p>
@@ -81,21 +83,20 @@ four coin tosses to say how many girls in this family.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Sum the list to give the number of girls in this family</span>
 </pre></div>
 </div>
-<p>If you didn’t do this before, use a <code class="docutils literal"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(...)</span></code> loop to make
-another family from coin tosses.  See <a class="reference internal" href="programs_in_python.html"><span class="doc">Programming in Python</span></a> for
-inspiration:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Make a family from coin tosses, using a for loop.</span>
+<p>If you didn’t do this before, use a <code class="docutils literal"><span class="pre">while</span></code> loop to make another family from
+coin tosses.  See <a class="reference internal" href="loops_and_functions.html"><span class="doc">Conditionals, functions and loops</span></a> for inspiration:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Make a family from coin tosses, using a while loop.</span>
 </pre></div>
 </div>
 <p>Now you know how to make one family.  Now you’re going to make 1000 families.</p>
 <p>First make an empty list to collect the number of girls in each family.</p>
-<p>Then use another <code class="docutils literal"><span class="pre">for</span> <span class="pre">s</span> <span class="pre">in</span> <span class="pre">range(...)</span></code> loop to make 1000 families.  For each
-family, calculate the number of girls, using the code you just wrote above.
-Collect the number of girls in your list.</p>
+<p>Then use another <code class="docutils literal"><span class="pre">while</span></code> loop to make 1000 families.  Careful of your
+counters, for each loop. For each family, calculate the number of girls, using
+the code you just wrote above.  Collect the number of girls in your list.</p>
 <p>Finally, use the <code class="docutils literal"><span class="pre">count</span></code> method of the list, to count the number of families
 with 3 girls.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Make a list to store the number of girls in each family</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Use a for loop to make 1000 families.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Use a while loop to make 1000 families.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1">#- For each family, calculate the number of girls</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Store in the list</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Count the number of families with 3 girls</span>

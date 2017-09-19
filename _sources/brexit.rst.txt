@@ -2,6 +2,8 @@
 Analyzing Brexit
 ################
 
+.. code-links:: clear
+
 Every year, the `Hansard Society
 <https://www.hansardsociety.org.uk/research/audit-of-political-engagement>`_
 sponsors a survey on political engagement in the UK.

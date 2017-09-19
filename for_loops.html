@@ -1,0 +1,157 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>For loops &#8212; Tutorials on imaging, computing and mathematics</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Conditionals, functions and loops" href="loops_and_functions.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p><span class="math">\(\newcommand{L}[1]{\| #1 \|}\newcommand{VL}[1]{\L{ \vec{#1} }}\newcommand{R}[1]{\operatorname{Re}\,(#1)}\newcommand{I}[1]{\operatorname{Im}\, (#1)}\)</span></p>
+<div class="section" id="for-loops">
+<h1>For loops<a class="headerlink" href="#for-loops" title="Permalink to this headline">¶</a></h1>
+<p>See: <a class="reference internal" href="loops_and_functions.html"><span class="doc">Conditionals, functions and loops</span></a> for an introduction to <code class="docutils literal"><span class="pre">while</span></code> loops.</p>
+<p>To start, let us redefine the function to do a coin toss:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">coin_toss</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">our_result</span>
+</pre></div>
+</div>
+<p>Actually, people writing Python code do not often use <code class="docutils literal"><span class="pre">while</span></code> loops.  That
+is because Python has a particularly nice and general <code class="docutils literal"><span class="pre">for</span></code> loop.  Here is
+the way we would write the <code class="docutils literal"><span class="pre">while</span></code> loop above, using a <code class="docutils literal"><span class="pre">for</span></code> loop:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">coin_toss</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">coin_tosses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span>
+<span class="go">[1, 0, 1, 0]</span>
+</pre></div>
+</div>
+<p>Notice the use of <code class="docutils literal"><span class="pre">range</span></code>.  The <code class="docutils literal"><span class="pre">range</span></code> function here gives us a sequence
+of numbers, starting at 0, and going up to, but not including 4.  Therefore,
+the <code class="docutils literal"><span class="pre">range</span></code> function is giving us 4 numbers, 0, 1, 2, 3:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="go">[0, 1, 2, 3]</span>
+</pre></div>
+</div>
+<p>Now notice the line <code class="docutils literal"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(4)</span></code>.  The for loop will take each of the
+numbers 0 through 3, and put it into the variable we’ve named <code class="docutils literal"><span class="pre">i</span></code>. This is
+the <em>loop variable</em>.  You can see better what is going on if we collect the
+loop variable value in the for loop, instead of doing the coin toss:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">variable_values</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">variable_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">variable_values</span>
+<span class="go">[0, 1, 2, 3]</span>
+</pre></div>
+</div>
+<p>We can see the same thing, if we call the <code class="docutils literal"><span class="pre">print</span></code> function at each iteration
+of the loop, to show the value of <code class="docutils literal"><span class="pre">i</span></code>.   <code class="docutils literal"><span class="pre">print</span></code> displays the value as
+text.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="c1"># Show the value of i at each iteration of the loop</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Value of i is&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">Value of i is 0</span>
+<span class="go">Value of i is 1</span>
+<span class="go">Value of i is 2</span>
+<span class="go">Value of i is 3</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="loops_and_functions.html" title="previous chapter">Conditionals, functions and loops</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/for_loops.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/for_loops.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
