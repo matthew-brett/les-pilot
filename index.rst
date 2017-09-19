@@ -28,8 +28,7 @@ The pages will fill out in the days leading up to the course.
     school_and_fertility
     animal_attitudes_exercise
     animal_attitudes_solution
-    number_of_girls_exercise
-    number_of_girls_solution
+    number_of_girls
     python_intro
     day_0
     day_1
@@ -38,3 +37,6 @@ The pages will fill out in the days leading up to the course.
     loops_and_functions
     for_loops
     using_the_notebooks
+    brexit_proportions_exercise
+    brexit_proportions_solution
+    brexit_ages

@@ -10,16 +10,15 @@ On Wednesday 20th we are in `Room 204, Law Building
 Morning
 *******
 
-* solving with simulation; :doc:`number_of_girls_exercise`.
-* back to Brexit.  Formulating the null hypothesis.  The
-  population and the sample; parameter and statistic. Simulating samples, and
-  therefore, statistics.  The sampling distribution.  Has the the poll taken a
-  random sample of Brexit voters?
+* :doc:`for_loops`;
+* solving with simulation; :doc:`number_of_girls`;
+* back to Brexit.  Formulating the null hypothesis.  The population and the
+  sample; parameter and statistic. Simulating samples, and therefore,
+  statistics.  The sampling distribution.  Has the the poll taken a random
+  sample of Brexit voters? :doc:`brexit_proportions_exercise`.
 * the age distribution problem.  The mean as a statistic.  Null hypothesis
-  comparing distributions.  List slicing, list contcatenation.
-  ``random.shuffle``.
-* a toy problem and `permutation testing
-  <https://matthew-brett/github.com/teaching/permutation_testing.html>`_.
-* a permutation test on the Brexit data.
+  comparing distributions.  :doc:`more_on_lists`.
+* :doc:`brexit_ages` on the Brexit data.
+* introducing :doc:`school_and_fertility`.
 
 .. include:: links_names.inc

@@ -209,7 +209,7 @@ build-%:
 intro-talk: intro_talk.md
 	pandoc -t beamer -s intro_talk.md -o intro_talk_slides.pdf
 
-TEMPLATES = animal_attitudes number_of_girls
+TEMPLATES = animal_attitudes brexit_proportions
 
 TPL_FILES = $(TEMPLATES:=.tpl)
 SOLUTION_FILES = $(TPL_FILES:.tpl=_solution.rst)

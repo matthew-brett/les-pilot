@@ -20,3 +20,5 @@ Please turn up for 10am on each day, we'll start on time.
 
 Don't forget to bring your laptops.  Before the first class, you'll need to do
 the :doc:`setup_beforehand`.
+
+.. include:: links_names.inc
