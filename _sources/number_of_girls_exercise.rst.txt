@@ -14,7 +14,7 @@ Three girls in a family of four
     >>> #: We need the random module
     >>> import random
 
-Now we need a function to do a coin toss.  Assume that probability of heads
+We need a function to do a coin toss.  Assume that probability of heads
 is 0.5.  The function returns 1 for head and 0 for a tail:
 
 .. nbplot::

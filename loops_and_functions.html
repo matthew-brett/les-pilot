@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Loops and functions &#8212; Tutorials on imaging, computing and mathematics</title>
+    <title>Conditionals, functions and loops &#8212; Tutorials on imaging, computing and mathematics</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -25,6 +25,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Introduction to the Jupyter Notebook" href="jupyter_intro.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -41,10 +42,206 @@
           <div class="body" role="main">
             
   <p><span class="math">\(\newcommand{L}[1]{\| #1 \|}\newcommand{VL}[1]{\L{ \vec{#1} }}\newcommand{R}[1]{\operatorname{Re}\,(#1)}\newcommand{I}[1]{\operatorname{Im}\, (#1)}\)</span></p>
-<div class="section" id="loops-and-functions">
-<h1>Loops and functions<a class="headerlink" href="#loops-and-functions" title="Permalink to this headline">¶</a></h1>
-<p>For loops.</p>
-<p>Functions.</p>
+<div class="section" id="conditionals-functions-and-loops">
+<h1>Conditionals, functions and loops<a class="headerlink" href="#conditionals-functions-and-loops" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference download internal" href="loops_and_functions.ipynb">Download this page as a Jupyter notebook (no outputs)</a>.</li>
+</ul>
+<p>In this Notebook, we work out how to simulate a coin toss in Python.  Then we
+wrap up the coin toss logic into our own function.  Lastly, we work out how to
+do many coin tosses and collect the result.</p>
+<div class="section" id="conditionals">
+<h2>Conditionals<a class="headerlink" href="#conditionals" title="Permalink to this headline">¶</a></h2>
+<p>We want our Python code to do the equivalent of a coin toss.  We want to run
+the code, and get a random answer, that is 0 50% of the time (representing a
+Head), and 1 50% of the time (representing a Tail).</p>
+<p>Let’s start by getting a random number that can be any value, with equal
+likelihood, all the way between 0 and 1.  We think first of the <code class="docutils literal"><span class="pre">random</span></code>
+module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+<p>We can explore the functions inside the random module by tab completion (see
+<a class="reference internal" href="jupyter_intro.html#getting-help"><span class="std std-ref">Getting help</span></a>).  We can also look at the <a class="reference external" href="https://docs.python.org/3.6/library/random.html">documentation for the random
+module</a>.  We discover that
+the <code class="docutils literal"><span class="pre">random</span></code> function in the <code class="docutils literal"><span class="pre">random</span></code> module does what we want:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get a random number between 0 and 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="go">0.889900600711181</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get another random number between 0 and 1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="go">0.9602318110750124</span>
+</pre></div>
+</div>
+<p>To do our coin toss, we can look at the random number.  If it is &lt; 0.5, we can
+decide this is a 0, and if it is &gt;= 0.5, we will say it is a 1.  This is an
+“if, then” type statement, called a <em>conditional</em>.  It’s called a conditional
+because we do one thing if a condition is met, where the condition here is
+that the random number is &lt; 0.5.  A conditional in Python looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Next we see the condition that is being tested</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span><span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+<p>There are a couple of important things to notice here. The conditional starts
+with <code class="docutils literal"><span class="pre">if</span></code>, followed by the condition, here <code class="docutils literal"><span class="pre">random_no</span> <span class="pre">&lt;</span> <span class="pre">0.5</span></code>.  There
+must be a colon (<cite>:</cite>) at the end of the line, and this signals the start of
+the statements that should run if the condition is True.</p>
+<p>The statement to execute if the condition is True, is <code class="docutils literal"><span class="pre">our_result</span> <span class="pre">=</span> <span class="pre">0</span></code>.
+Notice that this statement is <em>indented</em> by four spaces.  It is this
+indentation that tells Python that the statement should run only if the
+condition is True.  You can put many statements to run if the condition is
+True, but they must all be indented in the same way.  Luckily the Notebook and
+other code editors usually guess what we want and do the indentation for us.</p>
+<p>Next we see a line <code class="docutils literal"><span class="pre">else:</span></code>.  Notice that this line is <em>not</em> indented.  That
+is because we want this line to run if the condition is False.  Remember, the
+indented lines above run only when the condition is True.</p>
+<p>Notice again that the <code class="docutils literal"><span class="pre">else:</span></code> has a colon at the end, to say that more
+indented lines will follow.  These lines only run if the condition is False.</p>
+<p>To recap, the indented lines after the <code class="docutils literal"><span class="pre">if</span></code> and before the <code class="docutils literal"><span class="pre">else</span></code> run only
+if the condition is True.  The indented lines after the <code class="docutils literal"><span class="pre">else:</span></code> only run if
+the condition is False.</p>
+<p>You don’t have to have an <code class="docutils literal"><span class="pre">else:</span></code> part of a conditional block - you can just
+have the <code class="docutils literal"><span class="pre">if</span></code> part.  For example, this code would do the same as the code
+above:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># We have the &quot;if&quot; part, but no &quot;else:&quot; part.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions">
+<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
+<p>In <a class="reference internal" href="jupyter_intro.html"><span class="doc">Introduction to the Jupyter Notebook</span></a>, we saw functions in action, such as <code class="docutils literal"><span class="pre">len</span></code> and
+<code class="docutils literal"><span class="pre">max</span></code>.</p>
+<p>These are functions that Python provides for us.</p>
+<p>We can also write our own functions.</p>
+<p>We’re going to wrap up our logic for the coin toss into a function, and call
+the function <code class="docutils literal"><span class="pre">coin_toss</span></code>.  Like <code class="docutils literal"><span class="pre">random.random</span></code> our function <code class="docutils literal"><span class="pre">coin_toss</span></code>
+will accept no arguments.  It will return a 0 50% of the time and a 1 50% of
+the time.</p>
+<p>We make a function like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">coin_toss</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">our_result</span>
+</pre></div>
+</div>
+<p>The function starts with the word <code class="docutils literal"><span class="pre">def</span></code> which tells Python we are defining a
+function.  Next follows the name of the function, followed by, in our case,
+parentheses.  You specify what arguments the function should have, in the
+parentheses. In our case, our function as no arguments, so there is nothing
+between the parentheses.</p>
+<p>Next there follows a series of statements that are indented.  These statements
+are the <em>body</em> of the function.  They are the code that gets run when the
+function gets called.</p>
+<p>We return the result with the <code class="docutils literal"><span class="pre">return</span></code> statement.  Here we are returning a 0
+if a random number was &lt; 0.5, and a 1 otherwise.</p>
+<p>Let’s call the function a few times to see if the results are plausible:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Notice, we pass no arguments</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_toss</span><span class="p">()</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">coin_toss</span><span class="p">()</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">coin_toss</span><span class="p">()</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loops">
+<h2>Loops<a class="headerlink" href="#loops" title="Permalink to this headline">¶</a></h2>
+<p>We often want to repeat some code many times.  We could type the same code
+over and over again, but this would be messy, error-prone and boring.  No,
+what we want, is a loop.</p>
+<p>A loop is a set of statements that we can repeat several times.</p>
+<p>One type of Python loop uses <code class="docutils literal"><span class="pre">while</span></code>.</p>
+<div class="section" id="while-loops">
+<h3>While loops<a class="headerlink" href="#while-loops" title="Permalink to this headline">¶</a></h3>
+<p>For our trials, we need to do four coin tosses, and collect the results.  We
+can do this with a <code class="docutils literal"><span class="pre">while</span></code> loop, like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># We use a counter to keep track of how many times we&#39;ve run</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">counter</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">coin_toss</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">coin_tosses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">counter</span> <span class="o">=</span> <span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span>
+<span class="go">[0, 0, 1, 1]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">while</span></code> loop, like the <code class="docutils literal"><span class="pre">if</span></code> statement, tests a condition, here
+<code class="docutils literal"><span class="pre">counter</span> <span class="pre">&lt;</span> <span class="pre">4</span></code>.  Like the <code class="docutils literal"><span class="pre">if</span></code> statement, there are indented statements
+after the condition test, that only run if the condition test is True.  The
+difference is that a while loop keeps running the indented statements until
+the condition is True.  So, the first time through, when <code class="docutils literal"><span class="pre">counter</span></code> is set to
+0, the condition will be True (0 is less than 4), and the body of the while
+loop executes.  But, when the while loop finishes running <code class="docutils literal"><span class="pre">counter</span> <span class="pre">=</span> <span class="pre">counter</span>
+<span class="pre">+</span> <span class="pre">1</span></code> at the end of the block, it goes back and checks the conditional again.  Now <code class="docutils literal"><span class="pre">counter</span></code> is 1, but this is still less than 4, and so we proceed to run <code class="docutils literal"><span class="pre">result</span> <span class="pre">=</span> <span class="pre">coin_toss()</span></code> and the rest of the statements in the body.  We do this until the condition is False, and then the while loop stops and the program continues after the end of the while loop.</p>
+</div>
+<div class="section" id="for-loops">
+<h3>For loops<a class="headerlink" href="#for-loops" title="Permalink to this headline">¶</a></h3>
+<p>Actually, people writing Python code do not often use <code class="docutils literal"><span class="pre">while</span></code> loops.  That
+is because Python has a particularly nice and general <code class="docutils literal"><span class="pre">for</span></code> loop.  Here is
+the way we would write the <code class="docutils literal"><span class="pre">while</span></code> loop above, using a <code class="docutils literal"><span class="pre">for</span></code> loop:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">result</span> <span class="o">=</span> <span class="n">coin_toss</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">coin_tosses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">coin_tosses</span>
+<span class="go">[1, 0, 1, 0]</span>
+</pre></div>
+</div>
+<p>Notice the use of <code class="docutils literal"><span class="pre">range</span></code>.  The <code class="docutils literal"><span class="pre">range</span></code> function here gives us a sequence
+of numbers, starting at 0, and going up to, but not including 4.  Therefore,
+the <code class="docutils literal"><span class="pre">range</span></code> function is giving us 4 numbers, 0, 1, 2, 3:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="go">[0, 1, 2, 3]</span>
+</pre></div>
+</div>
+<p>Now notice the line <code class="docutils literal"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">range(4)</span></code>.  The for loop will take each of the
+numbers 0 through 3, and put it into the variable we’ve named <code class="docutils literal"><span class="pre">i</span></code>. This is
+the <em>loop variable</em>.  You can see better what is going on if we collect the
+loop variable value in the for loop, instead of doing the coin toss:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">variable_values</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">variable_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">variable_values</span>
+<span class="go">[0, 1, 2, 3]</span>
+</pre></div>
+</div>
+<p>We can see the same thing, if we call the <code class="docutils literal"><span class="pre">print</span></code> function at each iteration
+of the loop, to show the value of <code class="docutils literal"><span class="pre">i</span></code>.   <code class="docutils literal"><span class="pre">print</span></code> displays the value as
+text.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="c1"># Show the value of i at each iteration of the loop</span>
+<span class="gp">... </span>    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Value of i is&#39;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">Value of i is 0</span>
+<span class="go">Value of i is 1</span>
+<span class="go">Value of i is 2</span>
+<span class="go">Value of i is 3</span>
+</pre></div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -52,10 +249,25 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Conditionals, functions and loops</a><ul>
+<li><a class="reference internal" href="#conditionals">Conditionals</a></li>
+<li><a class="reference internal" href="#functions">Functions</a></li>
+<li><a class="reference internal" href="#loops">Loops</a><ul>
+<li><a class="reference internal" href="#while-loops">While loops</a></li>
+<li><a class="reference internal" href="#for-loops">For loops</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="jupyter_intro.html" title="previous chapter">Introduction to the Jupyter Notebook</a></li>
   </ul></li>
 </ul>
 </div>

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>A little introduction to Python and the Notebook &#8212; Tutorials on imaging, computing and mathematics</title>
+    <title>Introduction to the Jupyter Notebook &#8212; Tutorials on imaging, computing and mathematics</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -25,6 +25,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Conditionals, functions and loops" href="loops_and_functions.html" />
+    <link rel="prev" title="A little introduction to Python and the Notebook" href="python_intro.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -41,16 +43,306 @@
           <div class="body" role="main">
             
   <p><span class="math">\(\newcommand{L}[1]{\| #1 \|}\newcommand{VL}[1]{\L{ \vec{#1} }}\newcommand{R}[1]{\operatorname{Re}\,(#1)}\newcommand{I}[1]{\operatorname{Im}\, (#1)}\)</span></p>
-<div class="section" id="a-little-introduction-to-python-and-the-notebook">
-<h1>A little introduction to Python and the Notebook<a class="headerlink" href="#a-little-introduction-to-python-and-the-notebook" title="Permalink to this headline">¶</a></h1>
-<p>We are now using the <a href="#id1"><span class="problematic" id="id2">`Jupyter Notebook`_</span></a>.</p>
-<p>As you can see, it</p>
+<div class="section" id="introduction-to-the-jupyter-notebook">
+<h1>Introduction to the Jupyter Notebook<a class="headerlink" href="#introduction-to-the-jupyter-notebook" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Python as a calculator</li>
-<li>Strings</li>
-<li>Lists</li>
-<li>Packages</li>
+<li><a class="reference download internal" href="jupyter_intro.ipynb">Download this page as a Jupyter notebook (no outputs)</a>.</li>
 </ul>
+<div class="section" id="a-notebook-has-cells">
+<h2>A Notebook has cells<a class="headerlink" href="#a-notebook-has-cells" title="Permalink to this headline">¶</a></h2>
+<p>As you can see, the Jupyter Notebook runs in your web browser.</p>
+<p>It consists of <em>cells</em>. This is a text cell.  The cell below is a code cell.</p>
+<p>You can mix code and text cells in any order.</p>
+<p>To move from one cell to the next, you can use Shift-Enter. When you do
+this inside a code cell, it will execute, and move to the next cell.</p>
+<p>Press Shift-Enter now, to move out of this cell to the next, then Shift-Enter
+again to run the text cell, and move again.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">10</span>
+</pre></div>
+</div>
+<p>It doesn’t look as if anything has happened, but when you did Shift-Enter in
+the cell above, the Jupyter Notebook sent the code off to be executed by
+<a class="reference external" href="https://python.org">Python</a>.  Python is a programming language with a
+simple syntax that many universities use for teaching.  There is also a large
+community of scientists and tech companies that use Python for data analysis.</p>
+<p>The code cell above takes the <em>number</em> 10, and puts it into a <em>variable</em>
+called <code class="docutils literal"><span class="pre">a</span></code>. Now, when we use the variable <code class="docutils literal"><span class="pre">a</span></code>, it will carry the value 10.
+We say that the <em>variable</em> <code class="docutils literal"><span class="pre">a</span></code> has the <em>value</em> 10.</p>
+<p>We often want to see the values of variables, and the Notebook makes it easy
+to do that. We put the variable who value we want to see on its own at the end
+of a cell. The Notebook detects that we have done that, and shows us the
+value.  Here we display the value of the variable <code class="docutils literal"><span class="pre">a</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+<p>Notice that the Notebook made a new type of display after the cell, with the
+prompt in red, and starting with <code class="docutils literal"><span class="pre">Out[</span></code>. Every code cell has a number, such
+as 1, or 2. The Notebook labels the cell with its number.  The code that will
+be executed has the label <code class="docutils literal"><span class="pre">In[</span></code> followed by the cell number, meaning
+<em>Input</em>. If there is a variable on its own at the end, that will generate an
+<em>Output</em> cell, labeled with <code class="docutils literal"><span class="pre">Out[</span></code> followed by the cell number.</p>
+<p>Our code cells can have lines that do some work, followed by a variable on its
+own, so we can see its value. Like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span>
+<span class="go">5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-notebook-as-a-calculator">
+<h2>The Notebook as a calculator<a class="headerlink" href="#the-notebook-as-a-calculator" title="Permalink to this headline">¶</a></h2>
+<p>To get output from the cell, we don’t actually need to have a variable on its
+own. We can put any <em>expression</em> on the last line. An expression is anything
+that returns a value.  So <code class="docutils literal"><span class="pre">b</span></code> on its own returns a value, which is the value
+of <code class="docutils literal"><span class="pre">b</span></code> - in this case 5. But we can also do something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="mi">10</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">4</span>
+<span class="go">4.0</span>
+</pre></div>
+</div>
+<p>Notice, we didn’t use any variables. <code class="docutils literal"><span class="pre">(10</span> <span class="pre">+</span> <span class="pre">5</span> <span class="pre">+</span> <span class="pre">1)</span> <span class="pre">/</span> <span class="pre">4</span></code> is an expression -
+some code that returns a value.</p>
+<p>This means that we can use the Notebook as a simple calculator. You’ve
+already seen <code class="docutils literal"><span class="pre">+</span></code> and <code class="docutils literal"><span class="pre">/</span></code> and the parentheses. You also have <code class="docutils literal"><span class="pre">*</span></code>
+for multiply, and <code class="docutils literal"><span class="pre">-</span></code> for subtract, and <code class="docutils literal"><span class="pre">**</span></code> for to-the-power-of.
+For example, here’s <span class="math">\(10^4\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">10</span> <span class="o">**</span> <span class="mi">4</span>
+<span class="go">10000</span>
+</pre></div>
+</div>
+<p>Try calculating <span class="math">\(6 (2^3) / 4\)</span> (it should equal 12):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">6</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">4</span>
+<span class="go">12.0</span>
+</pre></div>
+</div>
+<p>Try <span class="math">\(1024^2 / 2^{16}\)</span></p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">1024</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="mi">16</span>
+<span class="go">16.0</span>
+</pre></div>
+</div>
+<p>We can also use variables in our calculations. For example, we might be
+interested in the result of <span class="math">\(2 x^2 + 3x + 10\)</span>. We want to calculate what
+answer we get for <span class="math">\(x = 2\)</span>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">10</span>
+<span class="go">24</span>
+</pre></div>
+</div>
+<p>Now we can simply get the answer for <span class="math">\(x = 7\)</span>, or any other value
+of <span class="math">\(x\)</span>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">10</span>
+<span class="go">129</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="comments-begin-with-a-hash">
+<h2>Comments begin with a hash (#)<a class="headerlink" href="#comments-begin-with-a-hash" title="Permalink to this headline">¶</a></h2>
+<p>The code cells in this Notebook, and all the Notebooks we’ll use in the class,
+will be in the Python programming language. In that language (and many
+others), a line beginning with <code class="docutils literal"><span class="pre">#</span></code> is a <em>comment</em>, which means that Python
+does not do anything with that line, and it just serves to explain the code.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># This is a comment.  It doesn&#39;t do anything.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># This is another comment.  It is just for your reading pleasure.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The line below sets the variable c to have value 10.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># The last line is an expression, and so we see an output of this expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># after the cell.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">c</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="strings-contain-text">
+<h2>Strings contain text<a class="headerlink" href="#strings-contain-text" title="Permalink to this headline">¶</a></h2>
+<p>So far we have only seen numbers. Another type of information that Python can
+store and use, is text. Python calls text data: <em>strings</em>. For example, here I
+set the variable <code class="docutils literal"><span class="pre">my_name</span></code> to the <em>string</em> <code class="docutils literal"><span class="pre">'Matthew'</span></code>. Notice the quotes
+around the string. The quotes tell Python that this is text (string) data:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_name</span> <span class="o">=</span> <span class="s1">&#39;Matthew&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_name</span>
+<span class="go">&#39;Matthew&#39;</span>
+</pre></div>
+</div>
+<p>You can use single quotes (<code class="docutils literal"><span class="pre">'</span></code>) to go round strings, or double quotes
+(<code class="docutils literal"><span class="pre">&quot;</span></code>). It doesn’t matter to Python, it recognizes you want to make a
+string.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># I&#39;m setting your_name to the string &#39;Alphonse&#39; using single quotes</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">your_name</span> <span class="o">=</span> <span class="s1">&#39;Alphonse&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">your_name</span>
+<span class="go">&#39;Alphonse&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># But I could have used double quotes, it ends up the same to Python.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">third_name</span> <span class="o">=</span> <span class="s2">&quot;Alphonse&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">third_name</span>
+<span class="go">&#39;Alphonse&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="functions-process-things">
+<h2>Functions process things<a class="headerlink" href="#functions-process-things" title="Permalink to this headline">¶</a></h2>
+<p>Python also has <em>functions</em>. It is easiest to explain a function by example.
+<code class="docutils literal"><span class="pre">len</span></code> is a function, returning the length of something. Here we get the
+length of the string:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="s1">&#39;Alphonse&#39;</span><span class="p">)</span>
+<span class="go">8</span>
+</pre></div>
+</div>
+<p>The result that Python returned from <code class="docutils literal"><span class="pre">len</span></code> is the number of characters in
+the string <code class="docutils literal"><span class="pre">'Alphonse'</span></code>. The variable <code class="docutils literal"><span class="pre">your_name</span></code> also points to the
+string <code class="docutils literal"><span class="pre">'Alphonse'</span></code>, so we get the same result from calling <code class="docutils literal"><span class="pre">len</span></code> on the
+variable <code class="docutils literal"><span class="pre">your_name</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">your_name</span><span class="p">)</span>
+<span class="go">8</span>
+</pre></div>
+</div>
+<p>The function has a name - <code class="docutils literal"><span class="pre">len</span></code>. We call it, by using its name and then an
+opening parenthesis, and then the <em>arguments</em> that we want to send to the
+function, and then a closing parenthesis.</p>
+<p>In this case the function <code class="docutils literal"><span class="pre">len</span></code> accepts only one argument, which is the
+thing we want the length of.</p>
+<p>Now try setting the variable <code class="docutils literal"><span class="pre">my_name</span></code> to a string containing your first
+(given) name. Then get the Notebook to tell you how many characters there are
+in your name. Here’s how I would do that, in the cell below. You can edit the
+cell to put your name in there instead.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_name</span> <span class="o">=</span> <span class="s1">&#39;Matthew&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">my_name</span><span class="p">)</span>
+<span class="go">7</span>
+</pre></div>
+</div>
+<p>There are functions which work on numbers as well. For example, the function
+<code class="docutils literal"><span class="pre">max</span></code> accepts two (or more) numbers, and returns the maximum:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">10</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lists">
+<h2>Lists<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h2>
+<p>Python has other useful types of data. One very useful type is the <em>list</em>.
+Here is a list of two numbers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span>
+<span class="go">[10, 4]</span>
+</pre></div>
+</div>
+<p>Notice the square brackets around the list items, and a comma between the
+items.</p>
+<p>What do you think you will get calling <code class="docutils literal"><span class="pre">len</span></code> on this list? Try it.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Try: len(my_list)</span>
+</pre></div>
+</div>
+<p>You can make an empty list by putting nothing between the brackets:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_empty_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_empty_list</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>Another thing we might want to do to a list is append a value.  We can do this
+using the <code class="docutils literal"><span class="pre">append</span></code> <em>method</em> of the list.  A <em>method</em> is a function attached
+to a value.  This is best seen in action:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span>
+<span class="go">[10, 4, 7]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span>
+<span class="go">[10, 4, 7, 1]</span>
+</pre></div>
+</div>
+<p>Notice that we <em>call</em> the method using the name of the list - here
+<code class="docutils literal"><span class="pre">my_list</span></code>, followed by a dot, followed by the name of the method, here
+<code class="docutils literal"><span class="pre">append</span></code>.  <code class="docutils literal"><span class="pre">append</span></code> is a function attached to <code class="docutils literal"><span class="pre">my_list</span></code>.</p>
+<p>Don’t worry about the details at the moment, we will have many chances to get
+used this this idea.</p>
+</div>
+<div class="section" id="set-equal-to-and-test-equal-to">
+<h2>Set equal to and test equal to<a class="headerlink" href="#set-equal-to-and-test-equal-to" title="Permalink to this headline">¶</a></h2>
+<p>We have been setting the values of variables with the variable name (e.g.
+<cite>my_name</cite>) followed by the equals character <cite>=</cite> and then the value. For
+example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Setting variable my_name to have value &quot;Matthew&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_name</span> <span class="o">=</span> <span class="s2">&quot;Matthew&quot;</span>
+</pre></div>
+</div>
+<p>This is the use of equal to mean “set the variable on the left equal to the
+value on the right”.</p>
+<p>There is another use of “equal” which is to test whether something is equal to
+something else.  This is called “test equals”.  Python uses double equal signs
+<code class="docutils literal"><span class="pre">==</span></code> for that meaning of equals.  For example, here we test whether the
+value of variable <code class="docutils literal"><span class="pre">my_name</span></code> is equal to the string <cite>‘John’</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Equal in the sense of test equal to</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_name</span> <span class="o">==</span> <span class="s1">&#39;John&#39;</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Notice that test-equal, with <code class="docutils literal"><span class="pre">==</span></code>, is an expression, that returns the value
+<code class="docutils literal"><span class="pre">True</span></code> if the two sides are equal, and <code class="docutils literal"><span class="pre">False</span></code> if they are not:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Equal in the sense of test equal to</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_name</span> <span class="o">==</span> <span class="s1">&#39;Matthew&#39;</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="packages">
+<h2>Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h2>
+<p>So far all the stuff we have seen uses functions that Python will always
+give you. For example, <code class="docutils literal"><span class="pre">len</span></code> and <code class="docutils literal"><span class="pre">max</span></code> are always available to you,
+whenever you start Python.</p>
+<p>There are many other things that Python keeps in <em>modules</em>. Modules are
+libraries of functions and other things, that you cannot use, until you
+load them into Python. You load them into Python using the <code class="docutils literal"><span class="pre">import</span></code>
+command.</p>
+<p>For example, we are soon going to be using the <code class="docutils literal"><span class="pre">random</span></code> module. This
+is a module that gives us random numbers of various sorts. Before we can
+use the <code class="docutils literal"><span class="pre">random</span></code> module, we have to <code class="docutils literal"><span class="pre">import</span></code> it - like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+<p>Now we have the random module loaded, we can access its functions, by
+typing the module name <code class="docutils literal"><span class="pre">random</span></code>, followed by a dot, followed by the
+function we want to use. For example, <code class="docutils literal"><span class="pre">random</span></code> has a function
+<code class="docutils literal"><span class="pre">randint</span></code>, that returns a number between the first argument (the low
+bound) and the second argument (the high bound). We can get a random
+number between 0 and 10 like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">9</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-help">
+<span id="id1"></span><h2>Getting help<a class="headerlink" href="#getting-help" title="Permalink to this headline">¶</a></h2>
+<p>Often we want to know what a function does, or how many arguments it takes.
+The Notebook has a useful feature to help us. Type the name of the function
+you are interested in, followed by <code class="docutils literal"><span class="pre">?</span></code> and press Shift-Enter. The Notebook
+will show you pane of help on that function.  Try it now, for <code class="docutils literal"><span class="pre">len</span></code> and
+<code class="docutils literal"><span class="pre">max</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Type (e.g):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># len?</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># in the cell below</span>
+</pre></div>
+</div>
+<p>It is also common that we want to know what functions or other goodies there
+are in a module.  The Notebook can help with that too.  In the code cell
+below, try typing <cite>random.</cite> (note the trailing dot) and then, without pressing
+Return, press the Tab key.  The Notebook shows you a list of functions and
+other things inside the <code class="docutils literal"><span class="pre">random</span></code> module.  This is called “Tab completion”.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Type:</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># random.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># followed by Tab, in the cell below</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -58,10 +350,28 @@
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to the Jupyter Notebook</a><ul>
+<li><a class="reference internal" href="#a-notebook-has-cells">A Notebook has cells</a></li>
+<li><a class="reference internal" href="#the-notebook-as-a-calculator">The Notebook as a calculator</a></li>
+<li><a class="reference internal" href="#comments-begin-with-a-hash">Comments begin with a hash (#)</a></li>
+<li><a class="reference internal" href="#strings-contain-text">Strings contain text</a></li>
+<li><a class="reference internal" href="#functions-process-things">Functions process things</a></li>
+<li><a class="reference internal" href="#lists">Lists</a></li>
+<li><a class="reference internal" href="#set-equal-to-and-test-equal-to">Set equal to and test equal to</a></li>
+<li><a class="reference internal" href="#packages">Packages</a></li>
+<li><a class="reference internal" href="#getting-help">Getting help</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="python_intro.html" title="previous chapter">A little introduction to Python and the Notebook</a></li>
+      <li>Next: <a href="loops_and_functions.html" title="next chapter">Conditionals, functions and loops</a></li>
   </ul></li>
 </ul>
 </div>
