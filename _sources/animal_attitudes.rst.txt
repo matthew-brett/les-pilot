@@ -4,9 +4,6 @@
 Attitudes to animal research
 ############################
 
-* For code template see: :download:`animal_attitudes_code.py`;
-* For solution see: :doc:`animal_attitudes_solution`.
-
 .. code-links:: clear
 
 Here we are going to try to analyze the data from this survey:
@@ -59,6 +56,12 @@ Show the list of the all the column names:
 .. nbplot::
 
     >>> #- Show the column names
+    >>> df.columns
+    Index(['ID', 'Q1', 'Q2a', 'Q2b', 'Q3a', 'Q3b', 'Q3c', 'Q3d', 'Q3e', 'Q3f',
+           ...
+           'Empstat', 'qual', 'marstat', 'access', 'Income', 'Broadsheet',
+           'MidMarket', 'Tabloid', 'NoPpr', 'weight'],
+          dtype='object', length=248)
 
 Have a look at the data dictionary.  Find the name of the column containing
 the variable with label "Sources of balanced information about use of:
@@ -67,16 +70,20 @@ Universities".  Keep a note of that.
 Now find the name of the column with label "Sources of balanced information
 about use of: Animal protection organisations".  Keep a note of that too.
 
-Use indexing to select make a new data frame containing only these two columns
-from the original data frame.  It will look something like ``questions =df[`` followed by
-the names of the columns you just found.  Have a look at :doc:`brexit` for
-inspiration.
+Finally, find the column for "Sources of balanced information about use of:
+Politicians / MPs".  Note as well.
+
+Use indexing to select make a new data frame containing only these three
+columns from the original data frame.  It will look something like ``questions
+=df[`` followed by the names of the columns you just found.  Have a look at
+:doc:`brexit` for inspiration.
 
 .. nbplot::
 
     >>> #- Select only the two columns we found above.
     >>> #- Something like
     >>> #- questions = df[ something here ]
+    >>> questions = df[['Q7_1', 'Q7_2', 'Q7_6']]
 
 Check that your new ``questions`` data frame has the column names you
 expected.
@@ -84,14 +91,19 @@ expected.
 .. nbplot::
 
     >>> #- Show the column names for the new "questions" data frame
+    >>> questions.columns
+    Index(['Q7_1', 'Q7_2', 'Q7_6'], dtype='object')
 
-Rename the columns to ``"trust_uni"`` and ``"trust_protectors"``.   See
-:doc:`brexit` for inspiration.
+Rename the columns to ``"trust_uni"``, ``"trust_protectors"``,
+``"trust_politicians"``.   See :doc:`brexit` for inspiration.
 
 .. nbplot::
 
     >>> #- Rename the columns of the new data frame to:
-    >>> #- "trust_uni" and "trust_protectors"
+    >>> #- "trust_uni", "trust_protectors", "trust_politicians"
+    >>> questions.columns = ['trust_uni', 'trust_protectors', 'trust_politicians']
+    >>> questions.columns
+    Index(['trust_uni', 'trust_protectors', 'trust_politicians'], dtype='object')
 
 .. mpl-interactive::
 
@@ -100,12 +112,15 @@ Import the plotting library, using the same conventions as in :doc:`brexit`:
 .. nbplot::
 
     >>> #- Import the plotting library
+    >>> import matplotlib.pyplot as plt
 
 Plot a histogram of the values for the question about trusting universities.
 
 .. nbplot::
 
     >>> #- A histogram of the values for the trust universities question
+    >>> plt.hist(questions['trust_uni']);
+    (...)
 
 Plot a histogram of the values for the question about trusting Animal
 Protection Organizations:
@@ -113,9 +128,23 @@ Protection Organizations:
 .. nbplot::
 
     >>> #- A histogram of the values for the trust APOs question
+    >>> plt.hist(questions['trust_protectors']);
+    (...)
 
 Do you think there is a substantial difference between these histograms?   How
 would you check?
 
-If you have extra time, why not try and find out whether the respondents trust
-politicians any better than universities or animal protection organizations.
+Plot the histogram for the trust in politicians.  Is there a difference
+between this question and the other two?  How would you check?
+
+.. nbplot::
+
+    >>> #- A histogram of the values for the trust APOs question
+    >>> plt.hist(questions['trust_politicians']);
+    (...)
+
+Save the reduced data frame in case we want to use it later:
+
+.. nbplot::
+
+    >>> questions.to_csv('animal_questions.csv', index=False)

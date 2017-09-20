@@ -25,7 +25,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Attitudes to animal research" href="animal_attitudes_solution.html" />
+    <link rel="next" title="Three girls in a family of four" href="number_of_girls.html" />
     <link rel="prev" title="Schooling and fertility" href="school_and_fertility.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -46,11 +46,7 @@
 <div class="section" id="attitudes-to-animal-research">
 <h1>Attitudes to animal research<a class="headerlink" href="#attitudes-to-animal-research" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>For code template see: <a class="reference download internal" href="_downloads/animal_attitudes_code.py" download=""><code class="xref download docutils literal"><span class="pre">animal_attitudes_code.py</span></code></a>;</li>
-<li>For solution see: <a class="reference internal" href="animal_attitudes_solution.html"><span class="doc">Attitudes to animal research</span></a>.</li>
-</ul>
-<ul class="simple">
-<li><a class="reference download internal" href="animal_attitudes_exercise.ipynb">Download this page as a Jupyter notebook (no outputs)</a>.</li>
+<li><a class="reference download internal" href="animal_attitudes.ipynb">Download this page as a Jupyter notebook (no outputs)</a>.</li>
 </ul>
 <p>Here we are going to try to analyze the data from this survey:</p>
 <p><a class="reference external" href="https://www.ipsos.com/ipsos-mori/en-uk/attitudes-animal-research-2016">https://www.ipsos.com/ipsos-mori/en-uk/attitudes-animal-research-2016</a></p>
@@ -88,6 +84,12 @@ converted the data dictionary document to a PDF:</p>
 </div>
 <p>Show the list of the all the column names:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Show the column names</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+<span class="go">Index([&#39;ID&#39;, &#39;Q1&#39;, &#39;Q2a&#39;, &#39;Q2b&#39;, &#39;Q3a&#39;, &#39;Q3b&#39;, &#39;Q3c&#39;, &#39;Q3d&#39;, &#39;Q3e&#39;, &#39;Q3f&#39;,</span>
+<span class="go">       ...</span>
+<span class="go">       &#39;Empstat&#39;, &#39;qual&#39;, &#39;marstat&#39;, &#39;access&#39;, &#39;Income&#39;, &#39;Broadsheet&#39;,</span>
+<span class="go">       &#39;MidMarket&#39;, &#39;Tabloid&#39;, &#39;NoPpr&#39;, &#39;weight&#39;],</span>
+<span class="go">      dtype=&#39;object&#39;, length=248)</span>
 </pre></div>
 </div>
 <p>Have a look at the data dictionary.  Find the name of the column containing
@@ -95,24 +97,32 @@ the variable with label “Sources of balanced information about use of:
 Universities”.  Keep a note of that.</p>
 <p>Now find the name of the column with label “Sources of balanced information
 about use of: Animal protection organisations”.  Keep a note of that too.</p>
-<p>Use indexing to select make a new data frame containing only these two columns
-from the original data frame.  It will look something like <code class="docutils literal"><span class="pre">questions</span> <span class="pre">=df[</span></code> followed by
-the names of the columns you just found.  Have a look at <a class="reference internal" href="brexit.html"><span class="doc">Analyzing Brexit</span></a> for
-inspiration.</p>
+<p>Finally, find the column for “Sources of balanced information about use of:
+Politicians / MPs”.  Note as well.</p>
+<p>Use indexing to select make a new data frame containing only these three
+columns from the original data frame.  It will look something like <code class="docutils literal"><span class="pre">questions</span>
+<span class="pre">=df[</span></code> followed by the names of the columns you just found.  Have a look at
+<a class="reference internal" href="brexit.html"><span class="doc">Analyzing Brexit</span></a> for inspiration.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Select only the two columns we found above.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Something like</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1">#- questions = df[ something here ]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">questions</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Q7_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Q7_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Q7_6&#39;</span><span class="p">]]</span>
 </pre></div>
 </div>
 <p>Check that your new <code class="docutils literal"><span class="pre">questions</span></code> data frame has the column names you
 expected.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Show the column names for the new &quot;questions&quot; data frame</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">questions</span><span class="o">.</span><span class="n">columns</span>
+<span class="go">Index([&#39;Q7_1&#39;, &#39;Q7_2&#39;, &#39;Q7_6&#39;], dtype=&#39;object&#39;)</span>
 </pre></div>
 </div>
-<p>Rename the columns to <code class="docutils literal"><span class="pre">&quot;trust_uni&quot;</span></code> and <code class="docutils literal"><span class="pre">&quot;trust_protectors&quot;</span></code>.   See
-<a class="reference internal" href="brexit.html"><span class="doc">Analyzing Brexit</span></a> for inspiration.</p>
+<p>Rename the columns to <code class="docutils literal"><span class="pre">&quot;trust_uni&quot;</span></code>, <code class="docutils literal"><span class="pre">&quot;trust_protectors&quot;</span></code>,
+<code class="docutils literal"><span class="pre">&quot;trust_politicians&quot;</span></code>.   See <a class="reference internal" href="brexit.html"><span class="doc">Analyzing Brexit</span></a> for inspiration.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Rename the columns of the new data frame to:</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1">#- &quot;trust_uni&quot; and &quot;trust_protectors&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#- &quot;trust_uni&quot;, &quot;trust_protectors&quot;, &quot;trust_politicians&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">questions</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;trust_uni&#39;</span><span class="p">,</span> <span class="s1">&#39;trust_protectors&#39;</span><span class="p">,</span> <span class="s1">&#39;trust_politicians&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">questions</span><span class="o">.</span><span class="n">columns</span>
+<span class="go">Index([&#39;trust_uni&#39;, &#39;trust_protectors&#39;, &#39;trust_politicians&#39;], dtype=&#39;object&#39;)</span>
 </pre></div>
 </div>
 <div class="admonition hint">
@@ -123,21 +133,47 @@ interactive plots.  If running in the Jupyter Notebook, use <code class="docutil
 </div>
 <p>Import the plotting library, using the same conventions as in <a class="reference internal" href="brexit.html"><span class="doc">Analyzing Brexit</span></a>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- Import the plotting library</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 </pre></div>
 </div>
 <p>Plot a histogram of the values for the question about trusting universities.</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- A histogram of the values for the trust universities question</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">questions</span><span class="p">[</span><span class="s1">&#39;trust_uni&#39;</span><span class="p">]);</span>
+<span class="go">(...)</span>
 </pre></div>
+</div>
+<p>(<a class="reference external" href=".//animal_attitudes-9.png">png</a>, <a class="reference external" href=".//animal_attitudes-9.hires.png">hires.png</a>, <a class="reference external" href=".//animal_attitudes-9.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/animal_attitudes-9.png" src="_images/animal_attitudes-9.png" />
 </div>
 <p>Plot a histogram of the values for the question about trusting Animal
 Protection Organizations:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- A histogram of the values for the trust APOs question</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">questions</span><span class="p">[</span><span class="s1">&#39;trust_protectors&#39;</span><span class="p">]);</span>
+<span class="go">(...)</span>
 </pre></div>
+</div>
+<p>(<a class="reference external" href=".//animal_attitudes-10.png">png</a>, <a class="reference external" href=".//animal_attitudes-10.hires.png">hires.png</a>, <a class="reference external" href=".//animal_attitudes-10.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/animal_attitudes-10.png" src="_images/animal_attitudes-10.png" />
 </div>
 <p>Do you think there is a substantial difference between these histograms?   How
 would you check?</p>
-<p>If you have extra time, why not try and find out whether the respondents trust
-politicians any better than universities or animal protection organizations.</p>
+<p>Plot the histogram for the trust in politicians.  Is there a difference
+between this question and the other two?  How would you check?</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- A histogram of the values for the trust APOs question</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">questions</span><span class="p">[</span><span class="s1">&#39;trust_politicians&#39;</span><span class="p">]);</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//animal_attitudes-11.png">png</a>, <a class="reference external" href=".//animal_attitudes-11.hires.png">hires.png</a>, <a class="reference external" href=".//animal_attitudes-11.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/animal_attitudes-11.png" src="_images/animal_attitudes-11.png" />
+</div>
+<p>Save the reduced data frame in case we want to use it later:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">questions</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;animal_questions.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 
 
@@ -150,14 +186,14 @@ politicians any better than universities or animal protection organizations.</p>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="school_and_fertility.html" title="previous chapter">Schooling and fertility</a></li>
-      <li>Next: <a href="animal_attitudes_solution.html" title="next chapter">Attitudes to animal research</a></li>
+      <li>Next: <a href="number_of_girls.html" title="next chapter">Three girls in a family of four</a></li>
   </ul></li>
 </ul>
 </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/animal_attitudes_exercise.rst.txt"
+      <li><a href="_sources/animal_attitudes.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -183,7 +219,7 @@ politicians any better than universities or animal protection organizations.</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |
-      <a href="_sources/animal_attitudes_exercise.rst.txt"
+      <a href="_sources/animal_attitudes.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
