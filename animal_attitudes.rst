@@ -142,3 +142,9 @@ between this question and the other two?  How would you check?
     >>> #- A histogram of the values for the trust APOs question
     >>> plt.hist(questions['trust_politicians']);
     (...)
+
+Save the reduced data frame in case we want to use it later:
+
+.. nbplot::
+
+    >>> questions.to_csv('animal_questions.csv', index=False)
