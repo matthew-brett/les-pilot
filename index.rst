@@ -26,8 +26,7 @@ The pages will fill out in the days leading up to the course.
     schedule
     brexit
     school_and_fertility
-    animal_attitudes_exercise
-    animal_attitudes_solution
+    animal_attitudes
     number_of_girls
     day_0
     day_1
@@ -39,3 +38,4 @@ The pages will fill out in the days leading up to the course.
     brexit_proportions_exercise
     brexit_proportions_solution
     brexit_ages
+    more_on_lists

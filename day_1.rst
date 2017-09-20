@@ -19,6 +19,5 @@ Morning
 * the age distribution problem.  The mean as a statistic.  Null hypothesis
   comparing distributions.  :doc:`more_on_lists`.
 * :doc:`brexit_ages` on the Brexit data.
-* introducing :doc:`school_and_fertility`.
 
 .. include:: links_names.inc

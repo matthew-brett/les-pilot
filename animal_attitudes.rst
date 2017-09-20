@@ -70,17 +70,20 @@ Universities".  Keep a note of that.
 Now find the name of the column with label "Sources of balanced information
 about use of: Animal protection organisations".  Keep a note of that too.
 
-Use indexing to select make a new data frame containing only these two columns
-from the original data frame.  It will look something like ``questions =df[`` followed by
-the names of the columns you just found.  Have a look at :doc:`brexit` for
-inspiration.
+Finally, find the column for "Sources of balanced information about use of:
+Politicians / MPs".  Note as well.
+
+Use indexing to select make a new data frame containing only these three
+columns from the original data frame.  It will look something like ``questions
+=df[`` followed by the names of the columns you just found.  Have a look at
+:doc:`brexit` for inspiration.
 
 .. nbplot::
 
     >>> #- Select only the two columns we found above.
     >>> #- Something like
     >>> #- questions = df[ something here ]
-    >>> questions = df[['Q7_1', 'Q7_2']]
+    >>> questions = df[['Q7_1', 'Q7_2', 'Q7_6']]
 
 Check that your new ``questions`` data frame has the column names you
 expected.
@@ -89,18 +92,18 @@ expected.
 
     >>> #- Show the column names for the new "questions" data frame
     >>> questions.columns
-    Index(['Q7_1', 'Q7_2'], dtype='object')
+    Index(['Q7_1', 'Q7_2', 'Q7_6'], dtype='object')
 
-Rename the columns to ``"trust_uni"`` and ``"trust_protectors"``.   See
-:doc:`brexit` for inspiration.
+Rename the columns to ``"trust_uni"``, ``"trust_protectors"``,
+``"trust_politicians"``.   See :doc:`brexit` for inspiration.
 
 .. nbplot::
 
     >>> #- Rename the columns of the new data frame to:
-    >>> #- "trust_uni" and "trust_protectors"
-    >>> questions.columns = ['trust_uni', 'trust_protectors']
+    >>> #- "trust_uni", "trust_protectors", "trust_politicians"
+    >>> questions.columns = ['trust_uni', 'trust_protectors', 'trust_politicians']
     >>> questions.columns
-    Index(['trust_uni', 'trust_protectors'], dtype='object')
+    Index(['trust_uni', 'trust_protectors', 'trust_politicians'], dtype='object')
 
 .. mpl-interactive::
 
@@ -131,5 +134,11 @@ Protection Organizations:
 Do you think there is a substantial difference between these histograms?   How
 would you check?
 
-If you have extra time, why not try and find out whether the respondents trust
-politicians any better than universities or animal protection organizations.
+Plot the histogram for the trust in politicians.  Is there a difference
+between this question and the other two?  How would you check?
+
+.. nbplot::
+
+    >>> #- A histogram of the values for the trust APOs question
+    >>> plt.hist(questions['trust_politicians']);
+    (...)

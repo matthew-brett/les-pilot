@@ -2,6 +2,8 @@
 Schooling and fertility
 #######################
 
+.. code-links:: clear
+
 Here we are analyzing this dataset from the World Bank on gender and
 inequality:
 
@@ -84,7 +86,7 @@ The code is ``GBR``.
 
 Pandas truncates the output to only show a certain number of rows, and only a
 certain length for the text fields.  To investigate further, you can increase
-these limits to see all 630 rows for the UK, and all the text for the text
+these limits to see all 630 rows for the UK, and more of the text for the text
 fields:
 
 .. nbplot::
