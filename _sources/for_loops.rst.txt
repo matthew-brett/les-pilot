@@ -2,6 +2,8 @@
 For loops
 #########
 
+.. code-links::
+
 See: :doc:`loops_and_functions` for an introduction to ``while`` loops.
 
 To start, let us redefine the function to do a coin toss:
