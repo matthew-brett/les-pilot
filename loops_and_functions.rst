@@ -191,6 +191,8 @@ You can try your function out a few times with the cell below:
     >>> girl_or_boy()
     0
 
+.. _on-loops:
+
 *****
 Loops
 *****

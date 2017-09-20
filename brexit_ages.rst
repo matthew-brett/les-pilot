@@ -166,13 +166,19 @@ Python's ``random.shuffle`` function can do the shuffle for us (see:
 
     >>> random.seed(7)
 
-Here's a random shuffle of the combined list of ages:
+Before shuffling, the first 541 age values are all for Leave voters.  Here are
+the first 10:
 
 .. nbplot::
 
     >>> # The first 10 ages before shuffling (all brexit)
     >>> all_ages[:10]
     [71, 60, 74, 61, 47, 56, 76, 35, 44, 38]
+
+Here's a random shuffle of the combined list of ages:
+
+.. nbplot::
+
     >>> random.shuffle(all_ages)
     >>> # The first 10 ages of the shuffled list, mixed brexit and remain.
     >>> all_ages[:10]
@@ -244,6 +250,13 @@ large compared to the distribution of these 10000 differences.
     >>> plt.hist(shuffled_differences)
     (...)
 
+The maximumum of these differences is:
+
+.. nbplot::
+
+    >>> max(shuffled_differences)
+    3.8717109191037764
+
 Remember our ``observed_difference``?
 
 .. nbplot::
@@ -251,64 +264,20 @@ Remember our ``observed_difference``?
     >>> observed_difference
     3.6998380833655773
 
-``observed_difference`` looks like it is at the extreme right of the
-distribution. But - how far to the right? What proportion of the 10000 null
-hypothesis differences are greater than or equal to the observed value?
-
-To test this, we first sort the null hypothesis differences from lowest to
-highest:
+So - how many of the ``shuffled_differences`` are greater than or equal to the
+``observed_difference``?
 
 .. nbplot::
 
-    >>> sorted_differences = sorted(shuffled_differences)
-
-Next we find how many of these null hypothesis differences are greater than or
-equal to the ``observed_difference``:
-
-.. nbplot::
-
-    >>> # Go through all the differences one by one.
-    >>> # When we've found a difference greater than or equal to the observed
-    >>> # one, stop.
-    >>> index = 0
-    >>> while index < n_repeats:
-    ...     # Check the sorted difference at the current index
-    ...     if sorted_differences[index] >= observed_difference:
-    ...         # Stop checking, we've found a null hypothesis difference
-    ...         # greater than or equal to the observed difference.
-    ...         break
-    ...     # Otherwise, move on to the next null difference
-    ...     index = index + 1
-
-So, the index of the first difference greater than or equal to the observed
-difference is:
-
-.. nbplot::
-
-    >>> index
-    9999
-
-We calculate how many values in ``sorted_differences`` are greater than or
-equal to ``observed_difference``:
-
-.. nbplot::
-
-    >>> n_greater_than_equal = n_repeats - index
-    >>> n_greater_than_equal
+    >>> n_greater_equal = 0
+    >>> for i in range(n_repeats):
+    ...     if shuffled_differences[i] >= observed_difference:
+    ...         n_greater_equal = n_greater_equal + 1
+    >>> n_greater_equal
     1
 
-Therefore, the *proportion* of the null-hypothesis differences that are
-greater than or equal to the observed difference is:
+In 10000 samples, we only found one sample greater than or equal to the
+observed difference.
 
-.. nbplot::
-
-    >>> prop_greater_equal = n_greater_than_equal / n_repeats
-    >>> prop_greater_equal
-    0.0001
-
-This proportion is very small.  Therefore, our observed difference is very
-unlikely on the null hypothesis that observations in the two groups are
-equivalent. We might be tempted to reject the null hypothesis, and conclude
-that the two groups are not equivalent, and therefore, that people who say
-they voted Leave really do tend to be older than people who say they voted
-Remain.
+So, our estimate is that there is a 1 in 10000 chance that the observed
+difference could have come about by differences in random sampling.
