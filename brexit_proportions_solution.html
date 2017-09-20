@@ -97,16 +97,16 @@ Leave or Remain voter with that proportion:</p>
 <span class="gp">... </span>    <span class="c1"># Return 1 for Leave, 0 for Remain</span>
 <span class="gp">... </span>    <span class="n">random_no</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
 <span class="gp">... </span>    <span class="k">if</span> <span class="n">random_no</span> <span class="o">&lt;</span> <span class="mf">0.519</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
 <span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">... </span>    <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">our_result</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="gp">... </span>    <span class="k">return</span> <span class="n">our_result</span>
 </pre></div>
 </div>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: call the fnction</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1">#: remember the brackets at the end</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">leave_or_remain</span><span class="p">()</span>
-<span class="go">1</span>
+<span class="go">0</span>
 </pre></div>
 </div>
 <p>In <a class="reference internal" href="number_of_girls.html"><span class="doc">Three girls in a family of four</span></a>, a single trial was four children.  In our case, a
@@ -125,7 +125,7 @@ statistic for each trial:</p>
 <p>Run a single trial:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: Result of one trial</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">one_proportion</span><span class="p">()</span>
-<span class="go">0.47604562737642586</span>
+<span class="go">0.5239543726235741</span>
 </pre></div>
 </div>
 <p>Now we want the sampling distribution of this proportion.  So, we’re going to

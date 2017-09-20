@@ -14,9 +14,9 @@ def leave_or_remain():
     # Return 1 for Leave, 0 for Remain
     random_no = random.random()
     if random_no < 0.519:
-        our_result = 0
-    else:
         our_result = 1
+    else:
+        our_result = 0
     return our_result
 
 #: call the fnction

@@ -82,9 +82,9 @@ Leave or Remain voter with that proportion:
     ...     # Return 1 for Leave, 0 for Remain
     ...     random_no = random.random()
     ...     if random_no < 0.519:
-    ...         our_result = 0
-    ...     else:
     ...         our_result = 1
+    ...     else:
+    ...         our_result = 0
     ...     return our_result
 
 .. nbplot::
@@ -92,7 +92,7 @@ Leave or Remain voter with that proportion:
     >>> #: call the fnction
     >>> #: remember the brackets at the end
     >>> leave_or_remain()
-    1
+    0
 
 In :doc:`number_of_girls`, a single trial was four children.  In our case, a
 single trial is 1315 Leave or Remain voters drawn at random. We calculate the
@@ -115,7 +115,7 @@ Run a single trial:
 
     >>> #: Result of one trial
     >>> one_proportion()
-    0.47604562737642586
+    0.5239543726235741
 
 Now we want the sampling distribution of this proportion.  So, we're going to
 draw 10000 random samples, and look at the distribution of the statistic (the

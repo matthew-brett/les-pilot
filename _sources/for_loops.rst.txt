@@ -2,7 +2,7 @@
 For loops
 #########
 
-.. code-links::
+.. code-links:: clear
 
 See: :doc:`loops_and_functions` for an introduction to ``while`` loops.
 
@@ -28,9 +28,26 @@ To start, let us redefine the function to do a coin toss:
     ...         our_result = 1
     ...     return our_result
 
-Actually, people writing Python code do not often use ``while`` loops.  That
-is because Python has a particularly nice and general ``for`` loop.  Here is
-the way we would write the ``while`` loop above, using a ``for`` loop:
+In :ref:`loops and functions <on-loops>`, we have already used ``while`` loops
+to collect four coin toses.  Just to remind you, the ``while`` loop looks like
+this:
+
+.. nbplot::
+
+    >>> # We use a counter to keep track of how many times we've run
+    >>> counter = 0
+    >>> coin_tosses = []
+    >>> while counter < 4:
+    ...     result = coin_toss()
+    ...     coin_tosses.append(result)
+    ...     counter = counter + 1
+    ...
+    >>> coin_tosses
+    [1, 1, 0, 1]
+
+In face, people writing Python code do not often use ``while`` loops.  That is
+because Python has a particularly nice and general ``for`` loop.  Here is the
+way we would write the ``while`` loop above, using a ``for`` loop:
 
 .. nbplot::
 
@@ -40,7 +57,7 @@ the way we would write the ``while`` loop above, using a ``for`` loop:
     ...     coin_tosses.append(result)
     ...
     >>> coin_tosses
-    [1, 1, 0, 1]
+    [0, 0, 1, 0]
 
 *************
 The take-home

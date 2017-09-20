@@ -179,11 +179,15 @@ distribution, and this gives us a measure of whether the
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
 </pre></div>
 </div>
-<p>Here’s a random shuffle of the combined list of ages:</p>
+<p>Before shuffling, the first 541 age values are all for Leave voters.  Here are
+the first 10:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># The first 10 ages before shuffling (all brexit)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">all_ages</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 <span class="go">[71, 60, 74, 61, 47, 56, 76, 35, 44, 38]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">all_ages</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here’s a random shuffle of the combined list of ages:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">all_ages</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># The first 10 ages of the shuffled list, mixed brexit and remain.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">all_ages</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
 <span class="go">[24, 59, 55, 31, 89, 66, 64, 35, 28, 41]</span>
@@ -246,65 +250,34 @@ interactive plots.  If running in the Jupyter Notebook, use <code class="docutil
 <span class="go">(...)</span>
 </pre></div>
 </div>
-<p>(<a class="reference external" href=".//brexit_ages-20.png">png</a>, <a class="reference external" href=".//brexit_ages-20.hires.png">hires.png</a>, <a class="reference external" href=".//brexit_ages-20.pdf">pdf</a>)</p>
+<p>(<a class="reference external" href=".//brexit_ages-21.png">png</a>, <a class="reference external" href=".//brexit_ages-21.hires.png">hires.png</a>, <a class="reference external" href=".//brexit_ages-21.pdf">pdf</a>)</p>
 <div class="figure">
-<img alt="_images/brexit_ages-20.png" src="_images/brexit_ages-20.png" />
+<img alt="_images/brexit_ages-21.png" src="_images/brexit_ages-21.png" />
+</div>
+<p>The maximumum of these differences is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">max</span><span class="p">(</span><span class="n">shuffled_differences</span><span class="p">)</span>
+<span class="go">3.8717109191037764</span>
+</pre></div>
 </div>
 <p>Remember our <code class="docutils literal"><span class="pre">observed_difference</span></code>?</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">observed_difference</span>
 <span class="go">3.6998380833655773</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">observed_difference</span></code> looks like it is at the extreme right of the
-distribution. But - how far to the right? What proportion of the 10000 null
-hypothesis differences are greater than or equal to the observed value?</p>
-<p>To test this, we first sort the null hypothesis differences from lowest to
-highest:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sorted_differences</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">shuffled_differences</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Next we find how many of these null hypothesis differences are greater than or
-equal to the <code class="docutils literal"><span class="pre">observed_difference</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Go through all the differences one by one.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># When we&#39;ve found a difference greater than or equal to the observed</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1"># one, stop.</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">n_repeats</span><span class="p">:</span>
-<span class="gp">... </span>    <span class="c1"># Check the sorted difference at the current index</span>
-<span class="gp">... </span>    <span class="k">if</span> <span class="n">sorted_differences</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">observed_difference</span><span class="p">:</span>
-<span class="gp">... </span>        <span class="c1"># Stop checking, we&#39;ve found a null hypothesis difference</span>
-<span class="gp">... </span>        <span class="c1"># greater than or equal to the observed difference.</span>
-<span class="gp">... </span>        <span class="k">break</span>
-<span class="gp">... </span>    <span class="c1"># Otherwise, move on to the next null difference</span>
-<span class="gp">... </span>    <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
-</pre></div>
-</div>
-<p>So, the index of the first difference greater than or equal to the observed
-difference is:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">index</span>
-<span class="go">9999</span>
-</pre></div>
-</div>
-<p>We calculate how many values in <code class="docutils literal"><span class="pre">sorted_differences</span></code> are greater than or
-equal to <code class="docutils literal"><span class="pre">observed_difference</span></code>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n_greater_than_equal</span> <span class="o">=</span> <span class="n">n_repeats</span> <span class="o">-</span> <span class="n">index</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">n_greater_than_equal</span>
+<p>So - how many of the <code class="docutils literal"><span class="pre">shuffled_differences</span></code> are greater than or equal to the
+<code class="docutils literal"><span class="pre">observed_difference</span></code>?</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n_greater_equal</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">if</span> <span class="n">shuffled_differences</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">observed_difference</span><span class="p">:</span>
+<span class="gp">... </span>        <span class="n">n_greater_equal</span> <span class="o">=</span> <span class="n">n_greater_equal</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">n_greater_equal</span>
 <span class="go">1</span>
 </pre></div>
 </div>
-<p>Therefore, the <em>proportion</em> of the null-hypothesis differences that are
-greater than or equal to the observed difference is:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">prop_greater_equal</span> <span class="o">=</span> <span class="n">n_greater_than_equal</span> <span class="o">/</span> <span class="n">n_repeats</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">prop_greater_equal</span>
-<span class="go">0.0001</span>
-</pre></div>
-</div>
-<p>This proportion is very small.  Therefore, our observed difference is very
-unlikely on the null hypothesis that observations in the two groups are
-equivalent. We might be tempted to reject the null hypothesis, and conclude
-that the two groups are not equivalent, and therefore, that people who say
-they voted Leave really do tend to be older than people who say they voted
-Remain.</p>
+<p>In 10000 samples, we only found one sample greater than or equal to the
+observed difference.</p>
+<p>So, our estimate is that there is a 1 in 10000 chance that the observed
+difference could have come about by differences in random sampling.</p>
 </div>
 
 
