@@ -206,7 +206,7 @@ simulation-chi2: build-simulation_chi2
 build-%:
 	pandoc --toc --filter pandoc-citeproc --filter pandoc-eqnos $*.md -o $*.pdf
 
-intro-talk: intro_talk.md
+intro_talk_slides.pdf: intro_talk.md
 	pandoc -t beamer -s intro_talk.md -o intro_talk_slides.pdf
 
 TEMPLATES = animal_attitudes brexit_proportions
@@ -221,4 +221,4 @@ CODE_SKELETON_FILES = $(TPL_FILES:.tpl=_code.rst)
 
 rst-exercises: $(SOLUTION_FILES)
 
-html: rst-exercises intro-talk html-only
+html: rst-exercises intro_talk_slides.pdf html-only

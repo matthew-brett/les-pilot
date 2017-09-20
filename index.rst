@@ -29,7 +29,6 @@ The pages will fill out in the days leading up to the course.
     animal_attitudes_exercise
     animal_attitudes_solution
     number_of_girls
-    python_intro
     day_0
     day_1
     day_2
