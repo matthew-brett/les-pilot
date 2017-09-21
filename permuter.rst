@@ -2,6 +2,8 @@
 A two-group permutation test
 ############################
 
+.. code-links:: clear
+
 Test the null hypothesis that two samples of values could have come from the
 same underlying distribution.
 
