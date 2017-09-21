@@ -277,8 +277,6 @@ answers to the questions:
     ...     new_answers_1 = []
     ...     new_answers_2 = []
     ...     for i in range(len(answers_1)):
-    ...         answer_1 = answers_1[i]
-    ...         answer_2 = answers_2[i]
     ...         if random.random() >= 0.5:
     ...             # Don't swap
     ...             answer_1 = answers_1[i]
