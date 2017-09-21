@@ -220,9 +220,8 @@ axis:
     >>> plt.scatter(school_fertility['school'], school_fertility['fertility'])
     <...>
 
-Last, we save the data frame we made to a file, so we can use these values
-again.  When saving, we drop off the first implicit column, with the case
-numbers:
+We save the data frame we made to a file, so we can use these values again.
+When saving, we drop off the first implicit column, with the case numbers:
 
 .. nbplot::
 
@@ -235,3 +234,86 @@ numbers:
     >>> # Reset to Pandas defaults
     >>> pd.options.display.max_colwidth = max_colwidth
     >>> pd.options.display.max_rows = max_rows
+
+As usual, we make lists for our two sets of numbers:
+
+.. nbplot::
+
+    >>> school = list(school_fertility['school'])
+    >>> fertility = list(school_fertility['fertility'])
+
+We have speculated that, as the number of years in school goes up, the number
+of adolescents having children goes down.
+
+Remember :doc:`what_order_is_best`?  If ``school`` and ``fertility`` are
+perfectly arranged, with low values for ``school`` going with high values of
+``fertility``, we will get a high ``list_product``:
+
+.. nbplot::
+
+    >>> def list_product(first_list, second_list):
+    ...     product = 0
+    ...     for i in range(len(first_list)):
+    ...         value = first_list[i] * second_list[i]
+    ...         product = product + value
+    ...     return product
+
+So, what do we get for our observed lists?
+
+.. nbplot::
+
+    >>> observed_product = list_product(school, fertility)
+
+What do we compare this to?  What is our sampling distribution?
+
+We need our null hypothesis again.
+
+Our null hypothesis is that there is no systematic shared ordering to
+``school`` and ``fertility``.  Any appearance of shared ordering is just
+because of random sampling variation in ``school`` and ``fertility``.
+
+We can get an idea of sampling variation by doing something very similar to
+what we did in :doc:`brexit_ages`.  We can permute the ``fertility`` list to
+give a random sample of fertility values.  So, here is one trial:
+
+.. nbplot::
+
+    >>> #: The random module
+    >>> import random
+
+.. nbplot::
+    :hide-from: all
+    :show-to: doctest
+
+    >>> random.seed(1966)
+
+.. nbplot::
+
+    >>> def one_product(list_1, list_2):
+    ...     # We don't want to change list_2, so make a copy
+    ...     new_list_2 = list_2.copy()
+    ...     random.shuffle(new_list_2)
+    ...     return list_product(list_1, new_list_2)
+
+.. nbplot::
+
+    >>> one_product(school, fertility)
+
+.. nbplot::
+
+    >>> one_product(school, fertility)
+
+Now let's build up the sampling distribution:
+
+.. nbplot::
+
+    >>> n_repeats = 10000
+    >>> sample_products = []
+    >>> for i in range(n_repeats):
+    ...     product = one_product(school, fertility)
+    ...     sample_products.append(product)
+
+.. nbplot::
+
+    >>> plt.hist(sample_products)
+    (...)

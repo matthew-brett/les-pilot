@@ -8,11 +8,11 @@ Thursday 21st in Room 125, Geography.
 Morning
 *******
 
-* introducing :doc:`school_and_fertility`.
-* introducing :doc:`animal_attitudes`.
+* :doc:`samples_and_spread`;
+* Paired tests in :doc:`animal_attitudes`.
+* :doc:`what_order_is_best`.
+* Linear relationships and :doc:`school_and_fertility`.
 * break into groups; decide on your dataset and question.
-* the spread of the sampling distribution; standard deviation.
-* comparing the permutation test to the t-test.
 
 2 hour break.
 
