@@ -42,3 +42,5 @@ analysis at the University of Birmingham.
     what_order_is_best
     sample_and_spread
     permuter
+    linear
+    samples_and_spread
