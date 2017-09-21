@@ -24,8 +24,8 @@ Work in groups on your chosen dataset and question.
 
 Two group permute code in :doc:`permuter`.
 
-Linear relationship permuations test in :doc:`linear`.
+Paired permutation test in :doc:`paired`.
 
-Report back at 15.30.
+Linear relationship permuations test in :doc:`linear`.
 
 .. include:: links_names.inc
