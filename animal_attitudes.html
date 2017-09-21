@@ -45,6 +45,8 @@
   <p><span class="math">\(\newcommand{L}[1]{\| #1 \|}\newcommand{VL}[1]{\L{ \vec{#1} }}\newcommand{R}[1]{\operatorname{Re}\,(#1)}\newcommand{I}[1]{\operatorname{Im}\, (#1)}\)</span></p>
 <div class="section" id="attitudes-to-animal-research">
 <h1>Attitudes to animal research<a class="headerlink" href="#attitudes-to-animal-research" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction-to-the-data">
+<h2>Introduction to the data<a class="headerlink" href="#introduction-to-the-data" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><a class="reference download internal" href="animal_attitudes.ipynb">Download this page as a Jupyter notebook (no outputs)</a>.</li>
 </ul>
@@ -146,6 +148,7 @@ interactive plots.  If running in the Jupyter Notebook, use <code class="docutil
 <div class="figure">
 <img alt="_images/animal_attitudes-9.png" src="_images/animal_attitudes-9.png" />
 </div>
+<p>Check in the data dictionary above - what do 0 and 1 mean?</p>
 <p>Plot a histogram of the values for the question about trusting Animal
 Protection Organizations:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#- A histogram of the values for the trust APOs question</span>
@@ -175,13 +178,188 @@ between this question and the other two?  How would you check?</p>
 </pre></div>
 </div>
 </div>
+<div class="section" id="a-permutation-test">
+<h2>A permutation test<a class="headerlink" href="#a-permutation-test" title="Permalink to this headline">¶</a></h2>
+<p>Here we try and answer one of the questions above - is there a difference
+between the yes / no answers for the <code class="docutils literal"><span class="pre">trust_uni</span></code> answers and the
+<code class="docutils literal"><span class="pre">trust_proectors</span></code> answers.  Do the respondents trust universities more than
+Animal Protection Organizations (APOs)?</p>
+<p>To start, let’s make lists for the data we are going to study:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trust_uni</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">questions</span><span class="p">[</span><span class="s1">&#39;trust_uni&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trust_protectors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">questions</span><span class="p">[</span><span class="s1">&#39;trust_protectors&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>They came from the same data frame, so we are pretty sure they have the same
+lengths:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">trust_uni</span><span class="p">)</span>
+<span class="go">987</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">trust_protectors</span><span class="p">)</span>
+<span class="go">987</span>
+</pre></div>
+</div>
+<p>First - is there any differences in the answers?  We can see in the data
+dictionary that 0 means “No” or “Do not trust” and 1 means “Yes” or “Do
+trust”.  So we can see how many “Yes” votes there were with <code class="docutils literal"><span class="pre">sum</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">trust_uni</span><span class="p">)</span>
+<span class="go">346</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">sum</span><span class="p">(</span><span class="n">trust_protectors</span><span class="p">)</span>
+<span class="go">329</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">observed_difference</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">trust_uni</span><span class="p">)</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">trust_protectors</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">observed_difference</span>
+<span class="go">17</span>
+</pre></div>
+</div>
+<p>Of course we could also use <code class="docutils literal"><span class="pre">mean</span></code>, where the result will be the average
+answer, towards 0 if more people don’t trust, towards 1 if more people do
+trust:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="n">my_list</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">my_list</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">(</span><span class="n">trust_uni</span><span class="p">)</span>
+<span class="go">0.35055724417426543</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">(</span><span class="n">trust_protectors</span><span class="p">)</span>
+<span class="go">0.33333333333333331</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mean</span><span class="p">(</span><span class="n">trust_uni</span><span class="p">)</span> <span class="o">-</span> <span class="n">mean</span><span class="p">(</span><span class="n">trust_protectors</span><span class="p">)</span>
+<span class="go">0.017223910840932111</span>
+</pre></div>
+</div>
+<p>So, there is a difference.  But did this difference come about through some
+random factor in the way people were answering the questions?  Or can we
+exclude that as unlikely?</p>
+<p>What is our null hypothesis.</p>
+<p>There is some randomness to the answers to both questions <code class="docutils literal"><span class="pre">trust_uni</span></code> and
+<code class="docutils literal"><span class="pre">trust_protectors</span></code>.  This randomness is a reasonable explanation for the
+observed differences in the sum or mean of the answers to these questions.</p>
+<p>If the null hypothesis is true, then we can consider the answers to the two
+questions to be, effectively, an answer to the same question, maybe something
+like “do you trust special interest groups?”.</p>
+<p>But - careful - does our null hypothesis make us believe that we can take the
+answer from one person and allocate it to another?  No - our null hypothesis
+allows different people to have different views on “do you trust special
+interest groups”, but not to have different views on universities versus
+Animal Protection Organizations?</p>
+<p>So, how can we let people have their different views on the general question,
+while pretending (for now) that they have the same view of universities and
+APOs?</p>
+<p>Our null hypothesis allows us to <em>swap</em> the answers for the two questions,
+within one person.   Here is what it looks like if we randomly swap the
+answers to the questions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">sum_with_swap</span><span class="p">(</span><span class="n">answers_1</span><span class="p">,</span> <span class="n">answers_2</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="c1"># Make new lists for the answers where some are swapped</span>
+<span class="gp">... </span>    <span class="n">new_answers_1</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">... </span>    <span class="n">new_answers_2</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">answers_1</span><span class="p">)):</span>
+<span class="gp">... </span>        <span class="n">answer_1</span> <span class="o">=</span> <span class="n">answers_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">... </span>        <span class="n">answer_2</span> <span class="o">=</span> <span class="n">answers_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">... </span>        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="c1"># Don&#39;t swap</span>
+<span class="gp">... </span>            <span class="n">answer_1</span> <span class="o">=</span> <span class="n">answers_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">... </span>            <span class="n">answer_2</span> <span class="o">=</span> <span class="n">answers_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">... </span>        <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>            <span class="c1"># Swap</span>
+<span class="gp">... </span>            <span class="n">answer_2</span> <span class="o">=</span> <span class="n">answers_1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">... </span>            <span class="n">answer_1</span> <span class="o">=</span> <span class="n">answers_2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">... </span>        <span class="n">new_answers_1</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">answer_1</span><span class="p">)</span>
+<span class="gp">... </span>        <span class="n">new_answers_2</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">answer_2</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">new_answers_1</span><span class="p">)</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">new_answers_2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Try a single trial with swaps:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sum_with_swap</span><span class="p">(</span><span class="n">trust_uni</span><span class="p">,</span> <span class="n">trust_protectors</span><span class="p">)</span>
+<span class="go">-7</span>
+</pre></div>
+</div>
+<p>Now we can do one trial, we build up our sampling distribution:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sampled_sums</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">one_trial</span> <span class="o">=</span> <span class="n">sum_with_swap</span><span class="p">(</span><span class="n">trust_uni</span><span class="p">,</span> <span class="n">trust_protectors</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">sampled_sums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">one_trial</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We plot the distribution:</p>
+<div class="admonition hint">
+<p class="first admonition-title">Hint</p>
+<p class="last">If running in the IPython console, consider running <code class="docutils literal"><span class="pre">%matplotlib</span></code> to enable
+interactive plots.  If running in the Jupyter Notebook, use <code class="docutils literal"><span class="pre">%matplotlib</span>
+<span class="pre">inline</span></code>.</p>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sampled_sums</span><span class="p">)</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//animal_attitudes-29.png">png</a>, <a class="reference external" href=".//animal_attitudes-29.hires.png">hires.png</a>, <a class="reference external" href=".//animal_attitudes-29.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/animal_attitudes-29.png" src="_images/animal_attitudes-29.png" />
+</div>
+<p>Remember the observed difference:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">observed_difference</span>
+<span class="go">17</span>
+</pre></div>
+</div>
+<p>What do you think - is the difference in the answers to <code class="docutils literal"><span class="pre">trust_uni</span></code> and
+<code class="docutils literal"><span class="pre">trust_protectors</span></code> compatible with randomness in the answers to the
+questions, or is there some real difference here?</p>
+<p>Let’s do the same test for trust in politicians:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">trust_politicians</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">questions</span><span class="p">[</span><span class="s1">&#39;trust_politicians&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">politicians_observed</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">trust_uni</span><span class="p">)</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">trust_politicians</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">politicians_observed</span>
+<span class="go">284</span>
+</pre></div>
+</div>
+<p>Ouch.</p>
+<p>Now for our pair swap test:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sampled_sums</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">one_trial</span> <span class="o">=</span> <span class="n">sum_with_swap</span><span class="p">(</span><span class="n">trust_uni</span><span class="p">,</span> <span class="n">trust_politicians</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">sampled_sums</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">one_trial</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sampled_sums</span><span class="p">)</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//animal_attitudes-33.png">png</a>, <a class="reference external" href=".//animal_attitudes-33.hires.png">hires.png</a>, <a class="reference external" href=".//animal_attitudes-33.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/animal_attitudes-33.png" src="_images/animal_attitudes-33.png" />
+</div>
+<p>What do you think about the difference in trust between universities and
+politicians?</p>
+</div>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Attitudes to animal research</a><ul>
+<li><a class="reference internal" href="#introduction-to-the-data">Introduction to the data</a></li>
+<li><a class="reference internal" href="#a-permutation-test">A permutation test</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>

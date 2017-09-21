@@ -243,11 +243,75 @@ axis:</p>
 <div class="figure">
 <img alt="_images/school_and_fertility-16.png" src="_images/school_and_fertility-16.png" />
 </div>
-<p>Last, we save the data frame we made to a file, so we can use these values
-again.  When saving, we drop off the first implicit column, with the case
-numbers:</p>
+<p>We save the data frame we made to a file, so we can use these values again.
+When saving, we drop off the first implicit column, with the case numbers:</p>
 <div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">school_fertility</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;school_fertility.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 </pre></div>
+</div>
+<p>As usual, we make lists for our two sets of numbers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">school</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">school_fertility</span><span class="p">[</span><span class="s1">&#39;school&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fertility</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">school_fertility</span><span class="p">[</span><span class="s1">&#39;fertility&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>We have speculated that, as the number of years in school goes up, the number
+of adolescents having children goes down.</p>
+<p>Remember <a class="reference internal" href="what_order_is_best.html"><span class="doc">What order is best?</span></a>?  If <code class="docutils literal"><span class="pre">school</span></code> and <code class="docutils literal"><span class="pre">fertility</span></code> are
+perfectly arranged, with low values for <code class="docutils literal"><span class="pre">school</span></code> going with high values of
+<code class="docutils literal"><span class="pre">fertility</span></code>, we will get a high <code class="docutils literal"><span class="pre">list_product</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">list_product</span><span class="p">(</span><span class="n">first_list</span><span class="p">,</span> <span class="n">second_list</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">product</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">first_list</span><span class="p">)):</span>
+<span class="gp">... </span>        <span class="n">value</span> <span class="o">=</span> <span class="n">first_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">second_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<span class="gp">... </span>        <span class="n">product</span> <span class="o">=</span> <span class="n">product</span> <span class="o">+</span> <span class="n">value</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">product</span>
+</pre></div>
+</div>
+<p>So, what do we get for our observed lists?</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">observed_product</span> <span class="o">=</span> <span class="n">list_product</span><span class="p">(</span><span class="n">school</span><span class="p">,</span> <span class="n">fertility</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>What do we compare this to?  What is our sampling distribution?</p>
+<p>We need our null hypothesis again.</p>
+<p>Our null hypothesis is that there is no systematic shared ordering to
+<code class="docutils literal"><span class="pre">school</span></code> and <code class="docutils literal"><span class="pre">fertility</span></code>.  Any appearance of shared ordering is just
+because of random sampling variation in <code class="docutils literal"><span class="pre">school</span></code> and <code class="docutils literal"><span class="pre">fertility</span></code>.</p>
+<p>We can get an idea of sampling variation by doing something very similar to
+what we did in <a class="reference internal" href="brexit_ages.html"><span class="doc">Comparing two groups with permutation testing</span></a>.  We can permute the <code class="docutils literal"><span class="pre">fertility</span></code> list to
+give a random sample of fertility values.  So, here is one trial:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#: The random module</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">random</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">one_product</span><span class="p">(</span><span class="n">list_1</span><span class="p">,</span> <span class="n">list_2</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="c1"># We don&#39;t want to change list_2, so make a copy</span>
+<span class="gp">... </span>    <span class="n">new_list_2</span> <span class="o">=</span> <span class="n">list_2</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">new_list_2</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">return</span> <span class="n">list_product</span><span class="p">(</span><span class="n">list_1</span><span class="p">,</span> <span class="n">new_list_2</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">one_product</span><span class="p">(</span><span class="n">school</span><span class="p">,</span> <span class="n">fertility</span><span class="p">)</span>
+<span class="go">75196.897957675363</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">one_product</span><span class="p">(</span><span class="n">school</span><span class="p">,</span> <span class="n">fertility</span><span class="p">)</span>
+<span class="go">72668.685532226926</span>
+</pre></div>
+</div>
+<p>Now let’s build up the sampling distribution:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">n_repeats</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sample_products</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_repeats</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">product</span> <span class="o">=</span> <span class="n">one_product</span><span class="p">(</span><span class="n">school</span><span class="p">,</span> <span class="n">fertility</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">sample_products</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">sample_products</span><span class="p">)</span>
+<span class="go">(...)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href=".//school_and_fertility-28.png">png</a>, <a class="reference external" href=".//school_and_fertility-28.hires.png">hires.png</a>, <a class="reference external" href=".//school_and_fertility-28.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="_images/school_and_fertility-28.png" src="_images/school_and_fertility-28.png" />
 </div>
 </div>
 
