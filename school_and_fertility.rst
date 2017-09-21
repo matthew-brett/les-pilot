@@ -298,10 +298,12 @@ give a random sample of fertility values.  So, here is one trial:
 .. nbplot::
 
     >>> one_product(school, fertility)
+    75196.897957675363
 
 .. nbplot::
 
     >>> one_product(school, fertility)
+    72668.685532226926
 
 Now let's build up the sampling distribution:
 
