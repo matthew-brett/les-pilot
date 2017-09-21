@@ -22,6 +22,8 @@ Afternoon
 
 Work in groups on your chosen dataset and question.
 
+Two group permute code in :doc:`permuter`.
+
 Report back at 15.30.
 
 .. include:: links_names.inc
