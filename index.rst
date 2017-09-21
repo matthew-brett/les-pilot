@@ -41,3 +41,4 @@ analysis at the University of Birmingham.
     for_loops_again_solution
     what_order_is_best
     sample_and_spread
+    permuter
