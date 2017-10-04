@@ -209,6 +209,8 @@ build-%:
 intro_talk_slides.pdf: intro_talk.md
 	pandoc -t beamer -s intro_talk.md -o intro_talk_slides.pdf
 
+report: build-report
+
 TEMPLATES = brexit_proportions for_loops_again
 
 TPL_FILES = $(TEMPLATES:=.tpl)
