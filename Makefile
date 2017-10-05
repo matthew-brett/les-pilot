@@ -224,3 +224,9 @@ CODE_SKELETON_FILES = $(TPL_FILES:.tpl=_code.rst)
 rst-exercises: $(SOLUTION_FILES)
 
 html: rst-exercises intro_talk_slides.pdf html-only
+
+process-feedback: tools/process_feedback.py feedback/student_feedback.csv
+	$(PYTHON) tools/process_feedback.py
+
+feedback: feedback.md process-feedback
+	pandoc feedback.md feedback/fb_like_most.md feedback/fb_could_change.md feedback/fb_other_suggestions.md -o feedback.pdf
