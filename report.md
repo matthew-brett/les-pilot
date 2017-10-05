@@ -54,7 +54,7 @@ My discussions with teachers in the four LES schools suggested that students:
 * often do not have a deep understanding of statistics after their current
   courses;
 * find it hard to see the relevance of statistics courses to their core
-  discipline, until the start their final year projects.
+  discipline, until they start their final year projects.
 
 There seems to be a general feeling that we should teach new students to use code, to broaden the range of data they can analyze, and give them more flexibility in analysis methods.
 
@@ -73,27 +73,119 @@ consensus that the next generation of statistics courses should:
   analysis experience" [@temple_lang2015] by "teaching through research"
   [@cobb2015mere].
 
-The second of these arguments gives a further motivation to teach code - in
-order to make statistical reasoning more accessible to students who do not
-have a substantial background in mathematics.
+The second of these arguments is another reason to teach code - in order to
+make statistical reasoning more accessible to students who do not have a
+substantial background in mathematics.
 
 # Prior art
 
-There are now sevaral books and courses teaching statistics and data science
-to readers who can already write Python or R code - Think Stats, Statistics is
-Easy, Data science from Scratch.
+Julian Simon advocated teaching statistics through resampling from the mid
+sixties.  His book [-@simon1997resampling], which is [freely available
+online](http://www.resample.com/intro-text-online), uses a simple custom
+computer language to express resampling algorithms. He collected experimental
+evidence that his approach was effective in teaching statistics to high school
+students [-@simon1969new] and undergraduates [-@simon1976probability],
+including those with "low skills and little interest in mathematics".
 
+There are now sevaral books that teach statistics through resampling
+to readers who can already read and write Python code [@downey2014think;
+@grus2015data; @shasha2010statistics].
 
+In 2015, Berkeley started an initiative to teach data science to
+undergraduates of all disciplines using simple Python code. They use the
+[Jupyter Notebook](https://jupyter.org) to students to get started with
+running code.  The textbook is online at https://www.inferentialthinking.com.
+The course takes an interesting approach, which is to get the students running
+the instructor's code very early in the course, before explaining how the code
+works in any detail.
 
-Teaching this way has become much easier with the development of interactive
-code and data notebooks, such as the [Jupyter Notebook](https://jupyter.org)
-and [R Studio](https://www.rstudio.com).
+# The course
 
-In the second semester of 2015, Berkeley started a cross-university
-introduction to data science now called [Computational and Inferential
-Thinking](https://www.inferentialthinking.com). They used the Jupyter Notebook
-to write the course book, and teach the course.  The material uses no
-mathematical formulae, but instead uses simple computer code to express the
-same ideas.
+I chose to combine elements from the resampling course of
+[@simon1997resampling] and the Berkeley data science course.  All the teaching
+material after the initial introduction was in the form of interactive Jupyter
+Notebooks, with the students running the same code as I was, on their own
+laptops.  We used real full open-access datasets for all the tutorials and
+exercises:
+
+* A survey of political attitudes post Brexit;
+* A survey on attitudes to animal research;
+* A World Bank dataset on gender inequality.
+
+The order of play was to:
+
+* introduce the Jupyter Notebook;
+* get and part-analyze the Brexit data, to discover that 41% of the survey
+  respondents who told the interviewer their Brexit vote, admitted to voting
+  Leave; our question - did the survey company mess up with its sampling?
+* ask the students "If a family has four children, what are the chances that
+  they have three girls and one boy?" [@simon1997resampling]. In trying to
+  solve this problem, I introduce the idea of trying to solve probability
+  problems with simulation (Monte Carlo sampling).  We simulate with coin
+  tosses and get something near the right answer;
+* we can ask the computer to do this tedious process for us, much more
+  quickly.  Introduce the code necessary to express the coin-toss algorithm.
+  Run the coin-toss algorithm to get a similar answer;
+* return the the Brexit 41% problem; it's the same problem.  Solve with
+  simulation; show that 41% cannot plausibly have come about by random
+  sampling; introduce the sampling distribution;
+* the histogram of the ages of the Leave voters looks different from that of
+  the Remain voters; could this difference be due to sampling?  Introduce the
+  permutation test for generating samples of mixed Leave and Remain voters.
+  Show that the actual difference in Leave / Remain mean ages is outside the
+  range of differences we see from these samples;
+* introduce the survey on attitudes to Animal Research.  Respondents gave yes
+  / no answers to a question on whether they trusted a) universities or b)
+  animal protection organizations for advice on animal research.  Ask whether
+  the difference in yes / no proportions for these answers could be due to
+  sampling.  Explain sampling for the paired test (swap answers within
+  subject).
+* introduce World Bank Survey.  Show scatterplot of youth childbirth rates per
+  country against average years that that girls remain in school.  Introduce
+  idea of correlation. Generate random samples by shuffling one of the two
+  vectors, and recalculating (surrogate for) correlation.
+
+Along the way, the students needed to be able to read, and possibly modify:
+
+* variable assignment: e.g. `a = 10`;
+* appending to lists: e.g. `b.append(a)` where `b` is a list;
+* if statements e.g. `if coin_toss == 1: # do something`.
+* for loops e.g. `for i in range(1000): # do something
+* using simple functions, defined in the Notebook, e.g.:
+
+~~~~
+def mean(my_list):
+    return sum(my_list) / len(my_list)
+~~~~
+
+The aim was to express Simon's [-@simon1997resampling] custom language with a
+small amount of simple Python code.  Although the result does involve more
+lines of code than Simon's language, it does have the advantages that:
+
+* it's easier to see exactly what the code is doing;
+* the effort to explain how the code works is independently valuable to the
+  students, as it introduces them to a general purpose language widely used
+  for teaching and data science;
+* the students can see that the choice of language is not obscure;
+* the students can easily find language help and tutorials online.
+
+# Feedback
+
+I briefly referred to the feedback in the summary above.  The feedback
+confirmed my suspicions in the later parts of the class, that the students
+were, on average, finding it harder to read and modify the code than I had
+hoped. They wanted to have more practice in learning the constructs they were
+using, in order to fully understand them.
+
+# Next time
+
+Teaching computer programming is difficult [@mccracken2001multi].  However,
+our task is not that task; we need to teach the small subset of computer
+programming listed above.  This might be better called "scripting".  I
+established from this course that we can explain the fundamental ideas of
+statistics in a short time using these ideas, but we need to do more work to
+make it easier for students to feel comfortable with the code that they need.
+I imagine this will involve a combination of better, slower teaching of how
+the code works, and more exercises for the students to so in class or at home.
 
 # References
