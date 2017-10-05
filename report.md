@@ -9,7 +9,9 @@ bibliography: les_pilot.bib
 This is a report of a pilot course teaching statistics through computing, run
 over 10 hours of face-to-face teaching, from September 19th through the 21st.
 
-In 10 hours, I taught:
+The course web page is https://github.com/matthew-brett/les-pilot
+
+We covered:
 
 * solving a simple probability problem through physical simulation, and
   simulation with simple programming;
@@ -20,19 +22,48 @@ In 10 hours, I taught:
 * using permutation for paired tests (equivalent to paired t-tests);
 * comparing measures by permutation (equivalent to correlation).
 
+In the final 2 hour session I asked the students to try their own analysis on
+the data of their choice, either their own data, or using the datasets from
+the teaching and exercises.
+
+I was therefore trying to cover most of basic statistics, at fundamental
+level, as well as some Python coding; this was very ambitious for 10 hours
+total work time.
+
+My impressions were:
+
+* there was a very large difference between students in their level of comfort
+  with Python code;
+* the only student who had written a lot of code before found the course too
+  slow, but most found the course too fast;
+* the students seemed to enjoy the final session, and to be surprised at the
+  amount of analysis they were able to do.
+
+Next time I plan to:
+
+* explore ways of introducing code to those with no previous experience;
+* simplify the initial simulation;
+* add code exercises to practice the basic constructs they need;
+* remove discussion of the paired test and correlation by permutation.  These
+  follow naturally from the permutation test between groups.
+
 # Background
 
-There has been a lot of recent discussion about teaching introductory
-statistics, partly motivated by the recent success of data science methods.
+My discussions with teachers in the four LES schools suggested that students:
 
-A central article for this discussion is @cobb2015mere - "Mere Renovation is
+* often do not have a deep understanding of statistics after their current
+  courses;
+* find it hard to see the relevance of statistics courses to their core
+  discipline, until the start their final year projects.
+
+There seems to be a general feeling that we should teach new students to use code, to broaden the range of data they can analyze, and give them more flexibility in analysis methods.
+
+There has been a lot of discussion among teachers of statistics about problems
+with current undergraduate courses - see @cobb2015mere - "Mere Renovation is
 Too Little Too Late: We Need to Rethink Our Undergraduate Curriculum from the
-Ground Up”. There is [a page hosting the Cobb article and many comment papers
-from distinguished teachers of
-statistics](https://nhorton.people.amherst.edu/mererenovation).
-
-To summarize the Cobb paper and comments on it: modern statistics courses
-should:
+Ground Up” and commentaries on this paper at
+https://nhorton.people.amherst.edu/mererenovation.  There seems to be some
+consensus that the next generation of statistics courses should:
 
 * teach how to "think with data" [@horton2015think];
 * make statistical reasoning accessible by teaching in terms of algorithms and
@@ -41,6 +72,18 @@ should:
 * use analysis with real data and open questions to give an "authentic data
   analysis experience" [@temple_lang2015] by "teaching through research"
   [@cobb2015mere].
+
+The second of these arguments gives a further motivation to teach code - in
+order to make statistical reasoning more accessible to students who do not
+have a substantial background in mathematics.
+
+# Prior art
+
+There are now sevaral books and courses teaching statistics and data science
+to readers who can already write Python or R code - Think Stats, Statistics is
+Easy, Data science from Scratch.
+
+
 
 Teaching this way has become much easier with the development of interactive
 code and data notebooks, such as the [Jupyter Notebook](https://jupyter.org)
