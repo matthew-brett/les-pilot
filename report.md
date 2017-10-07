@@ -22,12 +22,12 @@ In the final 2 hour session I asked the students to try their own analysis on
 the data of their choice, either their own data, or data from the datasets we
 had used in class.
 
-My impressions were:
+My impressions, partly based on the course feedback, were:
 
 * there was a large difference between students in their level of comfort with
-  Python code;
-* the only student who had written a lot of code before found the course too
-  slow, but most found the course too fast;
+  the code we were using;
+* feedback shows that the only student who had written a lot of code before
+  found the course too slow, but a small majority thought it was too fast;
 * the students seemed to enjoy the final session, and to be surprised at the
   amount of analysis they were able to do.
 
@@ -95,8 +95,8 @@ early in the course, before explaining how the code works in any detail.
 
 # The course
 
-I combined elements from the resampling book of [@simon1997resampling] and the
-Berkeley data science course.  All the teaching material after the initial
+I combined elements from Simon's resampling book [-@simon1997resampling] and
+the Berkeley data science course.  All the teaching material after the initial
 introduction was in the form of interactive Jupyter Notebooks, with the
 students running the same code as I was, on their own laptops.  We used real
 and complete open-access datasets for all the tutorials and exercises. These
@@ -131,7 +131,7 @@ The order of play was to:
   permutation test for generating samples of mixed Leave and Remain voters.
   Show that the actual difference in Leave / Remain mean ages is outside the
   range of differences we see from these samples;
-* introduce the survey on attitudes to Animal Research.  Respondents gave yes
+* introduce the survey on attitudes to animal research.  Respondents gave yes
   / no answers to a question on whether they trusted a) universities or b)
   animal protection organizations for advice on animal research.  Ask whether
   the difference in yes / no proportions for these answers could be due to
@@ -142,7 +142,8 @@ The order of play was to:
   Introduce idea of correlation. Generate random samples by shuffling one of
   the two vectors, and recalculating (surrogate for) correlation.
 
-Along the way, the students needed to be able to read, and possibly modify:
+Along the way, the students needed to be able to read, and possibly modify the
+following programming constructs:
 
 * variable assignment: e.g. `a = 10`;
 * appending to lists: e.g. `b.append(a)` where `b` is a list;
@@ -168,24 +169,45 @@ lines of code than Simon's language, it does have the advantages that:
 # Discussion
 
 I briefly referred to the feedback in the summary above.  The feedback
-confirmed my suspicions in the later parts of the class, that the students
-were, on average, finding it harder to read and modify the code than I had
-hoped. They wanted to have more practice in learning the constructs they were
-using, in order to fully understand them.
+confirmed my suspicions that, in the later parts of the class, some of the
+students were finding it harder to read and modify the code than I had hoped.
+Looking back, I believe that I had tried to cover too wide a range of
+statistical problems, and therefore, they had not had enough time to practice
+reading and changing the code for the earlier examples.  From the feedback
+comments and discussions in the last session of the class, my impression was
+that most of the students who were feeling rushed, felt that the material was
+tractable, given more time.
 
-Teaching computer programming is difficult [@mccracken2001multi], but we only
-need a small proportion of the material that should be taught on a programming
-course.  We have no need to go into difficult topics like recursion or object
-oriented programming.  The Jupyter Notebook greatly lowers the barrier to
-running and writing code; it runs in the student's web browser after
-installing a single software package.  What we need to teach might better be
-called "scripting".  After this pilot, I am confident that, with more time and
-more exercises, it is possible to teach the level of programming that the
-students need in order to be able to understand the ideas, and see what tools
-they will have available if they continue their learning.  If that succeeds,
-we will have achieved two successes: the first is that we have introduced the
-students to a tool of great power for their future work; the second is that
-they will have a deeper and more general understanding of the principles of
-statistics.
+As some evidence for my impressions, in the feedback answers to the question
+about course pace, one student of 15 respondents thought the course was too
+slow, 6 thought the pace was about right, 6 thought it was moderately too
+fast, and 2 thought it was much too fast. 11 / 15 students agreed strongly or
+moderately with the statement "I had a better understanding of statistics
+after this class", and only one student moderately disagreed.
+
+After the course, two students spontaneously commented in email how useful
+they had found the course.  Both had applied the permutation methods to their
+own data after the course had finished.
+
+Teaching computer programming in full generality is difficult
+[@mccracken2001multi], but we only need a small proportion of the material
+that should be taught on a programming course.  We have no need to go into
+difficult topics like recursion or object oriented programming.  The Jupyter
+Notebook greatly lowers the barrier to running and writing code; it runs in
+the student's web browser after installing a single software package.  What we
+need to teach might better be called "scripting".
+
+Before doing this pilot, it was not clear to me what the balance of such a
+course would be, in terms of programming and statistics.  Preparing the
+material and teaching the course has made it clearer to me what range of
+material we can teach. I am confident that, with more time and more exercises,
+it is possible to teach the level of programming that the students need, to
+understand the statistical ideas.  The same introduction gives them a survey
+of the available tools if they continue their learning.  A single course
+introduces the students to a tool of great power for their future work at the
+same time as giving them a deeper and more general understanding of the
+principles of statistics.  It seems likely that this combination will make it
+easier for students to engage with real research data, in their second and
+third years.
 
 # References
