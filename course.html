@@ -1,0 +1,284 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Course outline &#8212; Tutorials on imaging, computing and mathematics</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Schedule" href="schedule.html" />
+    <link rel="prev" title="Setup beforehand" href="setup_beforehand.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p><span class="math">\(\newcommand{L}[1]{\| #1 \|}\newcommand{VL}[1]{\L{ \vec{#1} }}\newcommand{R}[1]{\operatorname{Re}\,(#1)}\newcommand{I}[1]{\operatorname{Im}\, (#1)}\)</span></p>
+<div class="section" id="course-outline">
+<h1>Course outline<a class="headerlink" href="#course-outline" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>See the  <a class="reference download internal" href="_downloads/intro_talk_slides.pdf" download=""><code class="xref download docutils literal"><span class="pre">talk</span> <span class="pre">slides</span></code></a> <a class="footnote-reference" href="#get-source" id="id1">[1]</a>.</p>
+</div>
+<div class="section" id="the-tools">
+<h2>The tools<a class="headerlink" href="#the-tools" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="jupyter_intro.html"><span class="doc">Introducting the Jupyter Notebook</span></a> (see
+<a class="reference internal" href="using_the_notebooks.html"><span class="doc">Using the Jupyter Notebooks</span></a>).</p>
+</div>
+<div class="section" id="the-first-problem-a-brexit-survey">
+<h2>The first problem - a Brexit survey<a class="headerlink" href="#the-first-problem-a-brexit-survey" title="Permalink to this headline">¶</a></h2>
+<p>First we analyze a survey of British voters after Brexit - see <a class="reference internal" href="brexit.html"><span class="doc">Analyzing Brexit</span></a>.</p>
+<p>We find that, of respondents who were prepared to say how they voted in the
+Brexit referendum, 41% said they voted Leave, and 59% said they voted Remain.</p>
+<p>But we know that 52% of UK voters voted Leave in the referendum.</p>
+<p>Let’s say we have complained about this discrepancy to the survey company, and
+they say, that the difference is due to “sampling error”.  They mean that,
+they took a random sample of UK voters, but, just by chance, that sample had
+rather fewer Leave voters than the whole UK population.</p>
+<p>That’s their claim.  But can that really be true?</p>
+</div>
+<div class="section" id="solving-with-simulation">
+<h2>Solving with simulation<a class="headerlink" href="#solving-with-simulation" title="Permalink to this headline">¶</a></h2>
+<p>We need to think about what random sampling means.</p>
+<p>To start, let’s think about a simpler problem.</p>
+<p>Here’s the problem:</p>
+<blockquote>
+<div>If a family has 4 children, what is the probability that the family has 3
+girls?</div></blockquote>
+<p>We can solve this by drawing out the different possibilities in a probability
+tree, but then we have to do some calculations with probability, and these can
+be difficult, and easy to get wrong, especially in harder cases than this.</p>
+<p>Another way to solve it, is with simulation.</p>
+<p>Let’s say each child has a 50% chance of being a girl.  We can simulate a
+birth with the toss of a coin.</p>
+<p>We can simulate four children by four coin tosses.  Call this a single trial.
+If we do one trial, 100 times, we can count the number of trials that have 3
+heads, and divide by 100, to estimate the probability of three girls.</p>
+<p>The algorithm is something like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">Set</span> <span class="n">the</span> <span class="n">success</span> <span class="n">counter</span> <span class="n">to</span> <span class="mi">0</span>
+<span class="n">Repeat</span> <span class="n">the</span> <span class="n">following</span> <span class="mi">100</span> <span class="n">times</span><span class="p">:</span>
+    <span class="n">Repeat</span> <span class="n">the</span> <span class="n">following</span> <span class="mi">4</span> <span class="n">times</span><span class="p">:</span>
+        <span class="n">Toss</span> <span class="n">a</span> <span class="n">coin</span><span class="p">,</span> <span class="n">record</span> <span class="n">Heads</span> <span class="ow">or</span> <span class="n">Tails</span>
+    <span class="n">If</span> <span class="n">the</span> <span class="n">number</span> <span class="n">of</span> <span class="n">Heads</span> <span class="n">equals</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">Increase</span> <span class="n">the</span> <span class="n">success</span> <span class="n">counter</span> <span class="n">by</span> <span class="mi">1</span>
+<span class="n">Show</span> <span class="n">success</span> <span class="n">counter</span> <span class="n">divided</span> <span class="n">by</span> <span class="mi">100</span>
+</pre></div>
+</div>
+<p>We do that with actual coin tosses, and get an answer close to 25 / 100 - a
+probability of 0.25.</p>
+<p>This all sounds like something the computer would be good at.  Let’s do the
+same simulation using some code.</p>
+<p>First we need:</p>
+<ul class="simple">
+<li><a class="reference internal" href="loops_and_functions.html"><span class="doc">Conditionals, functions and loops</span></a>.</li>
+<li><a class="reference internal" href="for_loops.html"><span class="doc">For loops</span></a>;</li>
+</ul>
+<p>Now we can do the same simulation, with code - see <a class="reference internal" href="number_of_girls.html"><span class="doc">Three girls in a family of four</span></a>;</p>
+</div>
+<div class="section" id="brexit-sampling-by-simulation">
+<h2>Brexit sampling by simulation<a class="headerlink" href="#brexit-sampling-by-simulation" title="Permalink to this headline">¶</a></h2>
+<p>We go back to the problem of “sampling error” in the Brexit survey.</p>
+<p>1315 respondents said how they voted in the referendum, and 541 said they
+voted Leave - about 41%.  This is well off the final UK result of 52%.</p>
+<p>When the survey company claim this is sampling error, they are saying that
+their random sample of UK voters just happened to pick up a smaller proportion
+of Leave voters.</p>
+<p>In statistical terms, everyone who voted in the referendum is the
+<em>population</em>.  We know that, in this population, 52% voted Leave.  The 1315
+survey respondents who said how they voted, are a <em>sample</em> from that
+population.</p>
+<p>If that sample is random, so that every UK voter had an equal chance of being
+in that 1315 sample, then, for each respondent, there is a 52% chance that
+they voted Leave.</p>
+<p>So, if the chance that any one voter voted Leave, is 52%, what are the chances
+that, if we take a sample of 1315 voters, only 41% voted Leave?</p>
+<p>This is the same problem as the problem of three girls in a family of four,
+except:</p>
+<ul class="simple">
+<li>our coin toss gave a 50% chance of being a girl, but our voter has a
+slightly greater chance (52%) of being a Leave voter and</li>
+<li>we have 1315 voters in our trial instead of four children.</li>
+</ul>
+<p>We are going to use the computer to do many thousands of trials, each with
+1315 simulated voters.  Each trial will give a proportion of Leave voters.
+For each trial, the proportion will be slightly different, because we will get
+more or less Leave voters by chance, on each trial.</p>
+<p>If we collect the proportion on each of these thousand trials, we can build up
+a <em>distribution</em> of proportions that we would expect when taking these 1315
+voter trials.</p>
+<p>This is the <em>sampling distribution</em> of the proportion - that is, the
+distribution of the proportions we expect to get, when we take many samples of
+size 1315.</p>
+<p>Where does 41% fall in this distribution?  Is it similar to a reasonable
+number of the values we get by simulation, or is it way off?</p>
+<p>See <a class="reference internal" href="brexit_proportions_exercise.html"><span class="doc">Testing Brexit Proportions</span></a>.</p>
+<p>As a side note - how does this <em>sampling distribution</em> change, as we have more
+or less voters in our sample?  Have a look at <a class="reference internal" href="samples_and_spread.html"><span class="doc">Spread of a distribution with number of samples</span></a>.</p>
+</div>
+<div class="section" id="comparing-two-groups-and-permutation">
+<h2>Comparing two groups and permutation<a class="headerlink" href="#comparing-two-groups-and-permutation" title="Permalink to this headline">¶</a></h2>
+<p>Looking again at <a class="reference internal" href="brexit.html"><span class="doc">Analyzing Brexit</span></a> - we see that the age distribution of Leave
+voters looks different from the age distribution of Remain voters.  For
+example, the mean age of the Leave voters is higher than the mean age of the
+Remain voters.</p>
+<p>Could this be sampling error too?  Could it be true that, in all UK referendum
+voters, the mean age of the Leave voters was more or less the same as the mean
+age of the Remain voters?  Could it be that, in our random sample, we just
+happen to have some older Leave voters or younger Remain voters?</p>
+<p>What we would like to do, is take many samples of 1315 voters, where 541 voted
+Leave, and 774 voted Remain.  We would take the mean of each set of voters,
+and subtract them to find the difference.  We’d do that many times to build up
+the distribution of differences, and then compare the difference that we’d
+actually got, with the distribution we found from many samples.  If the
+difference that we actually got is very large compared to this distribution,
+then we can conclude that a simple accident of sampling is not the explanation
+of our difference.</p>
+<p>But, we do not have lots of samples of 1315 voters to build up this
+distribution.</p>
+<p>Happily, there is a trick we can use to get something very close to this
+distribution.  That trick is to use the sample we have over and over again to
+make a simulated random sample.  We do this by pooling all 1315 voters into a
+single group, shuffling them randomly, and then splitting them into a fake
+group of 541 Leave voters and a fake sample of 774 remain voters, where these
+new fake samples have a random mixture of actual Leave voters and actual
+Remain voters.  We calculate the mean age difference for these two fake
+samples, and then continue to repeat the procedure, many times.  This gives us
+something very similar to the distribution we would expect if we really had
+taken many new samples of 1315.</p>
+<p>To do this shuffling, we need <a class="reference internal" href="more_on_lists.html"><span class="doc">More on working with lists</span></a>.</p>
+<p>To see this <em>permutation test</em> in action: <a class="reference internal" href="brexit_ages.html"><span class="doc">Comparing two groups with permutation testing</span></a>.</p>
+</div>
+<div class="section" id="paired-tests-with-permutation">
+<h2>Paired tests with permutation<a class="headerlink" href="#paired-tests-with-permutation" title="Permalink to this headline">¶</a></h2>
+<p>We can also do <em>paired</em> tests with permutation.  A paired test is where we
+have two measures from the same individual.  We know that the individual
+differs from other individuals, but we might wonder if the two measures
+differ.  If they don’t differ, then we can build up our sampling distribution,
+by swapping the two measures randomly, within each individual - we calculate
+the difference between the measures for the individual, and then the mean of
+these differences across individuals.  This is one trial - the mean goes into
+our <em>sampling distribution</em>, and we do this many times to build up the whole
+distribution.</p>
+<p>See paired tests in <a class="reference internal" href="animal_attitudes.html"><span class="doc">Attitudes to animal research</span></a>.</p>
+</div>
+<div class="section" id="testing-for-straight-line-relationships-with-permutation">
+<h2>Testing for straight-line relationships with permutation<a class="headerlink" href="#testing-for-straight-line-relationships-with-permutation" title="Permalink to this headline">¶</a></h2>
+<p>Look at the data described at the top of <a class="reference internal" href="school_and_fertility.html"><span class="doc">Schooling and fertility</span></a>.  This
+dataset has measures of gender inequality across countries. There seems to be
+some sort of straight-line relationship in these measures between the average
+number of years a girl stays in school, and the number of children born to
+teenage mothers.</p>
+<p>But - could this be due to sampling?  If we randomly paired the average years
+in school with the number of children, would we see a relationship like this
+appear often, or rarely?</p>
+<p>To think about what measure we would use for a straight-line relationship, see
+* <a class="reference internal" href="what_order_is_best.html"><span class="doc">What order is best?</span></a>.</p>
+<p>Now look at the test of linear relationships at then end of
+<a class="reference internal" href="school_and_fertility.html"><span class="doc">Schooling and fertility</span></a>.</p>
+<table class="docutils footnote" frame="void" id="get-source" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>Source files for building the slides, and source for all the
+pages in this website are always available in the <a class="reference external" href="https://github.com/matthew-brett/les-pilot">course Github
+repository</a>.</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Course outline</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#the-tools">The tools</a></li>
+<li><a class="reference internal" href="#the-first-problem-a-brexit-survey">The first problem - a Brexit survey</a></li>
+<li><a class="reference internal" href="#solving-with-simulation">Solving with simulation</a></li>
+<li><a class="reference internal" href="#brexit-sampling-by-simulation">Brexit sampling by simulation</a></li>
+<li><a class="reference internal" href="#comparing-two-groups-and-permutation">Comparing two groups and permutation</a></li>
+<li><a class="reference internal" href="#paired-tests-with-permutation">Paired tests with permutation</a></li>
+<li><a class="reference internal" href="#testing-for-straight-line-relationships-with-permutation">Testing for straight-line relationships with permutation</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="setup_beforehand.html" title="previous chapter">Setup beforehand</a></li>
+      <li>Next: <a href="schedule.html" title="next chapter">Schedule</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/course.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew Brett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/course.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,219 @@
+##############
+Course outline
+##############
+
+************
+Introduction
+************
+
+See the  :download:`talk slides <intro_talk_slides.pdf>` [#get-source]_.
+
+*********
+The tools
+*********
+
+:doc:`Introducting the Jupyter Notebook <jupyter_intro>` (see
+:doc:`using_the_notebooks`).
+
+***********************************
+The first problem - a Brexit survey
+***********************************
+
+First we analyze a survey of British voters after Brexit - see :doc:`brexit`.
+
+We find that, of respondents who were prepared to say how they voted in the
+Brexit referendum, 41% said they voted Leave, and 59% said they voted Remain.
+
+But we know that 52% of UK voters voted Leave in the referendum.
+
+Let's say we have complained about this discrepancy to the survey company, and
+they say, that the difference is due to "sampling error".  They mean that,
+they took a random sample of UK voters, but, just by chance, that sample had
+rather fewer Leave voters than the whole UK population.
+
+That's their claim.  But can that really be true?
+
+***********************
+Solving with simulation
+***********************
+
+We need to think about what random sampling means.
+
+To start, let's think about a simpler problem.
+
+Here's the problem:
+
+    If a family has 4 children, what is the probability that the family has 3
+    girls?
+
+We can solve this by drawing out the different possibilities in a probability
+tree, but then we have to do some calculations with probability, and these can
+be difficult, and easy to get wrong, especially in harder cases than this.
+
+Another way to solve it, is with simulation.
+
+Let's say each child has a 50% chance of being a girl.  We can simulate a
+birth with the toss of a coin.
+
+We can simulate four children by four coin tosses.  Call this a single trial.
+If we do one trial, 100 times, we can count the number of trials that have 3
+heads, and divide by 100, to estimate the probability of three girls.
+
+The algorithm is something like::
+
+    Set the success counter to 0
+    Repeat the following 100 times:
+        Repeat the following 4 times:
+            Toss a coin, record Heads or Tails
+        If the number of Heads equals 3:
+            Increase the success counter by 1
+    Show success counter divided by 100
+
+We do that with actual coin tosses, and get an answer close to 25 / 100 - a
+probability of 0.25.
+
+This all sounds like something the computer would be good at.  Let's do the
+same simulation using some code.
+
+First we need:
+
+* :doc:`loops_and_functions`.
+* :doc:`for_loops`;
+
+Now we can do the same simulation, with code - see :doc:`number_of_girls`;
+
+*****************************
+Brexit sampling by simulation
+*****************************
+
+We go back to the problem of "sampling error" in the Brexit survey.
+
+1315 respondents said how they voted in the referendum, and 541 said they
+voted Leave - about 41%.  This is well off the final UK result of 52%.
+
+When the survey company claim this is sampling error, they are saying that
+their random sample of UK voters just happened to pick up a smaller proportion
+of Leave voters.
+
+In statistical terms, everyone who voted in the referendum is the
+*population*.  We know that, in this population, 52% voted Leave.  The 1315
+survey respondents who said how they voted, are a *sample* from that
+population.
+
+If that sample is random, so that every UK voter had an equal chance of being
+in that 1315 sample, then, for each respondent, there is a 52% chance that
+they voted Leave.
+
+So, if the chance that any one voter voted Leave, is 52%, what are the chances
+that, if we take a sample of 1315 voters, only 41% voted Leave?
+
+This is the same problem as the problem of three girls in a family of four,
+except:
+
+* our coin toss gave a 50% chance of being a girl, but our voter has a
+  slightly greater chance (52%) of being a Leave voter and
+* we have 1315 voters in our trial instead of four children.
+
+We are going to use the computer to do many thousands of trials, each with
+1315 simulated voters.  Each trial will give a proportion of Leave voters.
+For each trial, the proportion will be slightly different, because we will get
+more or less Leave voters by chance, on each trial.
+
+If we collect the proportion on each of these thousand trials, we can build up
+a *distribution* of proportions that we would expect when taking these 1315
+voter trials.
+
+This is the *sampling distribution* of the proportion - that is, the
+distribution of the proportions we expect to get, when we take many samples of
+size 1315.
+
+Where does 41% fall in this distribution?  Is it similar to a reasonable
+number of the values we get by simulation, or is it way off?
+
+See :doc:`brexit_proportions_exercise`.
+
+As a side note - how does this *sampling distribution* change, as we have more
+or less voters in our sample?  Have a look at :doc:`samples_and_spread`.
+
+************************************
+Comparing two groups and permutation
+************************************
+
+Looking again at :doc:`brexit` - we see that the age distribution of Leave
+voters looks different from the age distribution of Remain voters.  For
+example, the mean age of the Leave voters is higher than the mean age of the
+Remain voters.
+
+Could this be sampling error too?  Could it be true that, in all UK referendum
+voters, the mean age of the Leave voters was more or less the same as the mean
+age of the Remain voters?  Could it be that, in our random sample, we just
+happen to have some older Leave voters or younger Remain voters?
+
+What we would like to do, is take many samples of 1315 voters, where 541 voted
+Leave, and 774 voted Remain.  We would take the mean of each set of voters,
+and subtract them to find the difference.  We'd do that many times to build up
+the distribution of differences, and then compare the difference that we'd
+actually got, with the distribution we found from many samples.  If the
+difference that we actually got is very large compared to this distribution,
+then we can conclude that a simple accident of sampling is not the explanation
+of our difference.
+
+But, we do not have lots of samples of 1315 voters to build up this
+distribution.
+
+Happily, there is a trick we can use to get something very close to this
+distribution.  That trick is to use the sample we have over and over again to
+make a simulated random sample.  We do this by pooling all 1315 voters into a
+single group, shuffling them randomly, and then splitting them into a fake
+group of 541 Leave voters and a fake sample of 774 remain voters, where these
+new fake samples have a random mixture of actual Leave voters and actual
+Remain voters.  We calculate the mean age difference for these two fake
+samples, and then continue to repeat the procedure, many times.  This gives us
+something very similar to the distribution we would expect if we really had
+taken many new samples of 1315.
+
+To do this shuffling, we need :doc:`more_on_lists`.
+
+To see this *permutation test* in action: :doc:`brexit_ages`.
+
+*****************************
+Paired tests with permutation
+*****************************
+
+We can also do *paired* tests with permutation.  A paired test is where we
+have two measures from the same individual.  We know that the individual
+differs from other individuals, but we might wonder if the two measures
+differ.  If they don't differ, then we can build up our sampling distribution,
+by swapping the two measures randomly, within each individual - we calculate
+the difference between the measures for the individual, and then the mean of
+these differences across individuals.  This is one trial - the mean goes into
+our *sampling distribution*, and we do this many times to build up the whole
+distribution.
+
+See paired tests in :doc:`animal_attitudes`.
+
+********************************************************
+Testing for straight-line relationships with permutation
+********************************************************
+
+Look at the data described at the top of :doc:`school_and_fertility`.  This
+dataset has measures of gender inequality across countries. There seems to be
+some sort of straight-line relationship in these measures between the average
+number of years a girl stays in school, and the number of children born to
+teenage mothers.
+
+But - could this be due to sampling?  If we randomly paired the average years
+in school with the number of children, would we see a relationship like this
+appear often, or rarely?
+
+To think about what measure we would use for a straight-line relationship, see
+* :doc:`what_order_is_best`.
+
+Now look at the test of linear relationships at then end of
+:doc:`school_and_fertility`.
+
+.. [#get-source] Source files for building the slides, and source for all the
+   pages in this website are always available in the `course Github
+   repository`_.
+
+.. include:: links_names.inc

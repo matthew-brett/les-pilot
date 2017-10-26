@@ -14,6 +14,7 @@ analysis at the University of Birmingham.
 
     when_where
     setup_beforehand
+    course
     schedule
 
 .. The hidden toctree below is to suppress build warnings
